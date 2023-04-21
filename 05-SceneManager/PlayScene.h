@@ -6,6 +6,7 @@
 #include "Brick.h"
 #include "Mario.h"
 #include "Goomba.h"
+#include "Map.h"
 //#include "Koopas.h"
 
 
@@ -22,11 +23,13 @@ protected:
 
 	void _ParseSection_ASSETS(string line);
 	void _ParseSection_OBJECTS(string line);
+	void _ParseSection_TILEMAP(string line);
 
 	void LoadAssets(LPCWSTR assetFile);
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
+	Map* map = NULL;
 
 	virtual void Load();
 	virtual void Update(DWORD dt);

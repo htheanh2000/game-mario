@@ -7,6 +7,7 @@
 #include "Mario.h"
 #include "Goomba.h"
 #include "Map.h"
+#include "BGBlock.h"
 //#include "Koopas.h"
 
 

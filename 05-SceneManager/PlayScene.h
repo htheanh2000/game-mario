@@ -14,7 +14,7 @@ class CPlayScene: public CScene
 {
 protected: 
 	// A play scene has to have player, right? 
-	LPGAMEOBJECT player;					
+	CMario* player = NULL;
 
 	vector<LPGAMEOBJECT> objects;
 
@@ -29,7 +29,6 @@ protected:
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
-	Map* map = NULL;
 
 	virtual void Load();
 	virtual void Update(DWORD dt);
@@ -38,10 +37,13 @@ public:
 
 	LPGAMEOBJECT GetPlayer() { return player; }
 
+	void SetCam(float cx, float cy);
+
 	void Clear();
 	void PurgeDeletedObjects();
 
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
+	Map* map = NULL;
 };
 
 typedef CPlayScene* LPPLAYSCENE;

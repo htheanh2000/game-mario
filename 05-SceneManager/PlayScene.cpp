@@ -73,7 +73,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 
 	if (tokens.size() < 3) return; // skip invalid lines - an animation must at least has 1 frame and 1 frame time
 
-	//DebugOut(L"--> %s\n",ToWSTR(line).c_str());
+	DebugOut(L"--> %s\n",ToWSTR(line).c_str());
 
 	LPANIMATION ani = new CAnimation();
 
@@ -162,6 +162,28 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	objects.push_back(obj);
 }
 
+void CPlayScene::_ParseSection_TILEMAP(string line)
+{
+	int idTex, numOfRowMap, numofColMap, numOfRowTileSet, numOfColTileSet, totalTile;
+
+	LPCWSTR path = ToLPCWSTR(line);
+	ifstream f(path, ios::in);
+	f >> idTex >> numOfRowMap >> numofColMap >> numOfRowTileSet >> numOfColTileSet >> totalTile;
+	int** tileMapData = new int* [numOfRowMap];
+	for (int i = 0; i < numOfRowMap; i++)
+	{
+		tileMapData[i] = new int[numofColMap];
+		for (int j = 0; j < numofColMap; j++)
+		{
+			f >> tileMapData[i][j];
+		}
+	}
+	f.close();
+	map = new Map(idTex, numOfRowMap, numofColMap, numOfRowTileSet, numOfColTileSet, totalTile);
+	map->GetSpriteTile();
+	map->SetMapData(tileMapData);
+}
+
 void CPlayScene::LoadAssets(LPCWSTR assetFile)
 {
 	DebugOut(L"[INFO] Start loading assets from : %s \n", assetFile);
@@ -195,28 +217,6 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 	f.close();
 
 	DebugOut(L"[INFO] Done loading assets from %s\n", assetFile);
-}
-
-void CPlayScene::_ParseSection_TILEMAP(string line)
-{
-	int idTex, numOfRowMap, numofColMap, numOfRowTileSet, numOfColTileSet, totalTile;
-
-	LPCWSTR path = ToLPCWSTR(line);
-	ifstream f(path, ios::in);
-	f >> idTex >> numOfRowMap >> numofColMap >> numOfRowTileSet >> numOfColTileSet >> totalTile;
-	int** tileMapData = new int* [numOfRowMap];
-	for (int i = 0; i < numOfRowMap; i++)
-	{
-		tileMapData[i] = new int[numofColMap];
-		for (int j = 0; j < numofColMap; j++)
-		{
-			f >> tileMapData[i][j];
-		}
-	}
-	f.close();
-	map = new Map(idTex, numOfRowMap, numofColMap, numOfRowTileSet, numOfColTileSet, totalTile);
-	map->GetSpriteTile();
-	map->SetMapData(tileMapData);
 }
 
 void CPlayScene::Load()
@@ -276,25 +276,48 @@ void CPlayScene::Update(DWORD dt)
 	if (player == NULL) return; 
 
 	// Update camera to follow mario
-	float cx, cy;
-	player->GetPosition(cx, cy);
 
-	CGame *game = CGame::GetInstance();
-	cx -= game->GetBackBufferWidth() / 2;
-	cy -= game->GetBackBufferHeight() / 2;
-
-	if (cx < 0) cx = 0;
-
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+	//CGame::GetInstance()->SetCamPos(cx, cy/*0.0f /*cy*/);
+	SetCam(player->GetX(), player->GetY());
+	
 
 	PurgeDeletedObjects();
 }
 
 void CPlayScene::Render()
 {
+	map->DrawMap();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
+
 }
+void CPlayScene::SetCam(float cx, float cy)
+{
+	int mw, mh;
+	int sw, sh;
+	CGame* game = CGame::GetInstance();
+	sw = game->GetBackBufferWidth();
+	sh = game->GetBackBufferHeight();
+	mw = map->GetMapWidth();
+
+	mh = map->GetMapHeight();
+
+	cx -= sw / 2;
+	// CamX
+	if (cx <= 0)//Left Edge
+		cx = 0;
+	if (cx >= mw - sw)//Right Edge
+		cx = (float)mw - (float)sw;
+
+	//cy -= sh /2 + MARIO_BIG_BBOX_HEIGHT;
+	cy -= sh/2 + MARIO_BIG_BBOX_HEIGHT;
+	if (cy <= 0)//Left Edge
+		cy = 0;
+
+	game->SetCamPos(cx, cy);
+	map->SetCamPos(cx, cy);
+}
+
 
 /*
 *	Clear all objects from this scene

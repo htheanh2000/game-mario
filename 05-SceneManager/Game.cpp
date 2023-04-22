@@ -27,6 +27,9 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 	backBufferWidth = r.right + 1;
 	backBufferHeight = r.bottom + 1;
 
+	screen_height = r.bottom + 1;
+	screen_width = r.right + 1;
+
 	DebugOut(L"[INFO] Window's client area: width= %d, height= %d\n", r.right - 1, r.bottom - 1);
 
 	// Create & clear the DXGI_SWAP_CHAIN_DESC structure
@@ -176,7 +179,7 @@ void CGame::Draw(float x, float y, LPTEXTURE tex, RECT* rect, float alpha, int s
 
 	D3DX10_SPRITE sprite;
 
-	// Set the sprite’s shader resource view
+	// Set the spriteï¿½s shader resource view
 	sprite.pTexture = tex->getShaderResourceView();
 
 	if (rect == NULL)
@@ -226,7 +229,7 @@ void CGame::Draw(float x, float y, LPTEXTURE tex, RECT* rect, float alpha, int s
 	D3DXMATRIX matScaling;
 	D3DXMatrixScaling(&matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
 
-	// Setting the sprite’s position and size
+	// Setting the spriteï¿½s position and size
 	sprite.matWorld = (matScaling * matTranslation);
 
 	spriteObject->DrawSpritesImmediate(&sprite, 1, 0, 0);

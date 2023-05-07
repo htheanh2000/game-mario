@@ -66,11 +66,9 @@ goomba.txt
 
 ### Enimies ###
 ###GOOMBA###
-2	236	369	1
-2	880	353	1
-2	928	353	1
-2	992	353	2
-2	528	369	1
+2	186	369	1
+2	236	339	2
+
 
 [TILEMAP]
 Resources\Tilemap\world1-1.txt

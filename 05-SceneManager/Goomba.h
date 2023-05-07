@@ -17,11 +17,19 @@
 #define ID_ANI_GOOMBA_WALKING 5000
 #define ID_ANI_GOOMBA_DIE 5001
 
+#define ID_RED_GOOMBA_WING_WALKING 5005
+#define ID_RED_GOOMBA_WALKING 5003
+#define ID_RED_GOOMBA_DIE 5004
+
+#define NORMAL_GOOMBA 1
+#define RED_GOOMBA	2
+
 class CGoomba : public CGameObject
 {
 protected:
 	float ax;				
 	float ay; 
+	int objType;
 
 	ULONGLONG die_start;
 
@@ -36,6 +44,6 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 public: 	
-	CGoomba(float x, float y);
+	CGoomba(float x, float y, int type);
 	virtual void SetState(int state);
 };

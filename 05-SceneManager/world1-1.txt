@@ -79,5 +79,10 @@ piranhaPlant.txt
 #PIRANHA PLANT#
 8	186	416
 
+##### FIRE PIRANHA PLANT 9 ######
+#BIG#
+9	359	348	1
+9	387	348	2
+
 [TILEMAP]
 Resources\Tilemap\world1-1.txt

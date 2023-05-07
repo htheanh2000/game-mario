@@ -324,7 +324,7 @@ void CPlayScene::SetCam(float cx, float cy)
 		cx = (float)mw - (float)sw;
 
 	//cy -= sh /2 + MARIO_BIG_BBOX_HEIGHT;
-	cy -= sh/2 + MARIO_BIG_BBOX_HEIGHT;
+	cy = (float)mh - (float)sh;
 	if (cy <= 0)//Left Edge
 		cy = 0;
 

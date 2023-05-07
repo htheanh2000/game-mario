@@ -11,7 +11,7 @@
 #include "Platform.h"
 #include "BGBlock.h"
 #include "QuestionBrick.h"
-
+#include "PiranhaPlant.h"
 #include "SampleKeyEventHandler.h"
 
 using namespace std;
@@ -143,7 +143,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CQuestionBrick(x, y, type);
 		break;
 	}
-
+	case OBJECT_TYPE_PIRANHA: { obj = new PiranhaPlant(x, y); break; }
 	case OBJECT_TYPE_PLATFORM:
 	{
 

@@ -27,6 +27,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	isOnPlatform = false;
 
+	if (isGoThroughBlock) {
+		// reset y to avoid mario lag and stuck in block
+		// To do: Fix mario can jump higher when in block 
+		y -= ADJUST_MARIO_COLLISION_WITH_COLOR_BLOCK;
+		vy = -MARIO_JUMP_SPEED_MAX;
+		isGoThroughBlock = false;
+	}
+	
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 

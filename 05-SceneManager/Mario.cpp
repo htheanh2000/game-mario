@@ -7,6 +7,7 @@
 #include "Goomba.h"
 #include "Coin.h"
 #include "Portal.h"
+#include "QuestionBrick.h"
 #include "Collision.h"
 #include "BGBlock.h"
 
@@ -56,6 +57,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CBGBlock*>(e->obj))
 		OnCollisionWithBackgroundBlock(e);
+	else if (dynamic_cast<CQuestionBrick*>(e->obj))
+		OnCollisionWithQuestionBrick(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -112,6 +115,11 @@ void CMario::OnCollisionWithBackgroundBlock(LPCOLLISIONEVENT e)
 	}
 }
 
+void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
+{
+	CQuestionBrick* questionBrick = dynamic_cast<CQuestionBrick*>(e->obj);
+	DebugOut(L"-------------------- TO DO: Add logic to show animation --------------------");
+}
 //
 // Get animation ID for small Mario
 //

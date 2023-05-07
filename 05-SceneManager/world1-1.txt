@@ -1,6 +1,7 @@
 # list of object assets to load in this scene
 [ASSETS]
 mario.txt
+items.txt
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas. 4: coin
@@ -31,5 +32,14 @@ mario.txt
 5	1504	336	16	16	2	22110	22110	22110
 
 5	2329	384	32	16	1	22110	22110	22110
+###QUESTION BRICK###
+7	177	352	1
+7	193	352	1
+7	225	304	1
+7	241	304	2
+7	417	320	1
+7	657	384	2
+7	705	352	1
+7	1473	368	2
 [TILEMAP]
 Resources\Tilemap\world1-1.txt

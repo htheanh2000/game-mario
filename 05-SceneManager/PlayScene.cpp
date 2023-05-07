@@ -132,6 +132,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CBGBlock(x, y, width, height);
 		break;
 	}
+	case OBJECT_TYPE_KOOPAS: {
+		int type = (int)atof(tokens[3].c_str());
+		obj = new Koopas(x, y, type);
+		break;
+	}
 
 	case OBJECT_TYPE_QUESTION_BRICK: {
 		float type = (float)atof(tokens[3].c_str());

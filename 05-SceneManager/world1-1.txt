@@ -70,23 +70,23 @@ pipe.txt
 
 ### Enimies ###
 ###GOOMBA###
-2	186	369	1
-2	236	339	2
+#2	186	369	1
+#2	236	339	2
 
 #KOOPAS 
-3	196	369	1
-3	256	339	3
+#3	196	369	1
+#3	256	339	3
 
 #PIRANHA PLANT#
-8	186	416
+#8	186	416
 
 # FIRE PIRANHA PLANT #
 
-9	359	348	1
-9	387	348	2
+#9	359	348	1
+#9	387	348	2
 
 # PIPE #
-77  259 385 1
+#77  259 385 1
 
 [TILEMAP]
 Resources\Tilemap\world1-1.txt

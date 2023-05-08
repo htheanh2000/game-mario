@@ -13,6 +13,7 @@
 #include "QuestionBrick.h"
 #include "PiranhaPlant.h"
 #include "FirePiranhaPlant.h"
+#include "PiranhaPipe.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -151,6 +152,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	}
 	case OBJECT_TYPE_PIRANHA: { obj = new PiranhaPlant(x, y); break; }
+	case OBJECT_TYPE_PIPE: {
+		int type = (int)atof(tokens[3].c_str());
+		obj = new PiranhaPipe(x, y, type);
+		break;
+	}
 	case OBJECT_TYPE_PLATFORM:
 	{
 

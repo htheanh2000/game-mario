@@ -17,8 +17,6 @@ protected:
 	// A play scene has to have player, right? 
 	CMario* player = NULL;
 
-	vector<LPGAMEOBJECT> objects;
-
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
 
@@ -45,6 +43,8 @@ public:
 
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
 	Map* map = NULL;
+
+	vector<LPGAMEOBJECT> objects; // To handle effect brick (coins, magic , ...)
 };
 
 typedef CPlayScene* LPPLAYSCENE;

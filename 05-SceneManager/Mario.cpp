@@ -126,7 +126,8 @@ void CMario::OnCollisionWithBackgroundBlock(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 {
 	CQuestionBrick* questionBrick = dynamic_cast<CQuestionBrick*>(e->obj);
-	DebugOut(L"-------------------- TO DO: Add logic to show animation --------------------");
+	questionBrick->isOpened = true;
+	
 }
 //
 // Get animation ID for small Mario

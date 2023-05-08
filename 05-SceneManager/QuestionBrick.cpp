@@ -15,6 +15,10 @@ void CQuestionBrick::GetBoundingBox(float& left, float& top, float& right, float
 void CQuestionBrick::Render()
 {
 	int aniId = ID_ANI_QUESTION_BRICK;
+
+	if (isEmpty) {
+		aniId = ID_ANI_QUESTION_BRICK_EMPTY;
+	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 }
 
@@ -32,6 +36,7 @@ void CQuestionBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isOpened = false;
 		isEmpty = true; // Ensure only effect for each brick
 
+		// TODO: Make brick jump after active effect
 	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);

@@ -5,6 +5,7 @@
 #define QUESTION_BRICK_BBOX_HEIGHT 16
 
 #define ID_ANI_QUESTION_BRICK 102
+#define ID_ANI_QUESTION_BRICK_EMPTY 103
 
 class CQuestionBrick :
     public CGameObject

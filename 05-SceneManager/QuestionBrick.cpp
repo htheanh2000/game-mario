@@ -24,11 +24,13 @@ void CQuestionBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 
-	if (isOpened) {
+	if (isOpened && !isEmpty) {
 		QBCoin* coin = new QBCoin(x, y);
 		coin->SetState(QB_COIN_STATE_UP);
 		scene->objects.push_back(coin);
+		mario->addCoin(); // add 1 coin
 		isOpened = false;
+		isEmpty = true; // Ensure only effect for each brick
 
 	}
 	CGameObject::Update(dt, coObjects);

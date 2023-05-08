@@ -3,6 +3,7 @@
 #include "Mario.h"
 #include "PlayScene.h"
 #include "QBCoin.h"
+#include "MushRoom.h"
 
 void CQuestionBrick::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -29,9 +30,10 @@ void CQuestionBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 
 	if (isOpened && !isEmpty) {
-		QBCoin* coin = new QBCoin(x, y);
-		coin->SetState(QB_COIN_STATE_UP);
-		scene->objects.push_back(coin);
+		// QBCoin* coin = new QBCoin(x, y);
+		CMushroom* mushroom = new CMushroom(x, y);
+		// coin->SetState(QB_COIN_STATE_UP);
+		scene->objects.push_back(mushroom);
 		mario->addCoin(); // add 1 coin
 		isOpened = false;
 		isEmpty = true; // Ensure only effect for each brick

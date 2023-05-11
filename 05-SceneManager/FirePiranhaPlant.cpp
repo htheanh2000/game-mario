@@ -1,5 +1,7 @@
 #include "FirePiranhaPlant.h"
 #include "debug.h"
+#include "FireBall.h"
+#include "Goomba.h"
 
 FirePiranhaPlant::FirePiranhaPlant(float x, float y, int type)
 {
@@ -28,16 +30,13 @@ void FirePiranhaPlant::GetBoundingBox(float& left, float& top, float& right, flo
 
 void FirePiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	// DebugOut(L"[INFO] y %f \n" , y);
-	// DebugOut(L"[INFO] maxY %f \n" , maxY);
-	// DebugOut(L"[INFO] minY %f \n" , minY);
-	// DebugOut(L"[INFO] vy %f \n" , vy);
 	if(y >= maxY) {
 		y = maxY ;
 		vy = -FIRE_PLANT_SPEED ;
 	}
 	else if (y <= minY) {
 		y = minY ;
+		Attack();
 		vy = FIRE_PLANT_SPEED ;
 	}
 	CGameObject::Update(dt, coObjects);
@@ -55,4 +54,11 @@ void FirePiranhaPlant::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
+}
+
+void FirePiranhaPlant::Attack() {
+	
+	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+	FireBall* ball = new FireBall(x , y);
+	scene->objects.push_back(ball);
 }

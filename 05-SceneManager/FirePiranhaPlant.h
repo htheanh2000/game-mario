@@ -41,6 +41,8 @@ protected:
 	float maxY  ;
 	float minY ;
     int objType;
+
+	void Attack() ;
 public:
 	FirePiranhaPlant(float x, float y, int type);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

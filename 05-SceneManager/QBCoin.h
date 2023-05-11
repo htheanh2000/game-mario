@@ -28,7 +28,6 @@ public:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) { left = top = right = bottom = 0; }
 	virtual void Render();
 	QBCoin(float x, float y);
-
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void OnNoCollision(DWORD dt);
 

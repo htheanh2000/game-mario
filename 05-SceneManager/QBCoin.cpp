@@ -43,6 +43,8 @@ void QBCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		//TODO: Score
 	}
 
+	
+
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }

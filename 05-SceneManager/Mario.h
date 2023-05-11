@@ -167,6 +167,7 @@ class CMario : public CGameObject
 
 	BOOLEAN isGoThroughBlock = false;
 
+
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
@@ -211,6 +212,7 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+
 
 	void addCoin() {coin++ ;} ;
 };

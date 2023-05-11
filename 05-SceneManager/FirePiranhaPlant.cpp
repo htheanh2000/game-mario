@@ -45,6 +45,7 @@ void FirePiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void FirePiranhaPlant::Render()
 {
+	
 	int aniId = ID_ANI_FPP_LEFT_BOTTOM;
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	// RenderBoundingBox();
@@ -57,8 +58,10 @@ void FirePiranhaPlant::OnNoCollision(DWORD dt)
 }
 
 void FirePiranhaPlant::Attack() {
-	
+	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
+	int tx = mario->GetX(); // target 
+	int ty = mario->GetY();	// target 
 	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-	FireBall* ball = new FireBall(x , y);
+	FireBall* ball = new FireBall(x , y, tx, ty);
 	scene->objects.push_back(ball);
 }

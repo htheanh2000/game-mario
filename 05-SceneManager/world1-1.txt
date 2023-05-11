@@ -82,11 +82,10 @@ pipe.txt
 
 # FIRE PIRANHA PLANT #
 
-#9	359	348	1
-#9	387	348	2
+9	359	348	1
 
 # PIPE #
-#77  259 385 1
+77	359	385	1
 
 [TILEMAP]
 Resources\Tilemap\world1-1.txt

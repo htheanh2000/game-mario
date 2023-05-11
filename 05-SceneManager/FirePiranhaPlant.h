@@ -29,17 +29,24 @@
 #define FPP_BIG 1
 #define FPP_SMALL 2
 
+#define FIRE_PLANT_SPEED 0.02f
+#define FIRE_PLANT_MAX_HEIGHT 50
+
 class FirePiranhaPlant :
     public CGameObject
 {
 protected:
 	float ax;
 	float ay;
+	float maxY  ;
+	float minY ;
     int objType;
 public:
 	FirePiranhaPlant(float x, float y, int type);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
+	virtual void OnNoCollision(DWORD dt);
+	// virtual int IsCollidable() { return 1; };
 };
 

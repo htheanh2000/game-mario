@@ -33,5 +33,5 @@ void PiranhaPipe::Render()
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	RenderBoundingBox();
+	// RenderBoundingBox();
 }

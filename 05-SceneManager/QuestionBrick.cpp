@@ -33,13 +33,14 @@ void CQuestionBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		// QBCoin* coin = new QBCoin(x, y);
 		CMushroom* mushroom = new CMushroom(x, y);
 		// coin->SetState(QB_COIN_STATE_UP);
+		mushroom->SetState(MUSHROOM_STATE_UP);
 		scene->objects.push_back(mushroom);
 		mario->addCoin(); // add 1 coin
 		isOpened = false;
 		isEmpty = true; // Ensure only effect for each brick
-
 		// TODO: Make brick jump after active effect
 	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
+

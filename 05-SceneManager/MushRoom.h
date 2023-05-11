@@ -6,7 +6,7 @@
 #define ID_ANI_MUSHROOM 105
 
 #define MUSHROOM_RUN_SPEED 0.08f
-#define MUSHROOM_GRAVITY 0.003f
+#define MUSHROOM_GRAVITY 0.0004f
 
 #define MUSHROOM_STATE_UP 100
 #define MUSHROOM_STATE_RUN 200
@@ -32,5 +32,6 @@ public:
 
 	virtual int IsCollidable() { return 1; }
 	virtual int IsBlocking() { return 0; }
+	virtual void OnNoCollision(DWORD dt);
 };
 

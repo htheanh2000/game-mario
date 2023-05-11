@@ -25,6 +25,10 @@ void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
+	if (y <= minY)
+	{
+		SetState(MUSHROOM_STATE_RUN);
+	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -52,4 +56,10 @@ void CMushroom::SetState(int state)
 		ay = MUSHROOM_GRAVITY;
 		break;
 	}
+}
+
+void CMushroom::OnNoCollision(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
 }

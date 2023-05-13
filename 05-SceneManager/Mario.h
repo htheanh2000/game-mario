@@ -216,4 +216,5 @@ public:
 
 
 	void addCoin() {coin++ ;} ;
+	int getLevel() {return level; } ;
 };

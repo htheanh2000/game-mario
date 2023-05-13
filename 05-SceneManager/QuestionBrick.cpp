@@ -4,6 +4,7 @@
 #include "PlayScene.h"
 #include "QBCoin.h"
 #include "MushRoom.h"
+#include "Leaf.h"
 
 CQuestionBrick::CQuestionBrick(float x, float y, int type)
 {
@@ -31,7 +32,6 @@ void CQuestionBrick::Render()
 
 void CQuestionBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	activateEffect();
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -40,12 +40,21 @@ void CQuestionBrick::activateEffect() {
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 
-	if (isOpened && !isEmpty) {
+	if (!isEmpty) {
 		// TO DO: CLEAN CODE HERE
 		if (objType == 2) {
+			 DebugOut(L"[INFO] Mario current level  %f \n", mario->getLevel() );
+			if(mario->getLevel() == MARIO_LEVEL_SMALL) {
 				CMushroom* mushroom = new CMushroom(x, y);
 				mushroom->SetState(MUSHROOM_STATE_UP);
 				scene->objects.push_back(mushroom);
+			}
+
+			// active leaf if mario in big state => go to mario racoon
+			if(mario->getLevel() == MARIO_LEVEL_BIG) {
+				CLeaf* leaf = new CLeaf(x, y);
+				scene->objects.push_back(leaf);
+			}
 		}
 		else {
 				QBCoin* coin = new QBCoin(x, y);
@@ -53,8 +62,8 @@ void CQuestionBrick::activateEffect() {
 				scene->objects.push_back(coin);
 				mario->addCoin(); // add 1 coin
 		}
-		isOpened = false;
 		isEmpty = true; // Ensure only effect for each brick
 		// TODO: Make brick jump after active effect
 	}
 }
+

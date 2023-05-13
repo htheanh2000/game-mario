@@ -12,13 +12,10 @@
 class CQuestionBrick :
     public CGameObject
 {   
-private:
-    void activateEffect();
 public:
-
     BOOLEAN isEmpty = false;
-    BOOLEAN isOpened = false; 
-
+    void activateEffect() ;
+    
     virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
     virtual void Render();
     CQuestionBrick(float x, float y, int type) ;

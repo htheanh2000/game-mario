@@ -183,7 +183,7 @@ void CMario::OnCollisionWithBackgroundBlock(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 {
 	CQuestionBrick* questionBrick = dynamic_cast<CQuestionBrick*>(e->obj);
-	questionBrick->isOpened = true;
+	questionBrick->activateEffect();
 }
 //
 // Get animation ID for small Mario

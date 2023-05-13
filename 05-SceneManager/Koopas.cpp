@@ -93,7 +93,7 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<CQuestionBrick*>(e->obj)) {
 		CQuestionBrick* questionBrick = dynamic_cast<CQuestionBrick*>(e->obj);
-		questionBrick->isOpened = true;
+		questionBrick->activateEffect();
 	} ;
 	// TODO: Not working, fix this ...
 	// if( state == KOOPAS_STATE_KICKED && !dynamic_cast<CMario*>(e->obj)) {

@@ -7,21 +7,31 @@ Koopas::Koopas(float x, float y, int model) : CGameObject(x, y)
 	this->ax = 0;
 	this->ay = KOOPAS_GRAVITY;
 	this->objType = model;
-	this->vx = KOOPAS_SPEED;
+	this->vx = -KOOPAS_SPEED;
 }
 
 void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x - KOOPAS_BBOX_WIDTH / 2;
-	top = y - KOOPAS_BBOX_HEIGHT / 2;
-	right = left + KOOPAS_BBOX_WIDTH;
-	bottom = top + KOOPAS_BBOX_HEIGHT;
+	int bwidth = KOOPAS_BBOX_WIDTH ;
+	int bheight = KOOPAS_BBOX_HEIGHT ;
+
+	if(state == KOOPAS_STATE_DEFEND) {
+		bheight = KOOPAS_DEFEND_BBOX_HEIGHT ; //Update the bounding box after chagne animation
+	}
+
+	left = x - bwidth / 2;
+	top = y - bheight / 2;
+	right = left + bwidth;
+	bottom = top + bheight;
 }
 
 void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+	if(state == KOOPAS_STATE_DEFEND) {
+		vx = 0;
+	}
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -48,17 +58,16 @@ void Koopas::Render()
 			aniId = ID_ANI_KOOPAS_WALKING_LEFT;
 		}
 	}
-	
 
-	for (int i = 0; i < effects.size(); i++)
-	{
-		effects[i]->Render();
+	if (state == KOOPAS_STATE_DEFEND) {
+		aniId = ID_ANI_KOOPAS_DEFEND ;
 	}
 
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	//RenderBoundingBox();
+	// RenderBoundingBox();
 }
+
 
 int Koopas::IsCollidable()
 {

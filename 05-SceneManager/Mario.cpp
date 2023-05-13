@@ -83,33 +83,34 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 	if (e->ny < 0)
 	{
 		// TODO: Implement method same with Groomba instead of ...
-		e->obj->Delete();
-
 		if (koopas->GetState() != ID_ANI_KOOPAS_IS_KICKED)
 		{
-			koopas->SetState(ID_ANI_KOOPAS_IS_KICKED);
+			koopas->SetState(KOOPAS_STATE_DEFEND);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
 	else // hit by Koopas
 	{
-		// TODO:: Cloned from Groomba
-		if (untouchable == 0)
-		{
-			if (koopas->GetState() != ID_ANI_KOOPAS_IS_KICKED)
-			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
-				}
-			}
+		if(koopas->GetState() == KOOPAS_STATE_DEFEND) {
+			//TODO: Mario hold koopas
 		}
+		// TODO:: Cloned from Groomba
+		// if (untouchable == 0)
+		// {
+		// 	if (koopas->GetState() != ID_ANI_KOOPAS_IS_KICKED)
+		// 	{
+		// 		if (level > MARIO_LEVEL_SMALL)
+		// 		{
+		// 			level = MARIO_LEVEL_SMALL;
+		// 			StartUntouchable();
+		// 		}
+		// 		else
+		// 		{
+		// 			DebugOut(L">>> Mario DIE >>> \n");
+		// 			SetState(MARIO_STATE_DIE);
+		// 		}
+		// 	}
+		// }
 	}
 }
 

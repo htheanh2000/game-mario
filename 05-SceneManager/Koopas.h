@@ -32,6 +32,12 @@
 
 #define KOOPAS_BBOX_WIDTH 16
 #define KOOPAS_BBOX_HEIGHT 26
+#define KOOPAS_DEFEND_BBOX_HEIGHT 16
+
+//--------------------STATE -------------------------
+#define KOOPAS_STATE_WALKING 100
+#define KOOPAS_STATE_DEFEND 200
+#define KOOPAS_STATE_KICKED 300
 
 class Koopas :
     public CGameObject

@@ -35,6 +35,10 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_0:
 		mario->SetState(MARIO_STATE_DIE);
 		break;
+	// case DIK_P:
+	// 	DebugOut(L"[INFO] Mario x  %f\n", mario->GetX());
+	// 	DebugOut(L"[INFO] Mario y  %f\n", mario->GetY());
+	// 	break;
 	case DIK_R: // reset
 		//Reload();
 		break;

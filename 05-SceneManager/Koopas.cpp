@@ -1,4 +1,6 @@
 #include "Koopas.h"
+#include "Mario.h"
+#include "QuestionBrick.h"
 
 #include "Utils.h"
 
@@ -15,7 +17,7 @@ void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	int bwidth = KOOPAS_BBOX_WIDTH ;
 	int bheight = KOOPAS_BBOX_HEIGHT ;
 
-	if(state == KOOPAS_STATE_DEFEND) {
+	if(state == KOOPAS_STATE_DEFEND || state == KOOPAS_STATE_KICKED) {
 		bheight = KOOPAS_DEFEND_BBOX_HEIGHT ; //Update the bounding box after chagne animation
 	}
 
@@ -29,8 +31,13 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+	
 	if(state == KOOPAS_STATE_DEFEND) {
 		vx = 0;
+	}
+
+	if(state == KOOPAS_STATE_KICKED) {
+		vx = KOOPAS_KICKED_SPEED;
 	}
 
 	CGameObject::Update(dt, coObjects);
@@ -59,10 +66,9 @@ void Koopas::Render()
 		}
 	}
 
-	if (state == KOOPAS_STATE_DEFEND) {
+	if (state == KOOPAS_STATE_DEFEND || state == KOOPAS_STATE_KICKED) {
 		aniId = ID_ANI_KOOPAS_DEFEND ;
 	}
-
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	// RenderBoundingBox();
@@ -84,6 +90,15 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return; 
 	if (dynamic_cast<Koopas*>(e->obj)) return; 
+
+	if (dynamic_cast<CQuestionBrick*>(e->obj)) {
+		CQuestionBrick* questionBrick = dynamic_cast<CQuestionBrick*>(e->obj);
+		questionBrick->isOpened = true;
+	} ;
+	// TODO: Not working, fix this ...
+	// if( state == KOOPAS_STATE_KICKED && !dynamic_cast<CMario*>(e->obj)) {
+	// 	isDeleted = true;
+	// }
 
 	if (e->ny != 0 )
 	{

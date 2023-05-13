@@ -92,7 +92,8 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 	else // hit by Koopas
 	{
 		if(koopas->GetState() == KOOPAS_STATE_DEFEND) {
-			//TODO: Mario hold koopas
+			//TODO: Mario kick koopas
+			koopas->SetState(KOOPAS_STATE_KICKED);
 		}
 		// TODO:: Cloned from Groomba
 		// if (untouchable == 0)

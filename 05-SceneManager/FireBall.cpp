@@ -11,10 +11,10 @@ FireBall::FireBall(float x, float y) :CGameObject(x, y)
 
 FireBall::FireBall(float x, float y, float tx, float ty) :CGameObject(x, y)
 {
-	DebugOut(L"[INFO] FireBall x  %f\n", x);
-	DebugOut(L"[INFO] FireBall y  %f\n", y);
-	DebugOut(L"[INFO] FireBall tx  %f\n", tx);
-	DebugOut(L"[INFO] FireBall ty  %f\n", ty);
+	// DebugOut(L"[INFO] FireBall x  %f\n", x);
+	// DebugOut(L"[INFO] FireBall y  %f\n", y);
+	// DebugOut(L"[INFO] FireBall tx  %f\n", tx);
+	// DebugOut(L"[INFO] FireBall ty  %f\n", ty);
 
 	this->x = x;
 	this->y = y;
@@ -30,8 +30,8 @@ FireBall::FireBall(float x, float y, float tx, float ty) :CGameObject(x, y)
     // Calculate the normalized velocity vector
     this->vx = dx / distance * FIRE_BALL_SPEED;
     this->vy = dy / distance * FIRE_BALL_SPEED;
-	DebugOut(L"[INFO] FireBall vx  %f\n", vx);
-	DebugOut(L"[INFO] FireBall vy  %f\n", vy);
+	// DebugOut(L"[INFO] FireBall vx  %f\n", vx);
+	// DebugOut(L"[INFO] FireBall vy  %f\n", vy);
 }
 
 void FireBall::GetBoundingBox(float& left, float& top, float& right, float& bottom)

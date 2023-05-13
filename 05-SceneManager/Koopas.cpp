@@ -7,6 +7,7 @@ Koopas::Koopas(float x, float y, int model) : CGameObject(x, y)
 	this->ax = 0;
 	this->ay = KOOPAS_GRAVITY;
 	this->objType = model;
+	this->vx = KOOPAS_SPEED;
 }
 
 void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -19,6 +20,11 @@ void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	vy += ay * dt;
+	vx += ax * dt;
+
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void Koopas::Render()
@@ -31,6 +37,15 @@ void Koopas::Render()
 		}
 		else {
 			aniId = ID_ANI_KOOPAS_GREEN_WING_LEFT;
+		}
+	}
+
+	if (objType == KOOPAS_GREEN) {
+		if (vx > 0) {
+			aniId = ID_ANI_KOOPAS_WALKING_RIGHT;
+		}
+		else {
+			aniId = ID_ANI_KOOPAS_WALKING_LEFT;
 		}
 	}
 	
@@ -55,3 +70,19 @@ void Koopas::OnNoCollision(DWORD dt)
 	x += vx * dt;
 	y += vy * dt;
 }
+
+void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (!e->obj->IsBlocking()) return; 
+	if (dynamic_cast<Koopas*>(e->obj)) return; 
+
+	if (e->ny != 0 )
+	{
+		vy = 0;
+	}
+	else if (e->nx != 0)
+	{
+		vx = -vx;
+	}
+}
+

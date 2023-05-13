@@ -11,6 +11,7 @@
 #include "Collision.h"
 #include "BGBlock.h"
 #include "MushRoom.h"
+#include "Koopas.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -70,6 +71,46 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithQuestionBrick(e);
 	else if (dynamic_cast<CMushroom*>(e->obj))
 		OnCollisionWithMushroom(e);
+	else if (dynamic_cast<Koopas*>(e->obj))
+		OnCollisionWithKoopas(e);
+}
+
+void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
+{
+	Koopas* koopas = dynamic_cast<Koopas*>(e->obj);
+
+	// jump on top >> kill Koopas and deflect a bit 
+	if (e->ny < 0)
+	{
+		// TODO: Implement method same with Groomba instead of ...
+		e->obj->Delete();
+
+		if (koopas->GetState() != ID_ANI_KOOPAS_IS_KICKED)
+		{
+			koopas->SetState(ID_ANI_KOOPAS_IS_KICKED);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+	}
+	else // hit by Koopas
+	{
+		// TODO:: Cloned from Groomba
+		if (untouchable == 0)
+		{
+			if (koopas->GetState() != ID_ANI_KOOPAS_IS_KICKED)
+			{
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
+		}
+	}
 }
 
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)

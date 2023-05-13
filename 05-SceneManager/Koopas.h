@@ -28,6 +28,7 @@
 #define ID_ANI_KOOPAS_RED_UPSIDE_COMEBACK 40018 
 
 #define KOOPAS_GRAVITY 0.002f
+#define KOOPAS_SPEED 0.05f
 
 #define KOOPAS_BBOX_WIDTH 16
 #define KOOPAS_BBOX_HEIGHT 26
@@ -49,8 +50,9 @@ public:
 	virtual void Render();
 
 	virtual int IsCollidable();
-	virtual int IsBlocking() { return 0; }
+	virtual int IsBlocking() { return 1; }
 	virtual void OnNoCollision(DWORD dt);
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e) ;
 
 };
 

@@ -5,7 +5,7 @@ CLeaf::CLeaf(float x, float y)
 	this->x = x;
 	this->y = y;
 
-	this->ay = 0;
+	this->ay = -LEAF_GRAVITY;
 	this->ax = 0;
 
 	minY = y - LEAF_MAX_HEIGHT;
@@ -32,7 +32,7 @@ void CLeaf::Render()
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 
-	RenderBoundingBox();
+	// RenderBoundingBox();
 }
 
 void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

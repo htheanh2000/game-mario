@@ -71,7 +71,7 @@ pipe.txt
 ### Enimies ###
 ###GOOMBA###
 #2	186	369	1
-#2	236	339	2
+2	236	339	2
 
 
 #KOOPAS 

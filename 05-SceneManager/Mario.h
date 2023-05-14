@@ -160,7 +160,8 @@ class CMario : public CGameObject
 	float ay;				// acceleration on y 
 
 	int level; 
-	int untouchable; 
+	int untouchable;
+	int isImmortal ; // Only for debugging/cheating mode 
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 	int coin; 

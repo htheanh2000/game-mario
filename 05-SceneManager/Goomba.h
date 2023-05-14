@@ -24,12 +24,16 @@
 #define NORMAL_GOOMBA 1
 #define RED_GOOMBA	2
 
+#define NORMAL_GOOMBA_LIFE_COUNT 1
+#define RED_GOOMBA_LIFE_COUNT	2
+
 class CGoomba : public CGameObject
 {
 protected:
 	float ax;				
 	float ay; 
 	int objType;
+	int lifeCount;
 
 	ULONGLONG die_start;
 
@@ -46,4 +50,5 @@ protected:
 public: 	
 	CGoomba(float x, float y, int type);
 	virtual void SetState(int state);
+	virtual void HitByMario();
 };

@@ -5,7 +5,13 @@ CGoomba::CGoomba(float x, float y, int type):CGameObject(x, y)
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
-	this->objType = type; // There are 2 types of objects
+	if(type == NORMAL_GOOMBA) {
+		lifeCount = 1;
+	}
+	else if (type == RED_GOOMBA) {
+		lifeCount = 2;
+	}
+ 	this->objType = type; // There are 2 types of objects
 	SetState(GOOMBA_STATE_WALKING);
 }
 
@@ -76,14 +82,28 @@ void CGoomba::Render()
 	}
 	else
 	{
-		aniId = ID_RED_GOOMBA_WING_WALKING;
-		if (state == GOOMBA_STATE_DIE)
+		if (state == GOOMBA_STATE_DIE) // dead groomba
 		{
 			aniId = ID_RED_GOOMBA_DIE;
+		}
+		else if(lifeCount == 1) { // unwind red goomba
+			aniId = ID_RED_GOOMBA_WALKING;
+		}
+		else { // wind red goomba
+			aniId = ID_RED_GOOMBA_WING_WALKING;
 		}
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x,y);
 	// RenderBoundingBox();
+}
+
+void CGoomba::HitByMario() {
+	if(lifeCount == 1) {
+		SetState(GOOMBA_STATE_DIE);
+	}
+	else {
+		lifeCount -= 1; // It should be 2 - 1 = 1 life count
+	}
 }
 
 void CGoomba::SetState(int state)

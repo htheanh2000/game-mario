@@ -144,7 +144,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	{
 		if (goomba->GetState() != GOOMBA_STATE_DIE)
 		{
-			goomba->SetState(GOOMBA_STATE_DIE);
+			goomba->HitByMario();
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
@@ -462,7 +462,7 @@ void CMario::Render()
 void CMario::SetState(int state)
 {
 	// DIE is the end state, cannot be changed! 
-	if (this->state == MARIO_STATE_DIE) return; 
+	if (this->state == MARIO_STATE_DIE && !isImmortal) return; 
 
 	switch (state)
 	{

@@ -41,6 +41,7 @@ public:
 	int GetState() { return this->state; }
 	virtual void Delete() { isDeleted = true;  }
 	bool IsDeleted() { return isDeleted; }
+	bool IsMario() { return isDeleted; }
 
 	void RenderBoundingBox();
 
@@ -65,9 +66,10 @@ public:
 
 	// When collision with an object has been detected (triggered by CCollision::Process)
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
-	
+
 	// Is this object blocking other object? If YES, collision framework will automatically push the other object
 	virtual int IsBlocking() { return 1; }
+	virtual int IsMarioBlocking() { return 1; }
 
 	~CGameObject();
 

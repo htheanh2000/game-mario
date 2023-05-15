@@ -1,6 +1,7 @@
 #include "Koopas.h"
 #include "Mario.h"
 #include "QuestionBrick.h"
+#include "BGBlock.h"
 
 #include "Utils.h"
 
@@ -95,10 +96,6 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 		CQuestionBrick* questionBrick = dynamic_cast<CQuestionBrick*>(e->obj);
 		questionBrick->activateEffect();
 	} ;
-	// TODO: Not working, fix this ...
-	// if( state == KOOPAS_STATE_KICKED && !dynamic_cast<CMario*>(e->obj)) {
-	// 	isDeleted = true;
-	// }
 
 	if (e->ny != 0 )
 	{
@@ -108,5 +105,7 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+	 
+	
 }
 

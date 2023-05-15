@@ -28,7 +28,7 @@
 #define ID_ANI_KOOPAS_RED_UPSIDE_COMEBACK 40018 
 
 #define KOOPAS_GRAVITY 0.002f
-#define KOOPAS_SPEED 0.0f //0.05f
+#define KOOPAS_SPEED 0.05f
 #define KOOPAS_KICKED_SPEED  0.2f
 
 #define KOOPAS_BBOX_WIDTH 16
@@ -46,6 +46,8 @@ class Koopas :
 protected:
 	float ax;
 	float ay;
+	float maxRight; 
+	float maxLeft; 
     int objType;
 	vector<LPGAMEOBJECT> effects;
 

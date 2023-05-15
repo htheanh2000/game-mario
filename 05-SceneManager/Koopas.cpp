@@ -41,8 +41,27 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vx = KOOPAS_KICKED_SPEED;
 	}
 
+
 	CGameObject::Update(dt, coObjects);
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+
+		if( this->state == KOOPAS_STATE_KICKED ) {
+		vector<LPGAMEOBJECT>* objects = new vector<LPGAMEOBJECT>();
+		for (UINT i = 0; i < coObjects->size(); i++)
+		{
+			LPGAMEOBJECT obj = (*coObjects)[i];
+			if (obj->IsMarioBlocking() ) {
+				objects->push_back(obj);
+			}
+		}
+		CCollision::GetInstance()->Process(this, dt, objects);
+
+		// clean up the memory after you're done using it
+		delete objects;
+	}
+	else {
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+	}
+	
 }
 
 void Koopas::Render()

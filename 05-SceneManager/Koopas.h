@@ -46,9 +46,8 @@ class Koopas :
 protected:
 	float ax;
 	float ay;
-	float maxRight; 
-	float maxLeft; 
     int objType;
+	int dkicked = 1 ; // vector when mario kick off
 	vector<LPGAMEOBJECT> effects;
 
 public:
@@ -62,6 +61,7 @@ public:
 	virtual int IsBlocking() { return 1; }
 	virtual void OnNoCollision(DWORD dt);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) ;
+	virtual void setDKicked(int vector) ;
 
 };
 

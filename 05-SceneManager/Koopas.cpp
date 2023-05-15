@@ -28,6 +28,10 @@ void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	bottom = top + bheight;
 }
 
+void Koopas::setDKicked(int vector) {
+	this->dkicked = vector;
+};
+
 void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
@@ -38,7 +42,7 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	if(state == KOOPAS_STATE_KICKED) {
-		vx = KOOPAS_KICKED_SPEED;
+		vx = -KOOPAS_KICKED_SPEED * dkicked; 
 	}
 
 
@@ -114,6 +118,7 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CQuestionBrick*>(e->obj)) {
 		CQuestionBrick* questionBrick = dynamic_cast<CQuestionBrick*>(e->obj);
 		questionBrick->activateEffect();
+		this->isDeleted = true;
 	} ;
 
 	if (e->ny != 0 )

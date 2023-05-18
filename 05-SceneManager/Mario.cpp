@@ -501,7 +501,7 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_RELEASE_FLY:
-			ay = MARIO_GRAVITY;
+			ay = MARIO_GRAVITY_RACOON;
 		break;
 
 	case MARIO_STATE_SIT:

@@ -1,9 +1,10 @@
 #pragma once
 #include "GameObject.h"
 
+// Define Koopas type
 #define KOOPAS_GREEN 1
 #define KOOPAS_RED 2
-#define KOOPAS_GREEN_WING 3
+#define KOOPAS_GREEN_WING 3 // KOOPAS_PARATROOPA
 
 // Koopas description 
 
@@ -35,31 +36,39 @@
 #define ID_ANI_KOOPAS_RED_UPSIDE_ISKICKED 40017 
 #define ID_ANI_KOOPAS_RED_UPSIDE_COMEBACK 40018 
 
-#define KOOPAS_GRAVITY 0.002f
+#define KOOPAS_GRAVITY 0.001f
 #define KOOPAS_SPEED 0.05f
+#define KOOPAS_JUMP_SPEED 0.3f
 #define KOOPAS_KICKED_SPEED  0.2f
 
 #define KOOPAS_BBOX_WIDTH 16
 #define KOOPAS_BBOX_HEIGHT 26
 #define KOOPAS_DEFEND_BBOX_HEIGHT 16
 
+
+
 //--------------------STATE -------------------------
 #define KOOPAS_STATE_WALKING 100
 #define KOOPAS_STATE_DEFEND 200
 #define KOOPAS_STATE_KICKED 300
 
+#define KOOPAS_JUMP_TIMESLEEP 1000
 class Koopas :
     public CGameObject
 {
+
+private:
+	void updateAnimation() ;
 protected:
 	float ax;
 	float ay;
     int objType;
 	int dkicked = 1 ; // vector when mario kick off
+	ULONGLONG jumpStart = 0 ;
 	vector<LPGAMEOBJECT> effects;
 
 public:
-	Koopas(float x, float y, int model);
+	Koopas(float x, float y, int type);
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

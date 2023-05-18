@@ -5,12 +5,13 @@
 
 #include "Utils.h"
 
-Koopas::Koopas(float x, float y, int model) : CGameObject(x, y)
+Koopas::Koopas(float x, float y, int type) : CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPAS_GRAVITY;
-	this->objType = model;
+	this->objType = type;
 	this->vx = -KOOPAS_SPEED;
+	this->jumpStart = GetTickCount64() + KOOPAS_JUMP_TIMESLEEP;
 }
 
 void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -36,6 +37,16 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+
+	if(objType == KOOPAS_GREEN_WING) {
+		// handle koopas wing effct -> jump
+		if(GetTickCount64() > jumpStart ) {
+			// Koopas jump
+			vy = -KOOPAS_JUMP_SPEED;
+			// Reset next jump start
+			jumpStart = GetTickCount64() + KOOPAS_JUMP_TIMESLEEP ;
+		}
+	}
 	
 	if(state == KOOPAS_STATE_DEFEND) {
 		vx = 0;
@@ -44,7 +55,7 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if(state == KOOPAS_STATE_KICKED) {
 		vx = -KOOPAS_KICKED_SPEED * dkicked; 
 	}
-
+	
 
 	CGameObject::Update(dt, coObjects);
 
@@ -70,6 +81,12 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Koopas::Render()
 {
+	updateAnimation();
+	// RenderBoundingBox();
+}
+
+
+void Koopas::updateAnimation() {
 	int aniId = ID_ANI_KOOPAS_WALKING_RIGHT;
 
 	if (objType == KOOPAS_GREEN_WING) {
@@ -93,9 +110,7 @@ void Koopas::Render()
 	if (state == KOOPAS_STATE_DEFEND || state == KOOPAS_STATE_KICKED) {
 		aniId = ID_ANI_KOOPAS_DEFEND ;
 	}
-
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	// RenderBoundingBox();
 }
 
 

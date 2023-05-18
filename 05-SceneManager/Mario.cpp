@@ -19,6 +19,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
+	if(lifeCount == 0) {
+		DebugOut(L">>> Mario DIE >>> \n");
+		SetState(MARIO_STATE_DIE);
+		// TODO: Back to world map
+	}
+
 	if (abs(vx) > abs(maxVx))
 		vx = maxVx;
 
@@ -156,15 +162,21 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
+	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+	if (mushroom->objType == RED_MUSHROOM) {
+		// handle logic for red mushrooms -> upgrade mario level
+		if (level == MARIO_LEVEL_RACOON) {
+			// TODO: handle logic for raccoon level
+		} else {
+			SetLevel(MARIO_LEVEL_BIG);
+		}
+	}
+	else if (mushroom->objType == GREEN_MUSHROOM ){
+		//handle logic for green mushroom -> add 1 life score mario level
+		setLifeCount(lifeCount + 1);
+	}
 	e->obj->Delete();
-	if (level == MARIO_LEVEL_RACOON)
-	{
-		// TO DO: ...
-	}
-	else
-	{
-		SetLevel(MARIO_LEVEL_BIG);
-	}
+	
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -193,8 +205,8 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 				}
 				else
 				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
+					setLifeCount(lifeCount - 1);
+					
 				}
 			}
 		}
@@ -438,11 +450,8 @@ void CMario::Render()
 	// RenderBoundingBox();
 
 	// DebugOutTitle(L"Coins: %d", coin);
-	int coin = 10;
-	int score = 100;
-	float time = 5.75;
 
-	DebugOutTitle(L"Coins: %d, Score: %d, Time: %.2f", coin, score, time);
+	DebugOutTitle(L"Coins: %d, Score: %d, Life: %.2f", coin, score, lifeCount);
 
 }
 

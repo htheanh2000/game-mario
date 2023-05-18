@@ -45,12 +45,12 @@ void CQuestionBrick::activateEffect()
 	{
 		// TO DO: CLEAN CODE HERE
 
-		if (objType == 2)
+		if (objType == RED_MUSHROOM_OR_LEAF_EFFECT)
 		{
 			DebugOut(L"[INFO] Mario current level  %f \n", mario->getLevel());
 			if (mario->getLevel() == MARIO_LEVEL_SMALL)
 			{
-				CMushroom *mushroom = new CMushroom(x, y);
+				CMushroom *mushroom = new CMushroom(x, y, RED_MUSHROOM);
 				mushroom->SetState(MUSHROOM_STATE_UP);
 				scene->objects.push_back(mushroom);
 			}
@@ -62,7 +62,12 @@ void CQuestionBrick::activateEffect()
 				scene->objects.push_back(leaf);
 			}
 		}
-		else
+		else if (objType == GREEN_MUSHROOM_EFFECT) {
+			CMushroom *mushroom = new CMushroom(x, y, GREEN_MUSHROOM);
+			mushroom->SetState(MUSHROOM_STATE_UP);
+			scene->objects.push_back(mushroom);
+		}
+		else // it should be 1 -> Coin
 		{
 			QBCoin *coin = new QBCoin(x, y);
 			coin->SetState(QB_COIN_STATE_UP);

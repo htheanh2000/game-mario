@@ -15,7 +15,8 @@ pipe.txt
 #
 # MARIO
 #0	76	350
-0	490	350
+#0	490	350
+0	1440	148
 
 # PLATFORM
 5	0	416	16	16	68	22110	22110	22110
@@ -62,6 +63,8 @@ pipe.txt
 
 6	1583	168	207	1	1
 ###QUESTION BRICK###
+# 1-coin 2-mushroom/leaf 3-up-mushroom
+
 7	177	352	1
 7	193	352	1
 7	225	304	1
@@ -70,6 +73,7 @@ pipe.txt
 7	657	384	2
 7	705	352	1
 7	1473	368	2
+7	1440	128	3 #1 up mushroom
 
 ### Enimies ###
 ###GOOMBA###

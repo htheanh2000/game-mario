@@ -143,6 +143,8 @@ class CMario : public CGameObject
 
 	int level; 
 	int untouchable;
+	int lifeCount;
+	int score; 
 	int isImmortal ; // Only for debugging/cheating mode 
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
@@ -171,11 +173,13 @@ public:
 		maxVx = 0.0f;
 		ax = 0.0f;
 		ay = MARIO_GRAVITY; 
-		level = MARIO_LEVEL_SMALL;
+		level = MARIO_LEVEL_RACOON;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;
 		coin = 0;
+		lifeCount = 1; 
+		score = 0;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -199,4 +203,6 @@ public:
 
 	void addCoin() {coin++ ;} ;
 	int getLevel() {return level; } ;
+	void setLifeCount(int life) {lifeCount = life; } ;
+	void setScore(int score) {this->score = score; } ;
 };

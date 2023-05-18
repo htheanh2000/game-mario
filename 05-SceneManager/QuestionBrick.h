@@ -7,8 +7,9 @@
 #define ID_ANI_QUESTION_BRICK 102
 #define ID_ANI_QUESTION_BRICK_EMPTY 103
 
-#define COINS 1  
-#define MUSHROOM 2  
+#define COINS_EFFECT 1  
+#define RED_MUSHROOM_OR_LEAF_EFFECT 2  
+#define GREEN_MUSHROOM_EFFECT 3
 class CQuestionBrick :
     public CGameObject
 {   

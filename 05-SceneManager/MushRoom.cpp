@@ -2,12 +2,13 @@
 #include "Mario.h"
 #include "PlayScene.h"
 
-CMushroom::CMushroom(float x, float y) : CGameObject(x, y)
+CMushroom::CMushroom(float x, float y, int type) : CGameObject(x, y)
 {
 	this->ay = 0;
 	this->ax = 0;
 	this->x = x;
 	this->y = y;
+	objType = type;
 
 	minY = y - MUSHROOM_BBOX_HEIGHT;
 }
@@ -35,10 +36,12 @@ void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CMushroom::Render()
 {
-	int aniId = -1;
+	int aniId = ID_RED_ANI_MUSHROOM;
 
-	aniId = ID_ANI_MUSHROOM;
-
+	if(objType == GREEN_MUSHROOM) {
+		aniId = ID_GREEN_ANI_MUSHROOM;
+	}
+	
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
 }

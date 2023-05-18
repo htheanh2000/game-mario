@@ -148,7 +148,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new Koopas(x, y, type); // Unwing koopas
 		if(type == KOOPAS_GREEN_WING) {
 			int delay = (int)atof(tokens[4].c_str());
-				obj = new Koopas(x, y, type, delay); // Unwing koopas
+			obj = new Koopas(x, y, type, delay); // Unwing koopas
 		}
 		else {
 			obj = new Koopas(x, y, type); // Unwing koopas

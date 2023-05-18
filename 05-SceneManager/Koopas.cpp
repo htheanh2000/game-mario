@@ -4,12 +4,14 @@
 #include "BGBlock.h"
 
 #include "Utils.h"
+#include "SoftBrick.h"
 
 Koopas::Koopas(float x, float y, int type) : CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPAS_GRAVITY;
 	this->objType = type;
+	state = KOOPAS_STATE_WALKING;
 	this->vx = -KOOPAS_SPEED;
 	this->jumpStart = GetTickCount64() + KOOPAS_JUMP_TIMESLEEP;
 }
@@ -92,12 +94,6 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Koopas::Render()
 {
-	updateAnimation();
-	// RenderBoundingBox();
-}
-
-
-void Koopas::updateAnimation() {
 	int aniId = ID_ANI_KOOPAS_WALKING_RIGHT;
 
 	if (objType == KOOPAS_GREEN_WING) {
@@ -122,6 +118,7 @@ void Koopas::updateAnimation() {
 		aniId = ID_ANI_KOOPAS_DEFEND ;
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+	// RenderBoundingBox();
 }
 
 
@@ -145,6 +142,12 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 		CQuestionBrick* questionBrick = dynamic_cast<CQuestionBrick*>(e->obj);
 		questionBrick->activateEffect();
 		this->isDeleted = true;
+	} ;
+
+	if (dynamic_cast<SoftBrick*>(e->obj) && state == KOOPAS_STATE_KICKED) {
+		SoftBrick* softbrick = dynamic_cast<SoftBrick*>(e->obj);
+		softbrick->Delete();
+		dkicked = -dkicked ;
 	} ;
 
 	if (e->ny != 0 )

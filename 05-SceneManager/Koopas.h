@@ -37,7 +37,7 @@
 #define ID_ANI_KOOPAS_RED_UPSIDE_COMEBACK 40018 
 
 #define KOOPAS_GRAVITY 0.001f
-#define KOOPAS_SPEED 0.05f
+#define KOOPAS_SPEED 0.01f
 #define KOOPAS_JUMP_SPEED 0.3f
 #define KOOPAS_KICKED_SPEED  0.2f
 
@@ -58,7 +58,6 @@ class Koopas :
 {
 
 private:
-	void updateAnimation() ;
 protected:
 	float ax;
 	float ay;

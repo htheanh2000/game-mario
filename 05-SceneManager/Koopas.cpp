@@ -14,6 +14,15 @@ Koopas::Koopas(float x, float y, int type) : CGameObject(x, y)
 	this->jumpStart = GetTickCount64() + KOOPAS_JUMP_TIMESLEEP;
 }
 
+Koopas::Koopas(float x, float y, int type, int delay) : CGameObject(x, y)
+{
+	this->ax = 0;
+	this->ay = KOOPAS_GRAVITY;
+	this->objType = type;
+	this->vx = -KOOPAS_SPEED;
+	this->jumpStart = GetTickCount64() + KOOPAS_JUMP_TIMESLEEP + delay;
+}
+
 void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	int bwidth = KOOPAS_BBOX_WIDTH ;
@@ -32,6 +41,8 @@ void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom
 void Koopas::setDKicked(int vector) {
 	this->dkicked = vector;
 };
+
+
 
 void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {

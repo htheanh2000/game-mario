@@ -143,7 +143,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_KOOPAS: {
 		int type = (int)atof(tokens[3].c_str());
-		obj = new Koopas(x, y, type);
+		obj = new Koopas(x, y, type); // Unwing koopas
+		if(type == KOOPAS_GREEN_WING) {
+			int delay = (int)atof(tokens[4].c_str());
+				obj = new Koopas(x, y, type, delay); // Unwing koopas
+		}
+		else {
+			obj = new Koopas(x, y, type); // Unwing koopas
+		}
 		break;
 	}
 

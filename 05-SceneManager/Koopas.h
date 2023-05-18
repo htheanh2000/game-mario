@@ -69,6 +69,8 @@ protected:
 
 public:
 	Koopas(float x, float y, int type);
+	Koopas(float x, float y, int type, int delay); // Init wing koopas
+
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -79,6 +81,5 @@ public:
 	virtual void OnNoCollision(DWORD dt);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) ;
 	virtual void setDKicked(int vector) ;
-
 };
 

@@ -5,6 +5,14 @@
 #define KOOPAS_RED 2
 #define KOOPAS_GREEN_WING 3
 
+// Koopas description 
+
+//Koopa Paratroopa: A Koopa Troopa with wings. Green ones (which appear blue-green underground and in castles) jump towards the player or 
+//fly back and forth, while red ones fly up and down.
+
+//Koopa Troopa: A soldier of the Turtle Empire that marches onwards. If stomped, it retreats in its shell, which can be kicked to hit other 
+//enemies and gain points. Green ones (which appear blue-green underground and in castles) walk back and forth just like Little Goombas, and red ones turn around when they find a pit.
+
 // KOOPAS GREEN
 #define ID_ANI_KOOPAS_WALKING_RIGHT 40001
 #define ID_ANI_KOOPAS_WALKING_LEFT 40002

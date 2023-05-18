@@ -3,7 +3,8 @@
 
 #define MUSHROOM_BBOX_WIDTH 16
 #define MUSHROOM_BBOX_HEIGHT 16
-#define ID_ANI_MUSHROOM 105
+#define ID_ANI_MUSHROOM 105 // Red mushroom
+#define ID_ANI_MUSHROOM 106 // Green mushroom
 
 #define MUSHROOM_RUN_SPEED 0.08f
 #define MUSHROOM_GRAVITY 0.0004f

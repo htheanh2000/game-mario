@@ -13,11 +13,21 @@ void DebugOut(const wchar_t* fmt, ...)
 	OutputDebugString(dbg_out);
 }
 
+// void DebugOutTitle(const wchar_t* fmt, ...)
+// {
+// 	wchar_t s[1024];
+// 	VA_PRINTS(s);
+// 	SetWindowText(_hwnd, s);
+// }
+
 void DebugOutTitle(const wchar_t* fmt, ...)
 {
-	wchar_t s[1024];
-	VA_PRINTS(s);
-	SetWindowText(_hwnd, s);
+    wchar_t s[1024];
+    va_list args;
+    va_start(args, fmt);
+    _vsnwprintf_s(s, sizeof(s) / sizeof(wchar_t), _TRUNCATE, fmt, args);
+    va_end(args);
+    SetWindowText(_hwnd, s);
 }
 
 void SetDebugWindow(HWND hwnd)

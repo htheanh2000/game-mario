@@ -437,7 +437,13 @@ void CMario::Render()
 
 	// RenderBoundingBox();
 
-	DebugOutTitle(L"Coins: %d", coin);
+	// DebugOutTitle(L"Coins: %d", coin);
+	int coin = 10;
+	int score = 100;
+	float time = 5.75;
+
+	DebugOutTitle(L"Coins: %d, Score: %d, Time: %.2f", coin, score, time);
+
 }
 
 void CMario::SetState(int state)

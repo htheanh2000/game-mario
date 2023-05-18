@@ -9,6 +9,7 @@ pipe.txt
 coin.txt
 brick.txt
 softbrick.txt
+star.txt
 
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -19,7 +20,7 @@ softbrick.txt
 # MARIO
 #0	76	350
 #0	490	350
-0	1902	385
+0	2544	350
 
 # PLATFORM
 5	0	416	16	16	68	22110	22110	22110
@@ -135,6 +136,8 @@ softbrick.txt
 10	2112	400
 #10	2096	384
 
+# Star #
+11	2688	336
 
 [TILEMAP]
 Resources\Tilemap\world1-1.txt

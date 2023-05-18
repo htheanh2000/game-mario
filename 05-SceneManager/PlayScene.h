@@ -10,6 +10,7 @@
 #include "BGBlock.h"
 #include "Koopas.h"
 
+#define MARIO_FIX_CAM_ADJUSTMENT 150
 
 class CPlayScene: public CScene
 {

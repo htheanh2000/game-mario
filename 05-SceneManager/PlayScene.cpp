@@ -351,8 +351,15 @@ void CPlayScene::SetCam(float cx, float cy)
 	if (cy <= 0)//Left Edge
 		cy = 0;
 
-	game->SetCamPos(cx, cy);
-	map->SetCamPos(cx, cy);
+
+	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
+	int marioY = mario->GetY();	// target 
+	int posY = cy ;
+	if(mario->getLevel() == MARIO_LEVEL_RACOON) {
+		 posY = marioY - MARIO_FIX_CAM_ADJUSTMENT; // Fix camera position when racoon fly;
+	}
+	game->SetCamPos(cx, posY);
+	map->SetCamPos(cx, posY);
 }
 
 

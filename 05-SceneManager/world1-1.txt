@@ -16,7 +16,7 @@ pipe.txt
 # MARIO
 #0	76	350
 #0	490	350
-0	1219	248
+0	1833	385
 
 # PLATFORM
 5	0	416	16	16	68	22110	22110	22110
@@ -92,7 +92,8 @@ pipe.txt
 3	1424	293	3	500
 
 #PIRANHA PLANT#
-#8	186	416
+8	1801	394	1
+8	1864	379	2
 
 # FIRE PIRANHA PLANT #
 
@@ -100,6 +101,8 @@ pipe.txt
 
 # PIPE #
 77	359	385	1
+77	1864	385	1
+77	1801	392	2
 
 [TILEMAP]
 Resources\Tilemap\world1-1.txt

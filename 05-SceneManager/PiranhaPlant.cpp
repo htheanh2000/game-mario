@@ -1,15 +1,15 @@
 #include "PiranhaPlant.h"
 #include "PlayScene.h"
 
-PiranhaPlant::PiranhaPlant(float x, float y) : CGameObject(x, y)
+PiranhaPlant::PiranhaPlant(float x, float y, int type) : CGameObject(x, y)
 {
 	this->x = x;
+	this->minY = y - PIRANHA_PLANT_BBOX_HEIGHT;
 	this->y = y;
 	this->ax = 0;
 	this->ay = 0;
 	this->startY = y;
-
-	this->minY = y - PIRANHA_PLANT_BBOX_HEIGHT;
+	objType = type;
 }
 
 void PiranhaPlant::SetState(int state)
@@ -89,6 +89,9 @@ void PiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void PiranhaPlant::Render()
 {
 	int aniId = ID_ANI_PIRANHA_PLANT;
+	if(objType == PIRANHA_2) {
+		aniId = ID_ANI_PIRANHA_PLANT_2;
+	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
 }

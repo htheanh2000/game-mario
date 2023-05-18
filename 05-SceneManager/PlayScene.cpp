@@ -159,7 +159,10 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CQuestionBrick(x, y, type);
 		break;
 	}
-	case OBJECT_TYPE_PIRANHA: { obj = new PiranhaPlant(x, y); break; }
+	case OBJECT_TYPE_PIRANHA: { 
+		int type = (float)atof(tokens[3].c_str());
+		obj = new PiranhaPlant(x, y, type); break; 
+		}
 	case OBJECT_TYPE_PIPE: {
 		int type = (int)atof(tokens[3].c_str());
 		obj = new PiranhaPipe(x, y, type);

@@ -1,0 +1,78 @@
+# list of object assets to load in this scene
+[ASSETS]
+
+mario.txt
+coin.txt
+items.txt
+#
+[OBJECTS]
+# type	x	y	extra_settings per object type
+# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
+# See OBJECT_TYPE constants in AssetIDs.h
+
+# MARIO
+0	138	0
+
+#COIN
+4	195	50
+4	211	34
+4	227	34
+4	243	50
+4	243	66
+4	211	82
+4	227	82
+4	243	98
+4	243	114
+4	227	130
+4	211	130
+4	195	114
+
+
+#Koopas
+
+
+#platform
+5	129	161
+5	145	161
+5	113	49
+5	113	49
+5	113	65
+5	113	81
+5	113	97
+5	113	113
+5	113	129
+5	113	145
+5	161	161
+5	178	161
+5	194	161
+5	210	161
+5	226	161
+5	242	161
+5	258	145
+5	274	129
+5	290	113
+5	306	97
+5	322	81
+5	338	65
+5	354	65
+5	370	65
+5	386	49
+5	386	0
+5	161	0
+5	178	0
+5	194	0
+5	210	0
+5	226	0
+5	242	0
+5	258	0
+5	274	0
+5	290	0
+5	306	0
+5	322	0
+5	338	0
+
+# Portal #
+50	362	16	400	32	1
+
+[TILEMAP]
+Resources\Tilemap\world1-1-hidden.txt

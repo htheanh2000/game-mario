@@ -8,6 +8,7 @@ height	240
 0	intro.txt
 1	world1-1.txt
 2	world1-1-hidden.txt
+3	world1-1-after.txt
 
 # id	file 
 [TEXTURES]

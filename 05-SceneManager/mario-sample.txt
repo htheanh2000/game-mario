@@ -1,5 +1,5 @@
 [SETTINGS]
-start	1
+start	4
 width	320
 height	240
 
@@ -9,6 +9,7 @@ height	240
 1	world1-1.txt
 2	world1-1-hidden.txt
 3	world1-1-after.txt
+4	mario-intro.txt
 
 # id	file 
 [TEXTURES]

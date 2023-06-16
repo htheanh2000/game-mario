@@ -18,9 +18,9 @@ star.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 #
 # MARIO
-#0	76	350
+0	76	350
 #0	490	350
-0	2244	0
+#0	2244	0
 
 # PLATFORM
 5	0	416	16	16	68	22110	22110	22110

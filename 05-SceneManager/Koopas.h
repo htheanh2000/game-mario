@@ -47,6 +47,7 @@
 
 
 #define KOOPAS_DEFEND_BBOX_HOLD_ADJUSTMENT 2
+#define KOOPAS_WAITING_RESPAWW_TIME  1000 
 
 
 
@@ -55,8 +56,9 @@
 #define KOOPAS_STATE_DEFEND 200
 #define KOOPAS_STATE_KICKED 300
 #define KOOPAS_STATE_HOLD 400
+#define KOOPAS_STATE_REPAWNING 500
 
-#define KOOPAS_JUMP_TIMESLEEP 1000
+#define KOOPAS_JUMP_TIMESLEEP 5000
 class Koopas :
     public CGameObject
 {
@@ -66,9 +68,9 @@ protected:
 	float ax;
 	float ay;
     int objType;
-	int dkicked = 1 ; // vector when mario kick off
 	ULONGLONG jumpStart = 0 ;
 	vector<LPGAMEOBJECT> effects;
+	ULONGLONG defending_start;
 
 public:
 	Koopas(float x, float y, int type);
@@ -85,5 +87,6 @@ public:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) ;
 	virtual void kicked() ;
 	virtual void hold() ;
+	virtual void defend() ;
 };
 

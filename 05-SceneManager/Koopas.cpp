@@ -5,6 +5,7 @@
 
 #include "Utils.h"
 #include "SoftBrick.h"
+#include "PlayScene.h"
 
 Koopas::Koopas(float x, float y, int type) : CGameObject(x, y)
 {
@@ -40,8 +41,15 @@ void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	bottom = top + bheight;
 }
 
-void Koopas::kicked(int vector) {
-	vx = -KOOPAS_KICKED_SPEED * vector; 
+void Koopas::kicked() {
+	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
+	vx = KOOPAS_KICKED_SPEED * mario->getNx(); 
+	this->SetState(KOOPAS_STATE_KICKED);
+};
+
+void Koopas::hold() { // Koopas is hold by mario
+	this->SetState(KOOPAS_STATE_HOLD);
+	
 };
 
 
@@ -65,9 +73,17 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vx = 0;
 	}
 
-	// if(state == KOOPAS_STATE_KICKED) {
-	// 	vx = -KOOPAS_KICKED_SPEED * dkicked; 
-	// }
+	if(state == KOOPAS_STATE_HOLD) {
+		vx=0;
+		vy=0;
+		CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
+		if(mario->GetState() == MARIO_STATE_HOLD_RELEASE ) {
+			this->kicked();
+		}
+		else {
+			this->SetPosition(mario->GetX() + mario->getMarioWidthSize() * mario->getNx(), mario->GetY() - KOOPAS_DEFEND_BBOX_HOLD_ADJUSTMENT);
+		}
+	}
 	
 
 	CGameObject::Update(dt, coObjects);
@@ -118,6 +134,10 @@ void Koopas::Render()
 		aniId = ID_ANI_KOOPAS_DEFEND ;
 	}
 
+	if (state == KOOPAS_STATE_HOLD ) {
+		aniId = ID_ANI_KOOPAS_DEFEND ;
+	}
+
 	if (state == KOOPAS_STATE_KICKED) {
 		aniId = ID_ANI_KOOPAS_IS_KICKED;
 	}
@@ -145,13 +165,12 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CQuestionBrick*>(e->obj)) {
 		CQuestionBrick* questionBrick = dynamic_cast<CQuestionBrick*>(e->obj);
 		questionBrick->activateEffect();
-		this->isDeleted = true;
+		// this->isDeleted = true;
 	} ;
 
 	if (dynamic_cast<SoftBrick*>(e->obj) && state == KOOPAS_STATE_KICKED) {
 		SoftBrick* softbrick = dynamic_cast<SoftBrick*>(e->obj);
 		softbrick->Delete();
-		dkicked = -dkicked ;
 	} ;
 
 	if (e->ny != 0 )

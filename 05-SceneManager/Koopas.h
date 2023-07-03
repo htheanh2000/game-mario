@@ -46,11 +46,15 @@
 #define KOOPAS_DEFEND_BBOX_HEIGHT 16
 
 
+#define KOOPAS_DEFEND_BBOX_HOLD_ADJUSTMENT 2
+
+
 
 //--------------------STATE -------------------------
 #define KOOPAS_STATE_WALKING 100
 #define KOOPAS_STATE_DEFEND 200
 #define KOOPAS_STATE_KICKED 300
+#define KOOPAS_STATE_HOLD 400
 
 #define KOOPAS_JUMP_TIMESLEEP 1000
 class Koopas :
@@ -79,6 +83,7 @@ public:
 	virtual int IsBlocking() { return 1; }
 	virtual void OnNoCollision(DWORD dt);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) ;
-	virtual void kicked(int vector) ;
+	virtual void kicked() ;
+	virtual void hold() ;
 };
 

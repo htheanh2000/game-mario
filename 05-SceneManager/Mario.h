@@ -41,6 +41,11 @@
 #define MARIO_STATE_SIT_RELEASE		601
 
 
+#define MARIO_STATE_HOLD			700
+#define MARIO_STATE_HOLD_RELEASE	701
+
+
+
 #pragma region ANIMATION_ID
 
 
@@ -206,4 +211,6 @@ public:
 	int getLevel() {return level; } ;
 	void setLifeCount(int life) {lifeCount = life; } ;
 	void setScore(int score) {this->score = score; } ;
+	int getMarioWidthSize();
+	int getNx() {return nx;} ;
 };

@@ -19,7 +19,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if(lifeCount == 0) {
+	if (lifeCount == 0)
+	{
 		DebugOut(L">>> Mario DIE >>> \n");
 		SetState(MARIO_STATE_DIE);
 		// TODO: Back to world map
@@ -46,13 +47,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		isGoThroughBlock = false;
 	}
 
-
 	// FILTER FUNC. SUPER EASY WAY AND SMART !!!!!!!!!!!
-	vector<LPGAMEOBJECT>* objects = new vector<LPGAMEOBJECT>();
+	vector<LPGAMEOBJECT> *objects = new vector<LPGAMEOBJECT>();
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
 		LPGAMEOBJECT obj = (*coObjects)[i];
-		if (obj->IsMarioBlocking()) {
+		if (obj->IsMarioBlocking())
+		{
 			objects->push_back(obj);
 		}
 	}
@@ -61,7 +62,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	// clean up the memory after you're done using it
 	delete objects;
-
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -73,16 +73,6 @@ void CMario::OnNoCollision(DWORD dt)
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 
-	// if(dynamic_cast<CBGBlock *>(e->obj) ) {
-	// 	CBGBlock *block = dynamic_cast<CBGBlock *>(e->obj);
-	// 	if(block->objType == ENEMIES_ONLY_BLOCK) {
-	// 	DebugOut(L"x %f \n", x);
-	// 	DebugOut(L"vx %f \n", vx);
-	// 		this->x -= 5;
-	// 		// y -= 1;
-	// 		vx = -MARIO_RUNNING_SPEED;
-	// 	}
-	// }
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
@@ -123,40 +113,50 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 	Koopas *koopas = dynamic_cast<Koopas *>(e->obj);
 
 	// jump on top >> kill Koopas and deflect a bit
-	if (e->ny < 0 &&  koopas->GetState() != KOOPAS_STATE_DEFEND)
+	if (e->ny < 0 && koopas->GetState() != KOOPAS_STATE_DEFEND)
 	{
 		// TODO: Implement method same with Groomba instead of ...
-			koopas->SetState(KOOPAS_STATE_DEFEND);
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		koopas->SetState(KOOPAS_STATE_DEFEND);
+		vy = -MARIO_JUMP_DEFLECT_SPEED;
 	}
 	else // hit by Koopas
 	{
 		if (koopas->GetState() == KOOPAS_STATE_DEFEND)
 		{
-			// TODO: Mario kick koopas
-			koopas->kicked(e->nx); // it should be 1 or -1
-			koopas->SetState(KOOPAS_STATE_KICKED);
+			if (this->GetState() == MARIO_STATE_RUNNING_RIGHT || this->GetState() == MARIO_STATE_RUNNING_LEFT) 
+			{
+				koopas->hold();
+				this->SetState(MARIO_STATE_HOLD); 
+			}
+			else {
+				koopas->kicked(); 
+			}
+			
 		}
 	}
 }
 
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
-	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
-	if (mushroom->objType == RED_MUSHROOM) {
+	CMushroom *mushroom = dynamic_cast<CMushroom *>(e->obj);
+	if (mushroom->objType == RED_MUSHROOM)
+	{
 		// handle logic for red mushrooms -> upgrade mario level
-		if (level == MARIO_LEVEL_RACOON) {
+		if (level == MARIO_LEVEL_RACOON)
+		{
 			// TODO: handle logic for raccoon level
-		} else {
+		}
+		else
+		{
 			SetLevel(MARIO_LEVEL_BIG);
 		}
 	}
-	else if (mushroom->objType == GREEN_MUSHROOM ){
-		//handle logic for green mushroom -> add 1 life score mario level
+	else if (mushroom->objType == GREEN_MUSHROOM)
+	{
+		// handle logic for green mushroom -> add 1 life score mario level
 		setLifeCount(lifeCount + 1);
 	}
 	e->obj->Delete();
-	
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -186,7 +186,6 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 				else
 				{
 					setLifeCount(lifeCount - 1);
-					
 				}
 			}
 		}
@@ -432,7 +431,6 @@ void CMario::Render()
 	// DebugOutTitle(L"Coins: %d", coin);
 
 	DebugOutTitle(L"Coins: %d, Score: %d, Life: %.2f", coin, score, lifeCount);
-
 }
 
 void CMario::SetState(int state)
@@ -472,7 +470,7 @@ void CMario::SetState(int state)
 		nx = -1;
 		break;
 	case MARIO_STATE_JUMP:
-		
+
 		if (isSitting)
 			break;
 		if (isOnPlatform)
@@ -490,13 +488,13 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_FLY:
-		DebugOut(L"MARIO_STATE_FLY \n") ;
-			vy = -MARIO_FLY_SPEED_Y;
-			ay = 0;
+		DebugOut(L"MARIO_STATE_FLY \n");
+		vy = -MARIO_FLY_SPEED_Y;
+		ay = 0;
 		break;
 
 	case MARIO_STATE_RELEASE_FLY:
-			ay = MARIO_GRAVITY_RACOON;
+		ay = MARIO_GRAVITY_RACOON;
 		break;
 
 	case MARIO_STATE_SIT:
@@ -531,6 +529,7 @@ void CMario::SetState(int state)
 		break;
 	}
 
+	
 	CGameObject::SetState(state);
 }
 
@@ -567,6 +566,32 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;
 		right = left + MARIO_SMALL_BBOX_WIDTH;
 		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
+	}
+}
+
+int CMario::getMarioWidthSize()
+{
+	if (level >= MARIO_LEVEL_BIG)
+	{
+		if (isSitting)
+		{
+			return MARIO_BIG_SITTING_BBOX_WIDTH;
+		}
+		else
+		{
+			if (level == MARIO_LEVEL_RACOON)
+			{
+				return MARIO_RACOON_BBOX_WIDTH;
+			}
+			else
+			{
+				return MARIO_BIG_BBOX_WIDTH;
+			}
+		}
+	}
+	else
+	{
+		return MARIO_SMALL_BBOX_WIDTH;
 	}
 }
 

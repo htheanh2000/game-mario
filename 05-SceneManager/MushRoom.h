@@ -16,7 +16,7 @@
 
 // define speed, gravity, ...
 #define MUSHROOM_RUN_SPEED 	0.08f
-#define MUSHROOM_GRAVITY 	0.0004f
+#define MUSHROOM_GRAVITY 	0.003f
 
 
 // define state
@@ -45,5 +45,6 @@ public:
 	virtual int IsCollidable() { return 1; }
 	virtual int IsBlocking() { return 0; }  
 	virtual void OnNoCollision(DWORD dt); // Allow runcable objects
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 };
 

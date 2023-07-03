@@ -134,7 +134,7 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 		if (koopas->GetState() == KOOPAS_STATE_DEFEND)
 		{
 			// TODO: Mario kick koopas
-			koopas->setDKicked(e->nx); // it should be 1 or -1
+			koopas->kicked(e->nx); // it should be 1 or -1
 			koopas->SetState(KOOPAS_STATE_KICKED);
 		}
 	}

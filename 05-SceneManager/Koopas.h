@@ -79,6 +79,6 @@ public:
 	virtual int IsBlocking() { return 1; }
 	virtual void OnNoCollision(DWORD dt);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) ;
-	virtual void setDKicked(int vector) ;
+	virtual void kicked(int vector) ;
 };
 

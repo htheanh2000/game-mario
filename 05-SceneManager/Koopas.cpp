@@ -114,8 +114,12 @@ void Koopas::Render()
 		}
 	}
 
-	if (state == KOOPAS_STATE_DEFEND || state == KOOPAS_STATE_KICKED) {
+	if (state == KOOPAS_STATE_DEFEND ) {
 		aniId = ID_ANI_KOOPAS_DEFEND ;
+	}
+
+	if (state == KOOPAS_STATE_KICKED) {
+		aniId = ID_ANI_KOOPAS_IS_KICKED;
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	// RenderBoundingBox();

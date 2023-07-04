@@ -3,6 +3,9 @@
         "xstring": "cpp",
         "ios": "cpp",
         "xiosbase": "cpp",
-        "cstdlib": "cpp"
+        "cstdlib": "cpp",
+        "list": "cpp",
+        "vector": "cpp",
+        "xutility": "cpp"
     }
 }

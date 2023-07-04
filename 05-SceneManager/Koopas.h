@@ -99,5 +99,6 @@ public:
 	virtual void kicked() ;
 	virtual void hold() ;
 	virtual void defend() ;
+	virtual void TurnBack() ;
 };
 

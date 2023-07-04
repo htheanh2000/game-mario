@@ -18,8 +18,8 @@ star.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 #
 # MARIO
-0	76	350
-#0	490	350
+#0	76	350
+0	490	350
 #0	2244	0
 
 # PLATFORM
@@ -86,8 +86,8 @@ star.txt
 
 # KOOPAS BLOCK TO LIMIT AREA #
 
-6	504	368	1	16	2
-6	600	368	1	16	2
+#6	504	368	1	16	2
+#6	600	368	1	16	2
 
 6	2086	377	1	16	2
 6	2110	377	1	16	2

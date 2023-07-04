@@ -6,6 +6,7 @@
 #include "Utils.h"
 #include "SoftBrick.h"
 #include "PlayScene.h"
+#include "DirectionBrick.h"
 
 Koopas::Koopas(float x, float y, int type) : CGameObject(x, y)
 {
@@ -17,6 +18,10 @@ Koopas::Koopas(float x, float y, int type) : CGameObject(x, y)
 	state = KOOPAS_STATE_WALKING;
 	this->vx = -KOOPAS_SPEED;
 	this->jumpStart = GetTickCount64() + KOOPAS_JUMP_TIMESLEEP;
+
+	CPlayScene *scene = (CPlayScene *)CGame::GetInstance()->GetCurrentScene();
+	CDirectionBrick *DBrick = new CDirectionBrick(x - KOOPAS_BBOX_WIDTH - 5, y);
+	scene->objects.push_back(DBrick);
 }
 
 Koopas::Koopas(float x, float y, int type, int delay) : CGameObject(x, y)
@@ -66,6 +71,14 @@ void Koopas::defend() { // Koopas is hold by mario
 	// }
 };
 
+void Koopas::TurnBack() {
+	vx = -vx;
+	DebugOut(L"[INFO] Koopas nx %f\n", this->nx);
+	CPlayScene *scene = (CPlayScene *)CGame::GetInstance()->GetCurrentScene();
+	CDirectionBrick *DBrick = new CDirectionBrick(x + (KOOPAS_BBOX_WIDTH + 25) * (vx/abs(vx)), y);
+	scene->objects.push_back(DBrick);
+};
+
 void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
@@ -104,7 +117,7 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		this->SetState(KOOPAS_STATE_REPAWNING) ;
 	}
 
-	if(dead_start + 5000 < GetTickCount64() && state == KOOPAS_STATE_DEAD ) {
+	if(dead_start + KOOPAS_WAITING_RESPAWW_TIME < GetTickCount64() && state == KOOPAS_STATE_DEAD ) {
 		CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
 		// DebugOut(L"[INFO] distant x  %f\n", abs(mario->GetX() - initX));
 
@@ -115,8 +128,6 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			defend_colitions = 0;
 			this->SetState(KOOPAS_STATE_WALKING) ;
 		}
-
-		
 	}
 
 	if(respawning_start + KOOPAS_WAITING_RESPAWWING_TIME < GetTickCount64() && state == KOOPAS_STATE_REPAWNING) {

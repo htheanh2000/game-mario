@@ -9,6 +9,8 @@
 
 Koopas::Koopas(float x, float y, int type) : CGameObject(x, y)
 {
+	initX = x;
+	initY = y;
 	this->ax = 0;
 	this->ay = KOOPAS_GRAVITY;
 	this->objType = type;
@@ -19,6 +21,8 @@ Koopas::Koopas(float x, float y, int type) : CGameObject(x, y)
 
 Koopas::Koopas(float x, float y, int type, int delay) : CGameObject(x, y)
 {
+	initX = x;
+	initY = y;
 	this->ax = 0;
 	this->ay = KOOPAS_GRAVITY;
 	this->objType = type;
@@ -100,6 +104,21 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		this->SetState(KOOPAS_STATE_REPAWNING) ;
 	}
 
+	if(dead_start + 5000 < GetTickCount64() && state == KOOPAS_STATE_DEAD ) {
+		CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
+		// DebugOut(L"[INFO] distant x  %f\n", abs(mario->GetX() - initX));
+
+		if(abs(mario->GetX() - initX) > 160) { // only respawn when player go away
+			vx = KOOPAS_SPEED ;
+			x = initX ;
+			y = initY ;
+			defend_colitions = 0;
+			this->SetState(KOOPAS_STATE_WALKING) ;
+		}
+
+		
+	}
+
 	if(respawning_start + KOOPAS_WAITING_RESPAWWING_TIME < GetTickCount64() && state == KOOPAS_STATE_REPAWNING) {
 		// Koopas repaws or change defend to walk state
 		y = y - 10;
@@ -168,8 +187,10 @@ void Koopas::Render()
 		aniId = ID_ANI_KOOPAS_GREEN_RESPAWNING;
 	}
 
+	if(state == KOOPAS_STATE_DEAD) {
+		return ; // Dead shoud return nothing
+	} 	
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	// RenderBoundingBox();
 }
 
 
@@ -207,8 +228,13 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (e->nx != 0)
 	{
 		vx = -vx;
+		if(defend_colitions <= KOOPAS_DEFEND_MAX_COLLISION) { // lmit maximal colition
+			defend_colitions++;
+		}
+		else {
+			dead_start = GetTickCount64();
+			state = KOOPAS_STATE_DEAD;
+		}
 	}
-	 
-	
 }
 

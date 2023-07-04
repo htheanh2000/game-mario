@@ -60,21 +60,28 @@
 #define KOOPAS_STATE_KICKED 300
 #define KOOPAS_STATE_HOLD 400
 #define KOOPAS_STATE_REPAWNING 500
+#define KOOPAS_STATE_DEAD 600
 
 #define KOOPAS_JUMP_TIMESLEEP 5000
+#define KOOPAS_DEFEND_MAX_COLLISION 3
 class Koopas :
     public CGameObject
 {
 
 private:
 protected:
+
+	float initX;
+	float initY;
 	float ax;
 	float ay;
     int objType;
+	int defend_colitions =  0;
 	ULONGLONG jumpStart = 0 ;
 	vector<LPGAMEOBJECT> effects;
-	ULONGLONG defending_start;
-	ULONGLONG respawning_start;
+	ULONGLONG defending_start = 0;
+	ULONGLONG respawning_start = 0;
+	ULONGLONG dead_start = 0;
 
 public:
 	Koopas(float x, float y, int type);

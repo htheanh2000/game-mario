@@ -35,6 +35,10 @@ void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		bheight = KOOPAS_DEFEND_BBOX_HEIGHT ; //Update the bounding box after chagne animation
 	}
 
+	if(state == KOOPAS_STATE_REPAWNING) {
+		bheight = KOOPAS_RESPAWN_BBOX_HEIGHT ; //Update the bounding box after chagne animation
+	}
+
 	left = x - bwidth / 2;
 	top = y - bheight / 2;
 	right = left + bwidth;
@@ -89,9 +93,17 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	if(defending_start + KOOPAS_WAITING_RESPAWW_TIME < GetTickCount64() && state == KOOPAS_STATE_DEFEND) {
+	if(defending_start + KOOPAS_WAITING_RESPAWW_TIME < GetTickCount64() && state == KOOPAS_STATE_DEFEND ) {
 		// Koopas repaws or change defend to walk state
-		y = y-10;
+		respawning_start = GetTickCount64();
+		y = y - 1;
+		this->SetState(KOOPAS_STATE_REPAWNING) ;
+	}
+
+	if(respawning_start + KOOPAS_WAITING_RESPAWWING_TIME < GetTickCount64() && state == KOOPAS_STATE_REPAWNING) {
+		// Koopas repaws or change defend to walk state
+		y = y - 10;
+		vx = KOOPAS_SPEED ;
 		this->SetState(KOOPAS_STATE_WALKING) ;
 	}
 	
@@ -151,6 +163,11 @@ void Koopas::Render()
 	if (state == KOOPAS_STATE_KICKED) {
 		aniId = ID_ANI_KOOPAS_IS_KICKED;
 	}
+
+	if (state == KOOPAS_STATE_REPAWNING) {
+		aniId = ID_ANI_KOOPAS_GREEN_RESPAWNING;
+	}
+
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	// RenderBoundingBox();
 }
@@ -190,7 +207,6 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (e->nx != 0)
 	{
 		vx = -vx;
-		DebugOut(L"[INFO] vx  %f\n", vx);
 	}
 	 
 	

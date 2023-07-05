@@ -77,6 +77,8 @@ protected:
 	float ay;
     int objType;
 	int defend_colitions =  0;
+
+	CGameObject* linkedObj ;
 	ULONGLONG jumpStart = 0 ;
 	vector<LPGAMEOBJECT> effects;
 	ULONGLONG defending_start = 0;

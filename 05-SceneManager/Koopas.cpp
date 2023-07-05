@@ -20,8 +20,9 @@ Koopas::Koopas(float x, float y, int type) : CGameObject(x, y)
 	this->jumpStart = GetTickCount64() + KOOPAS_JUMP_TIMESLEEP;
 
 	CPlayScene *scene = (CPlayScene *)CGame::GetInstance()->GetCurrentScene();
-	CDirectionBrick *DBrick = new CDirectionBrick(x - KOOPAS_BBOX_WIDTH - 5, y);
+	CDirectionBrick *DBrick = new CDirectionBrick(this);
 	scene->objects.push_back(DBrick);
+	linkedObj = DBrick ;
 }
 
 Koopas::Koopas(float x, float y, int type, int delay) : CGameObject(x, y)
@@ -73,10 +74,9 @@ void Koopas::defend() { // Koopas is hold by mario
 
 void Koopas::TurnBack() {
 	vx = -vx;
-	DebugOut(L"[INFO] Koopas nx %f\n", this->nx);
-	CPlayScene *scene = (CPlayScene *)CGame::GetInstance()->GetCurrentScene();
-	CDirectionBrick *DBrick = new CDirectionBrick(x + (KOOPAS_BBOX_WIDTH + 25) * (vx/abs(vx)), y);
-	scene->objects.push_back(DBrick);
+	DebugOut(L"[INFO] Koopas DX %f\n", this->GetDX());
+	linkedObj->SetPosition(this->GetX() , this->GetY());
+
 };
 
 void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

@@ -50,6 +50,7 @@ public:
 
 	float GetX() { return this->x; }
 	float GetY() { return this->y; }
+	float GetDX() { return this->vx == 0 ? 0 : this->vx / abs(this->vx); }
 	
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};

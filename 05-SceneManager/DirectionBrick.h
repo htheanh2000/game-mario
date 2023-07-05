@@ -15,9 +15,11 @@ public:
 
     float ax;				
 	float ay; 
-	BOOLEAN isLinked = false;
+	float markY = 0;
+	CGameObject* linkedObj ; 
+	BOOLEAN isTurnBacking = false;;
 
-	CDirectionBrick(float x, float y) ;
+	CDirectionBrick(CGameObject* linkedObj) ;
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);

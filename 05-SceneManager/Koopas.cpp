@@ -16,13 +16,10 @@ Koopas::Koopas(float x, float y, int type) : CGameObject(x, y)
 	this->ay = KOOPAS_GRAVITY;
 	this->objType = type;
 	state = KOOPAS_STATE_WALKING;
-	this->vx = -KOOPAS_SPEED;
+	this->vx = KOOPAS_SPEED;
 	this->jumpStart = GetTickCount64() + KOOPAS_JUMP_TIMESLEEP;
 
-	CPlayScene *scene = (CPlayScene *)CGame::GetInstance()->GetCurrentScene();
-	CDirectionBrick *DBrick = new CDirectionBrick(this);
-	scene->objects.push_back(DBrick);
-	linkedObj = DBrick ;
+	
 }
 
 Koopas::Koopas(float x, float y, int type, int delay) : CGameObject(x, y)
@@ -137,6 +134,13 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		this->SetState(KOOPAS_STATE_WALKING) ;
 	}
 	
+
+	if(!linkedObj) {
+		CPlayScene *scene = (CPlayScene *)CGame::GetInstance()->GetCurrentScene();
+		CDirectionBrick *DBrick = new CDirectionBrick(this);
+		scene->objects.push_back(DBrick);
+		linkedObj = DBrick ;
+	}
 
 	CGameObject::Update(dt, coObjects);
 

@@ -6,7 +6,7 @@
 CDirectionBrick::CDirectionBrick(CGameObject* linkedObj): CGameObject(x, y) {
 	this->ax = 0;
 	this->ay = KOOPAS_GRAVITY;
-	this->x = linkedObj->GetX();
+	this->x = linkedObj->GetX() - 15;
 	this->y = linkedObj->GetY();
 	this->linkedObj = linkedObj;
 	markY = y;
@@ -14,7 +14,7 @@ CDirectionBrick::CDirectionBrick(CGameObject* linkedObj): CGameObject(x, y) {
 
 void CDirectionBrick::Render()
 {
-	RenderBoundingBox();
+	// RenderBoundingBox();
 }
 
 void CDirectionBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
@@ -33,8 +33,10 @@ void CDirectionBrick::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// DebugOut(L"[INFO] DirectionBrick x  %f\n", this->x);
 	if(dynamic_cast<Koopas *>(linkedObj) ) {
 		if(y - markY > 15) {
-			DebugOut(L"[INFO] DIFF Y %f\n", markY - y );
+			DebugOut(L"[INFO] DIFF Y %f\n", y );
+			DebugOut(L"[INFO] DIFF MARK Y %f\n", markY  );
 			Koopas *koopas = dynamic_cast<Koopas *>(linkedObj);
+			this->y = linkedObj->GetY();
 			koopas->TurnBack();
 		}
 	}
@@ -45,7 +47,7 @@ void CDirectionBrick::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CDirectionBrick::OnNoCollision(DWORD dt)
 {
 	//x += vx * dt;
-	x = linkedObj->GetX() - 16  ;
+	x = linkedObj->GetX() + linkedObj->GetDX() * 16  ;
 	y += vy * dt;
 };
 

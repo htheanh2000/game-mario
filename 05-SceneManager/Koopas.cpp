@@ -16,22 +16,16 @@ Koopas::Koopas(float x, float y, int type) : CGameObject(x, y)
 	this->ay = KOOPAS_GRAVITY;
 	this->objType = type;
 	state = KOOPAS_STATE_WALKING;
-	this->vx = -KOOPAS_SPEED;
+	this->vx = 0 ;
+	if(type == KOOPAS_GREEN_WING) {
+		hasWing = true;
+	}
 	this->jumpStart = GetTickCount64() + KOOPAS_JUMP_TIMESLEEP;
 
 	
 }
 
-Koopas::Koopas(float x, float y, int type, int delay) : CGameObject(x, y)
-{
-	initX = x;
-	initY = y;
-	this->ax = 0;
-	this->ay = KOOPAS_GRAVITY;
-	this->objType = type;
-	this->vx = -KOOPAS_SPEED;
-	this->jumpStart = GetTickCount64() + KOOPAS_JUMP_TIMESLEEP + delay;
-}
+
 
 void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -76,12 +70,39 @@ void Koopas::TurnBack() {
 
 };
 
+void Koopas::Hit() {
+	DebugOut(L"[INFO] objType  %d\n", objType);
+	if(objType == KOOPAS_GREEN_WING && hasWing) {
+		hasWing = false ;
+	}
+	else {
+		this->defend();
+	}
+};
+
 void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if(objType == KOOPAS_GREEN_WING) {
+	if(vx == 0 ) {
+		CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
+		if(x - mario->GetX() < 160) {
+			vx = -KOOPAS_SPEED ;
+			if(objType == KOOPAS_GREEN_WING) {
+				jumpStart = GetTickCount64();
+				vx = - KOOPAS_WING_SPEED;
+			}
+		}
+	}
+
+	if(y >= 1000 && state != KOOPAS_STATE_DEAD) {
+		// DebugOut(L"[INFO] KOOPAS_STATE_DEAD  ");
+		state = KOOPAS_STATE_DEAD ;
+		dead_start = GetTickCount64();
+	}
+
+	if(objType == KOOPAS_GREEN_WING && hasWing) {
 		// handle koopas wing effct -> jump
 		if(GetTickCount64() > jumpStart ) {
 			// Koopas jump
@@ -107,23 +128,29 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	if(defending_start + KOOPAS_WAITING_RESPAWW_TIME < GetTickCount64() && state == KOOPAS_STATE_DEFEND ) {
+	if((defending_start + KOOPAS_WAITING_RESPAWW_TIME < GetTickCount64()) && (state == KOOPAS_STATE_DEFEND)  ) {
 		// Koopas repaws or change defend to walk state
 		respawning_start = GetTickCount64();
 		y = y - 1;
 		this->SetState(KOOPAS_STATE_REPAWNING) ;
 	}
 
-	if(dead_start + KOOPAS_WAITING_RESPAWW_TIME < GetTickCount64() && state == KOOPAS_STATE_DEAD ) {
+	if(dead_start + KOOPAS_WAITING_RESPAWW_TIME < GetTickCount64() &&  state == KOOPAS_STATE_DEAD  ) {
 		CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
-		// DebugOut(L"[INFO] distant x  %f\n", abs(mario->GetX() - initX));
-
-		if(abs(mario->GetX() - initX) > 160) { // only respawn when player go away
-			vx = KOOPAS_SPEED ;
+		if(objType == KOOPAS_GREEN_WING ) {  // Respawn swing 
+			vx = -KOOPAS_WING_SPEED ;
 			x = initX ;
 			y = initY ;
 			defend_colitions = 0;
-			this->SetState(KOOPAS_STATE_WALKING) ;
+			state = KOOPAS_STATE_WALKING ;
+			hasWing = true ;
+		}
+		else if ( abs(mario->GetX() - initX) > 160) { // || only respawn when player go away
+			vx = -KOOPAS_SPEED ; 
+			x = initX ;
+			y = initY ;
+			defend_colitions = 0;
+			state = KOOPAS_STATE_WALKING ;
 		}
 	}
 
@@ -135,7 +162,7 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	
 
-	if(!linkedObj && this->state == KOOPAS_STATE_WALKING) {
+	if(!linkedObj && this->state == KOOPAS_STATE_WALKING && objType != KOOPAS_GREEN_WING ) {
 		CPlayScene *scene = (CPlayScene *)CGame::GetInstance()->GetCurrentScene();
 		CDirectionBrick *DBrick = new CDirectionBrick(this);
 		scene->objects.push_back(DBrick);
@@ -155,12 +182,23 @@ void Koopas::Render()
 	int aniId = ID_ANI_KOOPAS_WALKING_RIGHT;
 
 	if (objType == KOOPAS_GREEN_WING) {
-		if (vx > 0) {
+		if(hasWing) {
+			if (vx > 0) {
 			aniId = ID_ANI_KOOPAS_GREEN_WING_RIGHT;
+			}
+			else {
+				aniId = ID_ANI_KOOPAS_GREEN_WING_LEFT;
+			}
 		}
 		else {
-			aniId = ID_ANI_KOOPAS_GREEN_WING_LEFT;
+			if (vx > 0) {
+			aniId = ID_ANI_KOOPAS_WALKING_RIGHT;
+			}
+			else {
+				aniId = ID_ANI_KOOPAS_WALKING_LEFT;
+			}
 		}
+		
 	}
 
 	if (objType == KOOPAS_GREEN) {

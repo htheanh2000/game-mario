@@ -38,8 +38,9 @@
 #define ID_ANI_KOOPAS_RED_UPSIDE_COMEBACK 40018 
 
 #define KOOPAS_GRAVITY 0.001f
-#define KOOPAS_SPEED 0.01f
-#define KOOPAS_JUMP_SPEED 0.3f
+#define KOOPAS_SPEED 0.02f
+#define KOOPAS_WING_SPEED 0.03f
+#define KOOPAS_JUMP_SPEED 0.2f
 #define KOOPAS_KICKED_SPEED  0.2f
 
 #define KOOPAS_BBOX_WIDTH 16
@@ -51,6 +52,7 @@
 #define KOOPAS_DEFEND_BBOX_HOLD_ADJUSTMENT 2
 #define KOOPAS_WAITING_RESPAWW_TIME  5000 
 #define KOOPAS_WAITING_RESPAWWING_TIME 2500 // Preparing for spawnng
+#define KOOPAS_JUMP_TIMESLEEP 1000
 
 
 
@@ -61,8 +63,8 @@
 #define KOOPAS_STATE_HOLD 400
 #define KOOPAS_STATE_REPAWNING 500
 #define KOOPAS_STATE_DEAD 600
+#define KOOPAS_STATE_WING_WALKING 700
 
-#define KOOPAS_JUMP_TIMESLEEP 5000
 #define KOOPAS_DEFEND_MAX_COLLISION 3
 class Koopas :
     public CGameObject
@@ -77,6 +79,7 @@ protected:
 	float ay;
     int objType;
 	int defend_colitions =  0;
+	BOOLEAN  hasWing = false; // FOr wing koopas only 
 
 	CGameObject* linkedObj ;
 	ULONGLONG jumpStart = 0 ;
@@ -85,10 +88,9 @@ protected:
 	ULONGLONG respawning_start = 0;
 	ULONGLONG dead_start = 0;
 
+
 public:
 	Koopas(float x, float y, int type);
-	Koopas(float x, float y, int type, int delay); // Init wing koopas
-
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -102,5 +104,6 @@ public:
 	virtual void hold() ;
 	virtual void defend() ;
 	virtual void TurnBack() ;
+	virtual void Hit() ; // Hit by Mario
 };
 

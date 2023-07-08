@@ -103,7 +103,7 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 	if (e->ny < 0 && koopas->GetState() != KOOPAS_STATE_DEFEND)
 	{
 		// TODO: Implement method same with Groomba instead of ...
-		koopas->defend();
+		koopas->Hit();
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 	}
 	else // hit by Koopas

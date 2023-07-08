@@ -15,14 +15,14 @@
 #define ID_GREEN_ANI_MUSHROOM 	106 // Green mushroom
 
 // define speed, gravity, ...
-#define MUSHROOM_RUN_SPEED 	0.08f
+#define MUSHROOM_RUN_SPEED 	0.05f
 #define MUSHROOM_GRAVITY 	0.003f
+#define MUSHROOM_SPEED_UP 	0.03f
 
 
 // define state
 #define MUSHROOM_STATE_UP 	100
 #define MUSHROOM_STATE_RUN 	200
-#define MUSHROOM_SPEED_UP 	0.03f
 
 class CMushroom :
     public CGameObject

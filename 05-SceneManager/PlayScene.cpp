@@ -365,7 +365,7 @@ void CPlayScene::SetCam(float cx, float cy)
 	if(mario->getLevel() == MARIO_LEVEL_RACOON) {
 		 posY = marioY - MARIO_FIX_CAM_ADJUSTMENT; // Fix camera position when racoon fly;
 	}
-	game->SetCamPos(cx, posY);
+	game->SetCamPos(cx, cy);
 	map->SetCamPos(cx, posY);
 }
 

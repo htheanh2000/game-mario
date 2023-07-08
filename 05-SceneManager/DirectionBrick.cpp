@@ -14,7 +14,7 @@ CDirectionBrick::CDirectionBrick(CGameObject* linkedObj): CGameObject(x, y) {
 
 void CDirectionBrick::Render()
 {
-	RenderBoundingBox();
+	// RenderBoundingBox();
 }
 
 void CDirectionBrick::GetBoundingBox(float &l, float &t, float &r, float &b)

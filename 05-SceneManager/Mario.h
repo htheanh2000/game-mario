@@ -151,6 +151,7 @@ class CMario : public CGameObject
 	int untouchable;
 	int lifeCount;
 	int score; 
+	BOOLEAN rotating = false ; // Active 1 time when matio roate left to right and right to left 
 	int isImmortal ; // Only for debugging/cheating mode 
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
@@ -202,6 +203,8 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void SetLevel(int l);
+	
+	void SetRorate();
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

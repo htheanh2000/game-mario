@@ -422,6 +422,10 @@ void CMario::Render()
 	DebugOutTitle(L"Coins: %d, Score: %d, Life: %.2f", coin, score, lifeCount);
 }
 
+void CMario::SetRorate() {
+	rotating = true;
+}
+
 void CMario::SetState(int state)
 {
 	// DIE is the end state, cannot be changed!
@@ -435,6 +439,7 @@ void CMario::SetState(int state)
 			break;
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
+		
 		nx = 1;
 		break;
 	case MARIO_STATE_RUNNING_LEFT:

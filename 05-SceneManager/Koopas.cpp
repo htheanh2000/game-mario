@@ -162,7 +162,7 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	
 
-	if(!linkedObj && this->state == KOOPAS_STATE_WALKING && objType != KOOPAS_GREEN_WING ) {
+	if(!linkedObj && this->state == KOOPAS_STATE_WALKING && objType != KOOPAS_GREEN_WING ) { // Should be on the ground first
 		CPlayScene *scene = (CPlayScene *)CGame::GetInstance()->GetCurrentScene();
 		CDirectionBrick *DBrick = new CDirectionBrick(this);
 		scene->objects.push_back(DBrick);
@@ -267,6 +267,7 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	else  if (dynamic_cast<SoftBrick*>(e->obj) && state == KOOPAS_STATE_KICKED) {
 		SoftBrick* softbrick = dynamic_cast<SoftBrick*>(e->obj);
 		softbrick->Delete();
+		defend_colitions--; //Make it break alll soft brick
 	} ;
 
 	if (e->ny != 0 )

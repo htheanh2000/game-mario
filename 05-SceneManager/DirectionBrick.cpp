@@ -31,7 +31,7 @@ void CDirectionBrick::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vx += ax * dt;
 
 	// DebugOut(L"[INFO] DirectionBrick x  %f\n", this->x);
-	if(dynamic_cast<Koopas *>(linkedObj) ) {
+	if(linkedObj->GetState() == KOOPAS_STATE_WALKING && dynamic_cast<Koopas *>(linkedObj) ) {
 		if(y - markY > 15) {
 			DebugOut(L"[INFO] DIFF Y %f\n", y );
 			DebugOut(L"[INFO] DIFF MARK Y %f\n", markY  );
@@ -47,7 +47,7 @@ void CDirectionBrick::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CDirectionBrick::OnNoCollision(DWORD dt)
 {
 	//x += vx * dt;
-	x = linkedObj->GetX() + linkedObj->GetDX() * 16  ;
+		x = linkedObj->GetX() + linkedObj->GetDX() * 16  ;
 	y += vy * dt;
 };
 

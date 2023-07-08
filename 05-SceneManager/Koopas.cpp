@@ -135,11 +135,14 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	
 
-	if(!linkedObj) {
+	if(!linkedObj && this->state == KOOPAS_STATE_WALKING) {
 		CPlayScene *scene = (CPlayScene *)CGame::GetInstance()->GetCurrentScene();
 		CDirectionBrick *DBrick = new CDirectionBrick(this);
 		scene->objects.push_back(DBrick);
 		linkedObj = DBrick ;
+	}
+	else {
+		// Delete the object
 	}
 
 	CGameObject::Update(dt, coObjects);

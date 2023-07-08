@@ -4,6 +4,7 @@
 #define GOOMBA_GRAVITY 0.002f
 #define GOOMBA_WALKING_SPEED 0.05f
 #define GOOMBA_DEFLECT_SPEED 0.3f
+#define GOOMBA_JUMP_SPEED 0.4f
 
 
 #define GOOMBA_BBOX_WIDTH 16
@@ -12,6 +13,7 @@
 
 #define GOOMBA_DIE_TIMEOUT 500
 #define GOOMBA_DEFLECT_TIMEOUT 500
+#define GOOMBA_JUMP_TIMEOUT 1500
 
 #define GOOMBA_STATE_WALKING 100
 #define GOOMBA_STATE_DIE 200
@@ -40,6 +42,7 @@ protected:
 
 	ULONGLONG die_start;
 	ULONGLONG deflect_start;
+	ULONGLONG jump_start;
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);

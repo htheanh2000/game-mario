@@ -7,6 +7,7 @@ CGoomba::CGoomba(float x, float y, int type):CGameObject(x, y)
 	this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
 	deflect_start = -1;
+	jump_start = GetTickCount64();
 	if(type == NORMAL_GOOMBA) {
 		lifeCount = 1;
 	}
@@ -63,6 +64,13 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+
+	if (objType == RED_GOOMBA && (state== GOOMBA_STATE_WALKING) && (GetTickCount64() - jump_start > GOOMBA_JUMP_TIMEOUT) )
+	{
+		vy =  -GOOMBA_JUMP_SPEED ; ;
+		jump_start = GetTickCount64();
+		return;
+	}
 
 	if ( (state==GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT) )
 	{

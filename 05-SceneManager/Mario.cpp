@@ -21,8 +21,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	if (lifeCount == 0)
 	{
-		DebugOut(L">>> Mario DIE >>> \n");
-		SetState(MARIO_STATE_DIE);
+		// DebugOut(L">>> Mario DIE >>> \n");
+		// SetState(MARIO_STATE_DIE);
 		// TODO: Back to world map
 	}
 
@@ -47,21 +47,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		isGoThroughBlock = false;
 	}
 
-	// FILTER FUNC. SUPER EASY WAY AND SMART !!!!!!!!!!!
-	vector<LPGAMEOBJECT> *objects = new vector<LPGAMEOBJECT>();
-	for (UINT i = 0; i < coObjects->size(); i++)
-	{
-		LPGAMEOBJECT obj = (*coObjects)[i];
-		if (obj->IsMarioBlocking())
-		{
-			objects->push_back(obj);
-		}
-	}
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 
-	CCollision::GetInstance()->Process(this, dt, objects);
-
-	// clean up the memory after you're done using it
-	delete objects;
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -168,7 +155,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	{
 		if (goomba->GetState() != GOOMBA_STATE_DIE)
 		{
-			goomba->HitByMario();
+			goomba->Hit();
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
@@ -219,8 +206,10 @@ void CMario::OnCollisionWithBackgroundBlock(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 {
-	CQuestionBrick *questionBrick = dynamic_cast<CQuestionBrick *>(e->obj);
-	questionBrick->activateEffect();
+	if(e->ny > 0) { //go up
+		CQuestionBrick *questionBrick = dynamic_cast<CQuestionBrick *>(e->obj);
+		questionBrick->activateEffect();
+	}
 }
 //
 // Get animation ID for small Mario
@@ -495,6 +484,7 @@ void CMario::SetState(int state)
 
 	case MARIO_STATE_RELEASE_FLY:
 		ay = MARIO_GRAVITY_RACOON;
+		this->SetState(MARIO_STATE_WALKING_RIGHT);
 		break;
 
 	case MARIO_STATE_SIT:

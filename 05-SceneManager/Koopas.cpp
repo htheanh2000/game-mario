@@ -16,7 +16,7 @@ Koopas::Koopas(float x, float y, int type) : CGameObject(x, y)
 	this->ay = KOOPAS_GRAVITY;
 	this->objType = type;
 	state = KOOPAS_STATE_WALKING;
-	this->vx = KOOPAS_SPEED;
+	this->vx = -KOOPAS_SPEED;
 	this->jumpStart = GetTickCount64() + KOOPAS_JUMP_TIMESLEEP;
 
 	
@@ -71,7 +71,7 @@ void Koopas::defend() { // Koopas is hold by mario
 
 void Koopas::TurnBack() {
 	vx = -vx;
-	DebugOut(L"[INFO] Koopas DX %f\n", this->GetDX());
+	// DebugOut(L"[INFO] Koopas DX %f\n", this->GetDX());
 	linkedObj->SetPosition(this->GetX() , this->GetY());
 
 };
@@ -146,24 +146,7 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	CGameObject::Update(dt, coObjects);
-
-		if( this->state == KOOPAS_STATE_KICKED ) {
-		vector<LPGAMEOBJECT>* objects = new vector<LPGAMEOBJECT>();
-		for (UINT i = 0; i < coObjects->size(); i++)
-		{
-			LPGAMEOBJECT obj = (*coObjects)[i];
-			if (obj->IsMarioBlocking() ) {
-				objects->push_back(obj);
-			}
-		}
-		CCollision::GetInstance()->Process(this, dt, objects);
-
-		// clean up the memory after you're done using it
-		delete objects;
-	}
-	else {
-		CCollision::GetInstance()->Process(this, dt, coObjects);
-	}
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 	
 }
 
@@ -209,6 +192,8 @@ void Koopas::Render()
 		return ; // Dead shoud return nothing
 	} 	
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+	// RenderBoundingBox();
+
 }
 
 
@@ -239,6 +224,8 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 		softbrick->Delete();
 	} ;
 
+	
+
 	if (e->ny != 0 )
 	{
 		vy = 0;
@@ -254,5 +241,11 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 			state = KOOPAS_STATE_DEAD;
 		}
 	}
+
+	
 }
+
+
+
+
 

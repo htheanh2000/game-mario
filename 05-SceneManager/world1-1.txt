@@ -81,8 +81,11 @@ star.txt
 
 ### Enimies ###
 ###GOOMBA###
-#2	186	369	1
-#2	236	339	2
+2	236	337	1
+2	880	321	1
+2	928	321	1
+2	992	321	2
+2	528	400	1
 
 # KOOPAS BLOCK TO LIMIT AREA #
 

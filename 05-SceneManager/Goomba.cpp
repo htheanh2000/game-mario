@@ -1,10 +1,12 @@
 #include "Goomba.h"
+#include "Koopas.h"
 
 CGoomba::CGoomba(float x, float y, int type):CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
+	deflect_start = -1;
 	if(type == NORMAL_GOOMBA) {
 		lifeCount = 1;
 	}
@@ -43,6 +45,9 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return; 
 	if (dynamic_cast<CGoomba*>(e->obj)) return; 
+	if (dynamic_cast<Koopas*>(e->obj)) {
+		this->Hit();
+	};
 
 	if (e->ny != 0 )
 	{
@@ -62,6 +67,12 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if ( (state==GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT) )
 	{
 		isDeleted = true;
+		return;
+	}
+
+	if ( (state == GOOMBA_STATE_DEFLECT) && (GetTickCount64() - deflect_start > GOOMBA_DEFLECT_TIMEOUT) )
+	{
+		state = GOOMBA_STATE_DIE;
 		return;
 	}
 
@@ -97,9 +108,12 @@ void CGoomba::Render()
 	// RenderBoundingBox();
 }
 
-void CGoomba::HitByMario() {
+void CGoomba::Hit() {
 	if(lifeCount == 1) {
-		SetState(GOOMBA_STATE_DIE);
+		vy = -GOOMBA_DEFLECT_SPEED ; 
+		vx = 0;
+		state = GOOMBA_STATE_DEFLECT ;
+		deflect_start = GetTickCount64();
 	}
 	else {
 		lifeCount -= 1; // It should be 2 - 1 = 1 life count

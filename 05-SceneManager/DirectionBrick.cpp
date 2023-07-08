@@ -33,8 +33,8 @@ void CDirectionBrick::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// DebugOut(L"[INFO] DirectionBrick x  %f\n", this->x);
 	if(linkedObj->GetState() == KOOPAS_STATE_WALKING && dynamic_cast<Koopas *>(linkedObj) ) {
 		if(y - markY > 15) {
-			DebugOut(L"[INFO] DIFF Y %f\n", y );
-			DebugOut(L"[INFO] DIFF MARK Y %f\n", markY  );
+			// DebugOut(L"[INFO] DIFF Y %f\n", y );
+			// DebugOut(L"[INFO] DIFF MARK Y %f\n", markY  );
 			Koopas *koopas = dynamic_cast<Koopas *>(linkedObj);
 			this->y = linkedObj->GetY();
 			koopas->TurnBack();

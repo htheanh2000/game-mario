@@ -172,6 +172,12 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		// Delete the object
 	}
 
+	if(unTouchable == true) {
+		x += this->GetDX() ; // Update x postion by +- 1 
+		y -= 1;
+		unTouchable = false;
+	}
+
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 	
@@ -249,20 +255,19 @@ void Koopas::OnNoCollision(DWORD dt)
 void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return; 
-	if (dynamic_cast<Koopas*>(e->obj)) return; 
-
-	if (dynamic_cast<CQuestionBrick*>(e->obj)) {
+	if (dynamic_cast<Koopas*>(e->obj)) {
+		unTouchable = true;
+		return;
+	}
+	else if (dynamic_cast<CQuestionBrick*>(e->obj)) {
 		CQuestionBrick* questionBrick = dynamic_cast<CQuestionBrick*>(e->obj);
 		questionBrick->activateEffect();
 		// this->isDeleted = true;
-	} ;
-
-	if (dynamic_cast<SoftBrick*>(e->obj) && state == KOOPAS_STATE_KICKED) {
+	} 
+	else  if (dynamic_cast<SoftBrick*>(e->obj) && state == KOOPAS_STATE_KICKED) {
 		SoftBrick* softbrick = dynamic_cast<SoftBrick*>(e->obj);
 		softbrick->Delete();
 	} ;
-
-	
 
 	if (e->ny != 0 )
 	{

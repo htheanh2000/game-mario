@@ -80,7 +80,7 @@ protected:
     int objType;
 	int defend_colitions =  0;
 	BOOLEAN  hasWing = false; // FOr wing koopas only 
-
+	BOOLEAN  unTouchable = false ;
 	CGameObject* linkedObj ;
 	ULONGLONG jumpStart = 0 ;
 	vector<LPGAMEOBJECT> effects;

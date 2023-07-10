@@ -72,6 +72,10 @@
 #define ID_ANI_RACOON_MARIO_BRACE_RIGHT 3100
 #define ID_ANI_RACOON_MARIO_BRACE_LEFT 3101
 
+
+#define ID_ANI_RACOON_MARIO_ATTACK_RIGHT 3200
+#define ID_ANI_RACOON_MARIO_ATTACK_LEFT 3201
+
 #define ID_ANI_MARIO_DIE 999
 
 // SMALL MARIO
@@ -146,7 +150,11 @@
 
 #define MARIO_STATUS_FLY  1000
 #define MARIO_STATUS_FALL  2000
+#define MARIO_STATUS_ATTACK  2000
 #define MARIO_STATUS_DEFAULT  0
+
+
+#define MARIO_ATTACK_TIME  300
 
 class CMario : public CGameObject
 {
@@ -158,6 +166,8 @@ class CMario : public CGameObject
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
+	BOOLEAN isAttacking = true;
+	ULONGLONG attackTime = -1 ;
 	int status = 0 ; // Fall, Fly, Hold, status control varible...
 	int level; 
 	int untouchable;
@@ -218,6 +228,7 @@ public:
 	void SetLevel(int l);
 	
 	void SetRorate();
+	void Attack();
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

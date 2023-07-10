@@ -25,7 +25,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		// TODO: Back to world map
 	}
 
-	// DebugOut(L"[INFO] Mario state:  %d\n", this->GetState());
+	// DebugOut(L"[INFO] Mario status:  %d\n", this->GetStatus());
 
 	if (abs(vx) > abs(maxVx))
 		vx = maxVx;
@@ -36,6 +36,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	if (this->status == MARIO_STATE_FLY && vy < minVy) {
 		vy = minVy;
+	}
+
+	if(isAttacking) {
+		vx = 0 ; // Mario should idle
+	}
+
+	if(attackTime + MARIO_ATTACK_TIME < GetTickCount64()) {
+		isAttacking = false ; // Finish attack
 	}
 
 	// reset untouchable timer if untouchable time has passed
@@ -77,7 +85,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vy = 0;
 		if (e->ny < 0) {
-			status = MARIO_STATUS_DEFAULT;
+			// status = MARIO_STATUS_DEFAULT;
 			isOnPlatform = true;
 		}
 	}
@@ -406,6 +414,16 @@ int CMario::GetAniIdRacoon()
 			aniId = ID_ANI_RACOON_MARIO_WALKING_LEFT;
 	}
 
+	if(isAttacking) {
+		DebugOut(L"[INFO] MARIO_STATUS_ATTACK:  %d\n", 1);
+		if(ax < 0) {
+			aniId = ID_ANI_RACOON_MARIO_ATTACK_LEFT;
+		}
+		else {
+			aniId = ID_ANI_RACOON_MARIO_ATTACK_RIGHT;
+		}
+	}
+
 	if (aniId == -1)
 		aniId = ID_ANI_MARIO_IDLE_RIGHT;
 	return aniId;
@@ -437,6 +455,12 @@ void CMario::Render()
 void CMario::SetRorate() {
 	rotating = true;
 }
+
+void CMario::Attack() {
+	this->isAttacking = true;
+	attackTime = GetTickCount64() ;
+}
+
 
 void CMario::SetState(int state)
 {

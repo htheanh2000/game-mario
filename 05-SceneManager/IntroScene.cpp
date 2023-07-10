@@ -155,6 +155,7 @@ void CIntroScene::_ParseSection_OBJECTS(string line)
 		float type = (float)atof(tokens[3].c_str());
 		obj = new CQuestionBrick(x, y, type);
 		break;
+
 	}
 	case OBJECT_TYPE_PIRANHA: { 
 		int type = (float)atof(tokens[3].c_str());

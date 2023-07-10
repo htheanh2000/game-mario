@@ -7,18 +7,19 @@
 #include "debug.h"
 
 #define MARIO_WALKING_SPEED		0.15f
+#define MARIO_FLYING_CONDITION_SPEED		0.2f
 #define MARIO_RUNNING_SPEED		0.25f
 
 #define MARIO_ACCEL_WALK_X	0.0005f
 #define MARIO_ACCEL_RUN_X	0.0007f
 
-#define MARIO_JUMP_SPEED_Y		0.7f
+#define MARIO_JUMP_SPEED_Y		0.5f
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
 
-#define MARIO_FLY_SPEED_Y		0.05f
+#define MARIO_FLY_SPEED_Y		0.1f
 
 #define MARIO_GRAVITY			0.002f
-#define MARIO_GRAVITY_RACOON	0.00002f
+#define MARIO_GRAVITY_RACOON	-0.0002f
 
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
 
@@ -62,8 +63,8 @@
 #define ID_ANI_RACOON_MARIO_JUMP_WALK_RIGHT 3700
 #define ID_ANI_RACOON_MARIO_JUMP_WALK_LEFT 3701
 
-#define ID_ANI_RACOON_MARIO_JUMP_RUN_RIGHT 3800
-#define ID_ANI_RACOON_MARIO_JUMP_RUN_LEFT 3801
+#define ID_ANI_RACOON_MARIO_FLYING_RIGHT 3800
+#define ID_ANI_RACOON_MARIO_FLYING_LEFT 3801
 
 #define ID_ANI_RACOON_MARIO_SIT_RIGHT 3900
 #define ID_ANI_RACOON_MARIO_SIT_LEFT 3901
@@ -140,13 +141,24 @@
 #define ADJUST_MARIO_COLLISION_WITH_COLOR_BLOCK 1
 #define MARIO_UNTOUCHABLE_TIME 2500
 
+#define MARIO_MAX_FALLING_SPEED 0.5f
+#define MARIO_MAX_FLYING_SPEED 0.1f
+
+#define MARIO_STATUS_FLY  1000
+#define MARIO_STATUS_FALL  2000
+#define MARIO_STATUS_DEFAULT  0
+
 class CMario : public CGameObject
 {
 	BOOLEAN isSitting;
 	float maxVx;
+	float minVy = -MARIO_MAX_FLYING_SPEED;
+	float maxVy = MARIO_MAX_FALLING_SPEED;
+
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
+	int status = 0 ; // Fall, Fly, Hold, status control varible...
 	int level; 
 	int untouchable;
 	int lifeCount;
@@ -156,6 +168,7 @@ class CMario : public CGameObject
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 	int coin; 
+
 
 	BOOLEAN isGoThroughBlock = false;
 
@@ -212,6 +225,9 @@ public:
 
 	void addCoin() {coin++ ;} ;
 	int getLevel() {return level; } ;
+	int GetState() {return state; } ;
+	int GetStatus() {return status; };
+	void SetStatus(int status) {this->status = status; };
 	void setLifeCount(int life) {lifeCount = life; } ;
 	void setScore(int score) {this->score = score; } ;
 	int getMarioWidthSize();

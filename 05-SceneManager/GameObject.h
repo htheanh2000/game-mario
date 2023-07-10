@@ -50,6 +50,8 @@ public:
 
 	float GetX() { return this->x; }
 	float GetY() { return this->y; }
+	float GetVx() { return this->vx; }
+	float GetVy() { return this->vy; }
 	float GetDX() { return this->vx == 0 ? 0 : this->vx / abs(this->vx); }
 	
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;

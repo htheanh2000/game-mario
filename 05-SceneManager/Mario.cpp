@@ -18,7 +18,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-
 	if (lifeCount == 0)
 	{
 		// DebugOut(L">>> Mario DIE >>> \n");
@@ -26,8 +25,18 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		// TODO: Back to world map
 	}
 
+	// DebugOut(L"[INFO] Mario state:  %d\n", this->GetState());
+
 	if (abs(vx) > abs(maxVx))
 		vx = maxVx;
+
+	if (this->status == MARIO_STATE_FLY && vy > maxVy) {
+		vy = maxVy; 
+	}
+
+	if (this->status == MARIO_STATE_FLY && vy < minVy) {
+		vy = minVy;
+	}
 
 	// reset untouchable timer if untouchable time has passed
 	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
@@ -55,6 +64,10 @@ void CMario::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
+
+	if (y <  -100) {
+		y = -100;
+	}
 }
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -63,8 +76,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
-		if (e->ny < 0)
+		if (e->ny < 0) {
+			status = MARIO_STATUS_DEFAULT;
 			isOnPlatform = true;
+		}
 	}
 	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
@@ -334,9 +349,6 @@ int CMario::GetAniIdBig()
 	return aniId;
 }
 
-//
-// Get animation ID for Fire Mario
-//
 
 //
 // Get animation ID for Raccoon Mario
@@ -346,12 +358,12 @@ int CMario::GetAniIdRacoon()
 	int aniId = -1;
 	if (!isOnPlatform)
 	{
-		if (abs(ax) == MARIO_ACCEL_RUN_X)
+		if (abs(ax) == MARIO_ACCEL_RUN_X && abs(vx) >= MARIO_FLYING_CONDITION_SPEED)
 		{
 			if (nx >= 0)
-				aniId = ID_ANI_RACOON_MARIO_JUMP_RUN_RIGHT;
+				aniId = ID_ANI_RACOON_MARIO_FLYING_RIGHT; // FLying animation
 			else
-				aniId = ID_ANI_RACOON_MARIO_JUMP_RUN_LEFT;
+				aniId = ID_ANI_RACOON_MARIO_FLYING_LEFT; // FLying animation
 		}
 		else
 		{
@@ -484,12 +496,19 @@ void CMario::SetState(int state)
 	case MARIO_STATE_FLY:
 		DebugOut(L"MARIO_STATE_FLY \n");
 		vy = -MARIO_FLY_SPEED_Y;
+		status = MARIO_STATUS_FLY;
 		ay = 0;
 		break;
 
 	case MARIO_STATE_RELEASE_FLY:
-		ay = MARIO_GRAVITY_RACOON;
-		this->SetState(MARIO_STATE_WALKING_RIGHT);
+		ay = MARIO_GRAVITY;
+		DebugOut(L"MARIO_STATE_RELEASE_FLY \n");
+		if(this->GetDX() > 0) {
+			this->SetState(MARIO_STATE_WALKING_RIGHT);
+		}
+		else {
+			this->SetState(MARIO_STATE_WALKING_LEFT);
+		}
 		break;
 
 	case MARIO_STATE_SIT:
@@ -515,6 +534,7 @@ void CMario::SetState(int state)
 	case MARIO_STATE_IDLE:
 		ax = 0.0f;
 		vx = 0.0f;
+		ay = MARIO_GRAVITY;
 		break;
 
 	case MARIO_STATE_DIE:

@@ -18,7 +18,8 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
-		if(mario->getLevel() == MARIO_LEVEL_RACOON) {
+		// DebugOut(L"[INFO] mario->GetVx(): %f\n", mario->GetVx());
+		if( mario->getLevel() == MARIO_LEVEL_RACOON && abs(mario->GetVx()) > MARIO_FLYING_CONDITION_SPEED) {
 			mario->SetState(MARIO_STATE_FLY);
 		}
 		else {
@@ -37,10 +38,10 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_0:
 		mario->SetState(MARIO_STATE_DIE);
 		break;
-	// case DIK_P:
-	// 	DebugOut(L"[INFO] Mario x  %f\n", mario->GetX());
-	// 	DebugOut(L"[INFO] Mario y  %f\n", mario->GetY());
-	// 	break;
+	case DIK_P:
+		// DebugOut(L"[INFO] Mario state:  %d\n", mario->GetState());
+		// DebugOut(L"[INFO] Mario y  %f\n", mario->GetY());
+		break;
 	case DIK_R: // reset
 		//Reload();
 		break;
@@ -55,8 +56,9 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_S:
-		if(mario->getLevel() == MARIO_LEVEL_RACOON) {
-			DebugOut(L"MARIO_STATE_RELEASE_FLY \n") ;
+		if(mario->GetStatus() == MARIO_STATUS_FLY) {
+			mario->SetStatus(MARIO_STATUS_FALL) ;
+			DebugOut(L"MARIO_STATE_RELEASE_FLY \n", mario->GetState()) ;
 			mario->SetState(MARIO_STATE_RELEASE_FLY) ;
 		}
 		mario->SetState(MARIO_STATE_RELEASE_JUMP);
@@ -65,8 +67,8 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 		mario->SetState(MARIO_STATE_SIT_RELEASE);
 		break;
 	case DIK_A:
-			DebugOut(L"MARIO_STATE_HOLD_RELEASE \n") ;
-			mario->SetState(MARIO_STATE_HOLD_RELEASE);
+			// DebugOut(L"MARIO_STATE_HOLD_RELEASE \n") ;
+			// mario->SetState(MARIO_STATE_HOLD_RELEASE);
 		break;
 	}
 }

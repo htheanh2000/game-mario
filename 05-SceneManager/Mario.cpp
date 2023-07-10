@@ -123,9 +123,9 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 	Koopas *koopas = dynamic_cast<Koopas *>(e->obj);
 
 	// jump on top >> kill Koopas and deflect a bit
-	if (e->ny < 0 && koopas->GetState() != KOOPAS_STATE_DEFEND)
+	if ( (e->ny < 0 || (isAttacking && level == MARIO_LEVEL_RACOON ) && koopas->GetState() != KOOPAS_STATE_DEFEND) )
 	{
-		// TODO: Implement method same with Groomba instead of ...
+		// TODO: Implement method same with Groomba instead of ... 
 		koopas->Hit();
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 	}
@@ -136,7 +136,8 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 			if (this->GetState() == MARIO_STATE_RUNNING_RIGHT || this->GetState() == MARIO_STATE_RUNNING_LEFT) 
 			{
 				koopas->hold();
-				this->SetState(MARIO_STATE_HOLD); 
+				// this->SetState(MARIO_STATE_HOLD); 
+				isHold = true ;
 			}
 			else {
 				koopas->kicked(); 
@@ -173,8 +174,8 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
 	CGoomba *goomba = dynamic_cast<CGoomba *>(e->obj);
 
-	// jump on top >> kill Goomba and deflect a bit
-	if (e->ny < 0)
+	// jump on top || mario racoon attack >> kill Goomba and deflect a bit
+	if (e->ny < 0 || (isAttacking && level == MARIO_LEVEL_RACOON))
 	{
 		if (goomba->GetState() != GOOMBA_STATE_DIE)
 		{

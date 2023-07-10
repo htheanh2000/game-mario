@@ -166,7 +166,8 @@ class CMario : public CGameObject
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
-	BOOLEAN isAttacking = true;
+	BOOLEAN isAttacking = false;
+	BOOLEAN isHold = false;
 	ULONGLONG attackTime = -1 ;
 	int status = 0 ; // Fall, Fly, Hold, status control varible...
 	int level; 
@@ -229,6 +230,7 @@ public:
 	
 	void SetRorate();
 	void Attack();
+	BOOLEAN IsHold() {return this->isHold ;};
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

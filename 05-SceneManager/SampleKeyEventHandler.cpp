@@ -67,12 +67,14 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 		mario->SetState(MARIO_STATE_SIT_RELEASE);
 		break;
 	case DIK_A:
-		// DebugOut(L"MARIO_STATE_HOLD_RELEASE \n") ;
-		if(mario->getLevel() == MARIO_LEVEL_RACOON) {
-			// mario->SetStatus(MARIO_STATUS_ATTACK) ;
-			mario->Attack();
+		if(mario->IsHold()) {
+			mario->SetState(MARIO_STATE_HOLD_RELEASE);
 		}
-			// mario->SetState(MARIO_STATE_HOLD_RELEASE);
+		else {
+			if(mario->getLevel() == MARIO_LEVEL_RACOON) {
+			mario->Attack();
+			}
+		}
 		break;
 	}
 }

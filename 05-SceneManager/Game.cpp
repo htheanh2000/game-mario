@@ -7,6 +7,7 @@
 #include "Texture.h"
 #include "Animations.h"
 #include "PlayScene.h"
+#include "IntroScene.h"
 
 CGame * CGame::__instance = NULL;
 
@@ -409,7 +410,9 @@ void CGame::ProcessKeyboard()
 		}
 	}
 
-	keyHandler->KeyState((BYTE*)&keyStates);
+	if(keyHandler != NULL) {
+		keyHandler->KeyState((BYTE*)&keyStates);
+	}
 
 	// Collect all buffered events
 	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
@@ -462,6 +465,15 @@ void CGame::_ParseSection_SCENES(string line)
 
 	LPSCENE scene = new CPlayScene(id, path);
 	scenes[id] = scene;
+
+	 if (id == INTRO_SCENE_ID) {
+		LPSCENE scene = new IntroScene(id, path);
+		scenes[id] = scene;
+	}
+	else {
+		LPSCENE scene = new CPlayScene(id, path);
+		scenes[id] = scene;
+	}
 }
 
 /*
@@ -517,6 +529,7 @@ void CGame::SwitchScene()
 
 	DebugOut(L"[INFO] Switching to scene %d\n", next_scene);
 
+	if (current_scene != 0) ;
 	scenes[current_scene]->Unload();
 
 	CSprites::GetInstance()->Clear();

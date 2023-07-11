@@ -17,6 +17,8 @@ using namespace std;
 #define KEYBOARD_BUFFER_SIZE 1024
 #define KEYBOARD_STATE_SIZE 256
 
+#define INTRO_SCENE_ID 99
+
 /*
 	Our simple game framework
 */

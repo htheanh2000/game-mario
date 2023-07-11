@@ -1,52 +1,42 @@
 #pragma once
-#include "Game.h"
-#include "Textures.h"
-#include "Scene.h"
-#include "GameObject.h"
-#include "Brick.h"
-#include "Mario.h"
-#include "Goomba.h"
-#include "Map.h"
-#include "BGBlock.h"
-#include "Koopas.h"
+#include "PlayScene.h"
+#include <fstream>
 
-#define MARIO_FIX_CAM_ADJUSTMENT 150
+#define ANI_GROUND_INTRO 1
 
-class CIntroScene : public CScene
+#define SCENE_SECTION_UNKNOWN -1
+#define SCENE_SECTION_ASSETS	1
+#define SCENE_SECTION_OBJECTS	2
+#define SCENE_SECTION_DRAWMAP 3
+
+#define ASSETS_SECTION_UNKNOWN -1
+#define ASSETS_SECTION_SPRITES 1
+#define ASSETS_SECTION_ANIMATIONS 2
+
+#define MAX_SCENE_LINE 1024
+
+#define GROUND_POSITION_X 128
+#define GROUND_POSITION_Y 114 
+
+class IntroScene :
+    public CPlayScene
 {
-protected:
-	// A play scene has to have player, right? 
-	CMario* player = NULL;
+	LPANIMATION ground;
+public:
+	IntroScene(int id, LPCWSTR filePath);
+    virtual void Load();
+    virtual void UnLoad();
+    virtual void Render();
+	virtual void Update(DWORD dt);
 
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
 
 	void _ParseSection_ASSETS(string line);
 	void _ParseSection_OBJECTS(string line);
-	void _ParseSection_TILEMAP(string line);
 
 	void LoadAssets(LPCWSTR assetFile);
 
-public:
-	CIntroScene(int id, LPCWSTR filePath);
-
-	virtual void Load();
-	virtual void Update(DWORD dt);
-	virtual void Render();
-	virtual void Unload();
-
-	LPGAMEOBJECT GetPlayer() { return player; }
-
-	void SetCam(float cx, float cy);
-
-	void Clear();
-	void PurgeDeletedObjects();
-
-	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
-	Map* map = NULL;
-
-	vector<LPGAMEOBJECT> objects; // To handle effect brick (coins, magic , ...)
+	vector<LPGAMEOBJECT> objects;
 };
-
-typedef CIntroScene* LPPLAYSCENE;
 

@@ -466,11 +466,11 @@ void CGame::_ParseSection_SCENES(string line)
 	LPSCENE scene = new CPlayScene(id, path);
 	scenes[id] = scene;
 
-	 if (id == INTRO_SCENE_ID) {
+	if (id == INTRO_SCENE_ID) {
 		LPSCENE scene = new IntroScene(id, path);
 		scenes[id] = scene;
 	}
-	else {
+	else { // CPlayScene include world map
 		LPSCENE scene = new CPlayScene(id, path);
 		scenes[id] = scene;
 	}

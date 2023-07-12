@@ -1,0 +1,6 @@
+# list of object assets to load in this scene
+[ASSETS]
+worldMapAssets.txt
+
+[TILEMAP]
+Resources\Tilemap\world-map.txt

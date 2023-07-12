@@ -1,13 +1,14 @@
 [SETTINGS]
-start	99
+start	100
 width	320
 height	240
 
 #id	type	file
 [SCENES]
-0	intro.txt
+0	worldMap.txt
 1	world1-1.txt
-99	intro.txt
+#99	intro.txt
+100	worldMap.txt
 
 # id	file 
 [TEXTURES]
@@ -23,4 +24,6 @@ height	240
 32	textures\enemies3.png
 80	textures\Map\world1-1_bank.png
 60	textures\Map\world1-1-1_bank.png
+70	textures\Map\worldmap_bank.png
+200	textures\worldmapObj.png
 1	textures\title.png

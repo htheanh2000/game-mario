@@ -1,6 +1,64 @@
+
 # list of object assets to load in this scene
 [ASSETS]
-worldMapAssets.txt
+grass.txt
+star.txt
+
+[OBJECTS]
+# type	x	y	extra_settings per object type
+# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas. 4: coin
+# 6 = question brick, 7 = PIPE, 8 = piranhaplant, 9 = firePiranhaPlant
+# See OBJECT_TYPE constants in AssetIDs.h
+#
+# Star #
+12	16	-16
+12	32	-16
+12	48	-16
+12	16	0
+12	32	0
+12	48	0
+12	16	32
+12	32	32
+12	48	32
+12	16	48
+12	32	48
+12	48	48
+12	16	64
+12	80	0
+12	96	0
+12	112	0
+12	80	16
+12	96	16
+12	112	16
+12	80	32
+12	96	32
+12	112	32
+12	144	0
+12	160	0
+12	176	0
+12	208	-16
+12	224	-16
+12	208	0
+12	224	0
+12	208	16
+12	224	16
+12	208	32
+12	224	32
+12	144	32
+12	160	32
+12	176	32
+12	192	32
+12	224	48
+12	224	64
+12	224	80
+12	224	96
+12	224	112
+12	144	48
+12	160	48
+12	128	64
+12	112	64
+12	96	64
+
 
 [TILEMAP]
 Resources\Tilemap\world-map.txt

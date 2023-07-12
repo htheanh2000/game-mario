@@ -25,6 +25,9 @@
 
 #define OBJECT_TYPE_PORTAL	50
 
+// WORLD MAP DEFINE
+#define OBJECT_TYPE_GRASS   12
+
 
 #pragma region MARIO 
 

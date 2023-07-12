@@ -16,6 +16,7 @@
 #include "PiranhaPipe.h"
 #include "SoftBrick.h"
 #include "Star.h"
+#include "Grass.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -191,6 +192,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int scene_id = atoi(tokens[5].c_str());
 		obj = new CPortal(x, y, r, b, scene_id);
 	}
+	case OBJECT_TYPE_GRASS: 
+	{
+		obj = new Grass(32, y + 16); 
+		break;
+	}
+
 	break;
 
 

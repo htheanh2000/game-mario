@@ -194,7 +194,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_GRASS: 
 	{
-		obj = new Grass(32, y + 16); 
+		obj = new Grass(x, y); 
 		break;
 	}
 

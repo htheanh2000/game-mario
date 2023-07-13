@@ -77,6 +77,7 @@
 #define ID_ANI_RACOON_MARIO_ATTACK_LEFT 3201
 
 #define ID_ANI_MARIO_DIE 999
+#define ID_ANI_MARIO_FLAT 9999
 
 // SMALL MARIO
 #define ID_ANI_MARIO_SMALL_IDLE_RIGHT 1100
@@ -166,6 +167,7 @@ class CMario : public CGameObject
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
+	BOOLEAN isFlatMario = false; // In world map sence
 	BOOLEAN isAttacking = false;
 	BOOLEAN isHold = false;
 	ULONGLONG attackTime = -1 ;
@@ -200,10 +202,11 @@ class CMario : public CGameObject
 public:
 	CMario(float x, float y) : CGameObject(x, y)
 	{
+		isFlatMario = CGame::GetInstance()->GetCurrentSceneId() == WORLD_DMAP_ID ;
 		isSitting = false;
 		maxVx = 0.0f;
 		ax = 0.0f;
-		ay = 0.0f; 
+		ay = isFlatMario ? 0.0f : MARIO_GRAVITY; 
 		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
 		untouchable_start = -1;

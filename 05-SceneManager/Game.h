@@ -18,6 +18,7 @@ using namespace std;
 #define KEYBOARD_STATE_SIZE 256
 
 #define INTRO_SCENE_ID 99
+#define WORLD_DMAP_ID 100
 
 /*
 	Our simple game framework
@@ -121,6 +122,8 @@ public:
 	int GetScreenHeight() { return screen_height; }
 	
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
+
+	int GetCurrentSceneId() { return current_scene; }  ;
 	void Load(LPCWSTR gameFile);
 	void SwitchScene();
 	void InitiateSwitchScene(int scene_id);

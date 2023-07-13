@@ -25,7 +25,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		// TODO: Back to world map
 	}
 
-	// DebugOut(L"[INFO] Mario status:  %d\n", this->GetStatus());
+	DebugOut(L"[INFO] Mario status:  %d\n", isFlatMario);
 
 	if (abs(vx) > abs(maxVx))
 		vx = maxVx;
@@ -435,7 +435,10 @@ void CMario::Render()
 	CAnimations *animations = CAnimations::GetInstance();
 	int aniId = -1;
 
-	if (state == MARIO_STATE_DIE)
+	if(isFlatMario){
+		aniId = ID_ANI_MARIO_FLAT;	
+	}
+	else if (state == MARIO_STATE_DIE)
 		aniId = ID_ANI_MARIO_DIE;
 	else if (level == MARIO_LEVEL_BIG)
 		aniId = GetAniIdBig();

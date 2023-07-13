@@ -15,6 +15,7 @@ public:
 		this->ani_id = ani_id;
 	};
 	virtual void Render();
+	int IsBlocking() { return ani_id == 80000 || ani_id == 88888; }
 	void Update(DWORD dt) {};
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

@@ -11,8 +11,7 @@ mario.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 #
 
-# MARIO
-0	30	47
+
 
 
 12	16	16	80000
@@ -74,6 +73,10 @@ mario.txt
 12	128	80	80008
 
 
+12	65	65	88888
 
+
+# MARIO
+0	30	47
 [TILEMAP]
 Resources\Tilemap\world-map.txt

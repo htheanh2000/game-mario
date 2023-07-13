@@ -640,6 +640,7 @@ int CMario::getMarioWidthSize()
 
 void CMario::SetLevel(int l)
 {
+	if(!this) return ;
 	// Adjust position to avoid falling off platform
 	if (this->level == MARIO_LEVEL_SMALL)
 	{

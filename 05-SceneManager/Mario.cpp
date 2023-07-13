@@ -25,7 +25,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		// TODO: Back to world map
 	}
 
-	DebugOut(L"[INFO] Mario status:  %d\n", isFlatMario);
+	// DebugOut(L"[INFO] Mario status:  %d\n", isFlatMario);
 
 	if (abs(vx) > abs(maxVx))
 		vx = maxVx;

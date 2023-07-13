@@ -18,6 +18,11 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
+		if(mario->IsFlatMario()) {
+			DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+			CGame::GetInstance()->InitiateSwitchScene(MAIN_SCENE_ID);
+			return ;
+		}
 		// DebugOut(L"[INFO] mario->GetVx(): %f\n", mario->GetVx());
 		if( mario->getLevel() == MARIO_LEVEL_RACOON && abs(mario->GetVx()) > MARIO_FLYING_CONDITION_SPEED) {
 			mario->SetState(MARIO_STATE_FLY);

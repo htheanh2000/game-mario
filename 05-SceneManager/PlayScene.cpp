@@ -379,8 +379,14 @@ void CPlayScene::SetCam(float cx, float cy)
 		// DebugOut(L"[INFO] marioY  %d\n", marioY);
 		posY = MARIO_HEAVEN_CAM_ADJUSTMENT - MARIO_FIX_CAM_ADJUSTMENT;
 	}
-	game->SetCamPos(cx, cy);
-	map->SetCamPos(cx, cy);
+	if(game->GetCurrentSceneId() == INTRO_SCENE_ID || game->GetCurrentSceneId() == WORLD_DMAP_ID) {
+		game->SetCamPos(cx, cy);
+		map->SetCamPos(cx, cy);
+	}
+	else {
+		game->SetCamPos(cx, posY);
+		map->SetCamPos(cx, posY);
+	}
 }
 
 

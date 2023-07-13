@@ -1,5 +1,4 @@
 #include "Map.h"
-
 Map::Map(int TexID, int NumofRowMap, int NumofColMap, int NumofRowTileSet, int NumofColTileSet, int TotalTile)
 {
 	Tex = CTextures::GetInstance()->Get(TexID);

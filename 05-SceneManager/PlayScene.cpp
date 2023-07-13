@@ -194,7 +194,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_GRASS: 
 	{
-		obj = new Grass(x, y); 
+		float ani_id = (float)atof(tokens[3].c_str());
+		obj = new Grass(x, y, ani_id); 
 		break;
 	}
 
@@ -378,8 +379,8 @@ void CPlayScene::SetCam(float cx, float cy)
 		// DebugOut(L"[INFO] marioY  %d\n", marioY);
 		posY = MARIO_HEAVEN_CAM_ADJUSTMENT - MARIO_FIX_CAM_ADJUSTMENT;
 	}
-	game->SetCamPos(cx, posY);
-	map->SetCamPos(cx, posY);
+	game->SetCamPos(cx, cy);
+	map->SetCamPos(cx, cy);
 }
 
 

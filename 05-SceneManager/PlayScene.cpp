@@ -184,13 +184,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		break;
 	}
-
 	case OBJECT_TYPE_PORTAL:
 	{
 		float r = (float)atof(tokens[3].c_str());
 		float b = (float)atof(tokens[4].c_str());
 		int scene_id = atoi(tokens[5].c_str());
 		obj = new CPortal(x, y, r, b, scene_id);
+		break;
 	}
 	case OBJECT_TYPE_GRASS: 
 	{
@@ -370,16 +370,15 @@ void CPlayScene::SetCam(float cx, float cy)
 	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
 	int marioY = mario->GetY();	// target 
 	int posY = cy; // TODO: Fix position when mario too high with ground
+	DebugOut(L"[INFO] marioY  %d\n", marioY);
 	if(mario->getLevel() == MARIO_LEVEL_RACOON) {
-		// DebugOut(L"[INFO] mario->getLevel()  %d\n", mario->getLevel());
-		// DebugOut(L"[INFO] marioY  %d\n", marioY);
 		posY = marioY - MARIO_FIX_CAM_ADJUSTMENT; // Fix camera position when racoon fly;
 	}
 	else if(marioY < MARIO_HEAVEN_CAM_ADJUSTMENT) {
 		// DebugOut(L"[INFO] marioY  %d\n", marioY);
 		posY = MARIO_HEAVEN_CAM_ADJUSTMENT - MARIO_FIX_CAM_ADJUSTMENT;
 	}
-	if(game->GetCurrentSceneId() == INTRO_SCENE_ID || game->GetCurrentSceneId() == WORLD_DMAP_ID) {
+	if(game->GetCurrentSceneId() == INTRO_SCENE_ID || game->GetCurrentSceneId() == WORLD_DMAP_ID || game->GetCurrentSceneId() == HIDDEN_SCENE_ID) {
 		game->SetCamPos(cx, cy);
 		map->SetCamPos(cx, cy);
 	}

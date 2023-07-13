@@ -20,6 +20,7 @@ using namespace std;
 #define INTRO_SCENE_ID 99
 #define WORLD_DMAP_ID 100
 #define MAIN_SCENE_ID 1
+#define HIDDEN_SCENE_ID 2
 
 /*
 	Our simple game framework

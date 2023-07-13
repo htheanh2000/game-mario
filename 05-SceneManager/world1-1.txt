@@ -139,7 +139,7 @@ star.txt
 11	2688	336
 
 # Portal
-#50	2265	110	2300	122	2
+50	2265	110	2300	122	2
 
 [TILEMAP]
 Resources\Tilemap\world1-1.txt

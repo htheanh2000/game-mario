@@ -1,5 +1,5 @@
 [SETTINGS]
-start	99
+start	1
 width	320
 height	240
 
@@ -7,6 +7,8 @@ height	240
 [SCENES]
 0	worldMap.txt
 1	world1-1.txt
+2	world1-1-hidden.txt
+3	world1-1.txt
 99	intro.txt
 100	worldMap.txt
 

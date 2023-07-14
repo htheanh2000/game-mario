@@ -121,8 +121,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
+
 		obj = new CMario(x,y); 
+
 		player = (CMario*)obj;  
+		if(CGame::GetInstance()->GetPrevState() != -1  )
+		{
+			int prevState =  CGame::GetInstance()->GetPrevState()  ;
+			DebugOut(L"[ERROR] MARIO state! %d \n", prevState);
+			player->SetLevel(prevState); // state mean level 
+		}
+
 
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;

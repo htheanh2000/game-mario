@@ -58,6 +58,8 @@ class CGame
 	unordered_map<int, LPSCENE> scenes;
 	int current_scene;
 	int next_scene = -1;
+	int prev_scene = -1;
+	int prev_state = -1; 
 	int screen_width;
 	int screen_height;
 	void _ParseSection_SETTINGS(string line);
@@ -124,8 +126,11 @@ public:
 	int GetScreenHeight() { return screen_height; }
 	
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
+	LPSCENE GetPrevScene() { return scenes[prev_scene]; }
 
 	int GetCurrentSceneId() { return current_scene; }  ;
+	int GetPrevState() { return prev_state; }  ;
+	int GetPrevSceneId() { return prev_scene; }  ;
 	void Load(LPCWSTR gameFile);
 	void SwitchScene();
 	void InitiateSwitchScene(int scene_id);

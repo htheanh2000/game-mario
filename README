@@ -15,6 +15,7 @@ This is a Mario Game project that clone Mario Bros 3 World 1-1
 - Racoon Mario can attack: Done
 - Mario can hold and kick koopas: Done
 
+
 ### 3. Koopas Object
 - Normal Koopas and Wing Koopas: Done
 - Respawn after dead: Done
@@ -34,7 +35,10 @@ This is a Mario Game project that clone Mario Bros 3 World 1-1
 ### 7. Color Box
 - Mario can jump throungh : Done
 
-### 8. HUD: Uncompleted world
+## Uncompleted world
+### HUD component
+### Mario can go to any Node
+
 
 
 ## Midterm feedback:

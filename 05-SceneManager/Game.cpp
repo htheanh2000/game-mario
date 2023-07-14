@@ -543,6 +543,12 @@ void CGame::SwitchScene()
 
 void CGame::InitiateSwitchScene(int scene_id)
 {
+	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
+	if(mario) {
+		prev_state = mario->getLevel() ;
+		prev_scene = current_scene;
+
+	}
 	next_scene = scene_id;
 }
 

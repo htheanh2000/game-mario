@@ -13,6 +13,8 @@
 #include "MushRoom.h"
 #include "Koopas.h"
 #include "Leaf.h"
+#include "FireBall.h"
+#include "PiranhaPlant.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -23,6 +25,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		// DebugOut(L">>> Mario DIE >>> \n");
 		// SetState(MARIO_STATE_DIE);
 		// TODO: Back to world map
+	}
+
+	if(die_start + 1000 < GetTickCount64() && state == MARIO_STATE_DIE) {
+		CGame::GetInstance()->InitiateSwitchScene(WORLD_DMAP_ID);
 	}
 
 	// DebugOut(L"[INFO] Mario status:  %d\n", isFlatMario);
@@ -110,6 +116,13 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithKoopas(e);
 	else if (dynamic_cast<CLeaf *>(e->obj))
 		OnCollisionWithLeaf(e);
+	else if (dynamic_cast<CLeaf *>(e->obj))
+		OnCollisionWithLeaf(e);
+	else if (dynamic_cast<FireBall *>(e->obj)) 
+		this->Hit();
+	else if (dynamic_cast<PiranhaPlant *>(e->obj)) 
+		this->Hit();
+		
 }
 
 void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
@@ -125,7 +138,6 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 	// jump on top >> kill Koopas and deflect a bit
 	if ( (e->ny < 0 || (isAttacking && level == MARIO_LEVEL_RACOON ) && koopas->GetState() != KOOPAS_STATE_DEFEND) )
 	{
-		// TODO: Implement method same with Groomba instead of ... 
 		koopas->Hit();
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 	}
@@ -136,13 +148,15 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 			if (this->GetState() == MARIO_STATE_RUNNING_RIGHT || this->GetState() == MARIO_STATE_RUNNING_LEFT) 
 			{
 				koopas->hold();
-				// this->SetState(MARIO_STATE_HOLD); 
 				isHold = true ;
 			}
 			else {
 				koopas->kicked(); 
 			}
 			
+		}
+		else {
+			this->Hit() ;
 		}
 	}
 }
@@ -185,21 +199,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	}
 	else // hit by Goomba
 	{
-		if (untouchable == 0)
-		{
-			if (goomba->GetState() != GOOMBA_STATE_DIE)
-			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					setLifeCount(lifeCount - 1);
-				}
-			}
-		}
+		this->Hit();
 	}
 }
 
@@ -460,6 +460,32 @@ void CMario::SetRorate() {
 	rotating = true;
 }
 
+void CMario::Die() {
+	vx = 0;
+	ax = 0;
+	vy = -MARIO_JUMP_SPEED_Y ;
+	state = MARIO_STATE_DIE ;
+	die_start = GetTickCount64();
+}
+
+void CMario::Hit() {
+	if (untouchable == 0)
+		{
+			if (level == MARIO_LEVEL_RACOON)
+			{
+				level = MARIO_LEVEL_BIG;
+			}
+			else if (level == MARIO_LEVEL_BIG)
+			{
+				level = MARIO_LEVEL_SMALL;
+			}
+			else if (level = MARIO_LEVEL_SMALL) {
+				this->Die() ;
+			}
+			StartUntouchable();
+	}
+}
+
 void CMario::Attack() {
 	this->isAttacking = true;
 	attackTime = GetTickCount64() ;
@@ -469,7 +495,7 @@ void CMario::Attack() {
 void CMario::SetState(int state)
 {
 	// DIE is the end state, cannot be changed!
-	if (this->state == MARIO_STATE_DIE && !isImmortal)
+	if (this->state == MARIO_STATE_DIE )
 		return;
 
 	switch (state)

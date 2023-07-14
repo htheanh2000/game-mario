@@ -171,6 +171,7 @@ class CMario : public CGameObject
 	BOOLEAN isAttacking = false;
 	BOOLEAN isHold = false;
 	ULONGLONG attackTime = -1 ;
+	ULONGLONG die_start = -1 ;
 	int status = 0 ; // Fall, Fly, Hold, status control varible...
 	int level; 
 	int untouchable;
@@ -232,6 +233,8 @@ public:
 	void SetLevel(int l);
 	
 	void SetRorate();
+	void Die();
+	void Hit();
 	void Attack();
 	BOOLEAN IsHold() {return this->isHold ;};
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }

@@ -108,8 +108,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	if (tokens.size() < 2) return;
 
 	int object_type = atoi(tokens[0].c_str());
-	int x = (int)atof(tokens[1].c_str());
-	int y = (int)atof(tokens[2].c_str());
+	float x = (float)atof(tokens[1].c_str());
+	float y = (float)atof(tokens[2].c_str());
 
 	CGameObject *obj = NULL;
 
@@ -141,8 +141,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break; 
 	}
 	case OBJECT_TYPE_BLOCK: {
-		int width = (int)atof(tokens[3].c_str());
-		int height = (int)atof(tokens[4].c_str());
+		float width = (float)atof(tokens[3].c_str());
+		float height = (float)atof(tokens[4].c_str());
 		int type = (int)atof(tokens[5].c_str());
 		obj = new CBGBlock(x, y, width, height, type);
 		break;
@@ -170,8 +170,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_PLATFORM:
 	{
 
-		int cell_width = (int)atof(tokens[3].c_str());
-		int cell_height = (int)atof(tokens[4].c_str());
+		float cell_width = (float)atof(tokens[3].c_str());
+		float cell_height = (float)atof(tokens[4].c_str());
 		int length = atoi(tokens[5].c_str());
 		int sprite_begin = atoi(tokens[6].c_str());
 		int sprite_middle = atoi(tokens[7].c_str());
@@ -187,8 +187,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_PORTAL:
 	{
-		int r = (int)atof(tokens[3].c_str());
-		int b = (int)atof(tokens[4].c_str());
+		float r = (float)atof(tokens[3].c_str());
+		float b = (float)atof(tokens[4].c_str());
 		int scene_id = atoi(tokens[5].c_str());
 		obj = new CPortal(x, y, r, b, scene_id);
 		break;

@@ -6,6 +6,8 @@
 FirePiranhaPlant::FirePiranhaPlant(float x, float y, int type)
 {
 	this->objType = type;
+	ay = 0 ;
+	ay = 0;
 	this->maxY = y + FIRE_PLANT_MAX_HEIGHT - 5 ;// TODO: investigate bad UI rendering if dont -5 !!;
 	vy = FIRE_PLANT_SPEED;
 	this->minY = y;
@@ -59,8 +61,8 @@ void FirePiranhaPlant::OnNoCollision(DWORD dt)
 
 void FirePiranhaPlant::Attack() {
 	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
-	int tx = mario->GetX(); // target 
-	int ty = mario->GetY();	// target 
+	float tx = mario->GetX(); // target 
+	float ty = mario->GetY();	// target 
 	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 	FireBall* ball = new FireBall(x , y, tx, ty);
 	scene->objects.push_back(ball);

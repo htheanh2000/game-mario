@@ -11,7 +11,7 @@ public:
 	int ani_id = -1;
 
 	Grass(float x, float y) : CGameObject(x, y) {}
-	Grass(float x, float y, float ani_id) : CGameObject(x, y) {
+	Grass(float x, float y, int ani_id) : CGameObject(x, y) {
 		this->ani_id = ani_id;
 	};
 	virtual void Render();

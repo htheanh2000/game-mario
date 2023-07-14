@@ -187,7 +187,6 @@ class CMario : public CGameObject
 	int lifeCount;
 	int score; 
 	BOOLEAN rotating = false ; // Active 1 time when matio roate left to right and right to left 
-	int isImmortal ; // Only for debugging/cheating mode 
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 	int coin; 

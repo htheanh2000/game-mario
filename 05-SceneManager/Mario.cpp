@@ -61,7 +61,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	isOnPlatform = false;
 
-	if (isGoThroughBlock)
+	if (isGoThroughBlock && !isFlatMario)
 	{
 		// reset y to avoid mario lag and stuck in block
 		// To do: Fix mario can jump higher when in block

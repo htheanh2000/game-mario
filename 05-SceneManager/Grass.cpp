@@ -7,7 +7,7 @@ void Grass::Render()
 		animations->Get(this->ani_id)->Render(x, y);
 	}
 	else {
-		RenderBoundingBox();
+		//RenderBoundingBox();
 	}
 }
 

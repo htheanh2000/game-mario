@@ -14,7 +14,7 @@ public:
 
 	CBGBlock(float x, float y, float width, float height, int type);
 	void Render() {
-		RenderBoundingBox();
+		//RenderBoundingBox();
 	};//RenderBoundingBox(); 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {};
 	// int IsBlocking() {return 0;} ;

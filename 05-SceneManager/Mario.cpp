@@ -500,6 +500,32 @@ void CMario::SetState(int state)
 
 	switch (state)
 	{
+	case MARIO_STATE_MOVE_UP:
+		ay = 0;
+		ax = 0;
+		vy = -FLAT_MARIO_SPEED ;
+		vx = 0 ;
+		break;
+	case MARIO_STATE_MOVE_DOWN:
+		ay = 0;
+		ax = 0;
+		vy = FLAT_MARIO_SPEED ;
+		vx = 0 ;
+		break;
+	case MARIO_STATE_MOVE_RIGHT:
+		ay = 0;
+		ax = 0;
+		vx = FLAT_MARIO_SPEED ;
+		vy = 0 ;
+		nx = 1;
+		break;
+	case MARIO_STATE_MOVE_LEFT:
+		ay = 0;
+		ax = 0;
+		vx = -FLAT_MARIO_SPEED ;
+		vy = 0 ;
+		nx = -1;
+		break;
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting)
 			break;
@@ -586,9 +612,12 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_IDLE:
-		ax = 0.0f;
-		vx = 0.0f;
-		ay = MARIO_GRAVITY;
+		if(! this->IsFlatMario()) {
+			ax = 0.0f;
+			vx = 0.0f;
+			ay = MARIO_GRAVITY;
+		}
+		
 		break;
 
 	case MARIO_STATE_DIE:

@@ -104,10 +104,20 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	LPGAME game = CGame::GetInstance();
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 	if(!mario ) return; 
-	if (game->IsKeyDown(DIK_RIGHT))
+	if (game->IsKeyDown(DIK_UP) && mario->IsFlatMario())
 	{
+		mario->SetState(MARIO_STATE_MOVE_UP);
+	}
+	else if (game->IsKeyDown(DIK_DOWN)  && mario->IsFlatMario()) {
+		mario->SetState(MARIO_STATE_MOVE_DOWN);
+	}
+	else if (game->IsKeyDown(DIK_RIGHT))
+	{
+		if(mario->IsFlatMario()) {
+			mario->SetState(MARIO_STATE_WALKING_RIGHT);
+		}
 		// mario->SetRorate() ;
-		if (game->IsKeyDown(DIK_A))
+		else if (game->IsKeyDown(DIK_A))
 			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
 		else
 			mario->SetState(MARIO_STATE_WALKING_RIGHT);
@@ -115,8 +125,11 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	}
 	else if (game->IsKeyDown(DIK_LEFT))
 	{
+		if(mario->IsFlatMario()) {
+			mario->SetState(MARIO_STATE_MOVE_LEFT);
+		}
 		// mario->SetRorate() ;
-		if (game->IsKeyDown(DIK_A))
+		else if (game->IsKeyDown(DIK_A))
 			mario->SetState(MARIO_STATE_RUNNING_LEFT);
 		else
 			mario->SetState(MARIO_STATE_WALKING_LEFT);

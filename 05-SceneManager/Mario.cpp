@@ -479,7 +479,7 @@ void CMario::Hit() {
 			{
 				level = MARIO_LEVEL_SMALL;
 			}
-			else if (level = MARIO_LEVEL_SMALL) {
+			else if (level == MARIO_LEVEL_SMALL) {
 				this->Die() ;
 			}
 			StartUntouchable();

@@ -108,8 +108,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	if (tokens.size() < 2) return;
 
 	int object_type = atoi(tokens[0].c_str());
-	float x = (float)atof(tokens[1].c_str());
-	float y = (float)atof(tokens[2].c_str());
+	int x = (int)atof(tokens[1].c_str());
+	int y = (int)atof(tokens[2].c_str());
 
 	CGameObject *obj = NULL;
 
@@ -141,9 +141,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break; 
 	}
 	case OBJECT_TYPE_BLOCK: {
-		float width = (float)atof(tokens[3].c_str());
-		float height = (float)atof(tokens[4].c_str());
-		float type = (float)atof(tokens[5].c_str());
+		int width = (int)atof(tokens[3].c_str());
+		int height = (int)atof(tokens[4].c_str());
+		int type = (int)atof(tokens[5].c_str());
 		obj = new CBGBlock(x, y, width, height, type);
 		break;
 	}
@@ -154,12 +154,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 
 	case OBJECT_TYPE_QUESTION_BRICK: {
-		float type = (float)atof(tokens[3].c_str());
+		int type = (int)atof(tokens[3].c_str());
 		obj = new CQuestionBrick(x, y, type);
 		break;
 	}
 	case OBJECT_TYPE_PIRANHA: { 
-		int type = (float)atof(tokens[3].c_str());
+		int type = (int)atof(tokens[3].c_str());
 		obj = new PiranhaPlant(x, y, type); break; 
 		}
 	case OBJECT_TYPE_PIPE: {
@@ -170,8 +170,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_PLATFORM:
 	{
 
-		float cell_width = (float)atof(tokens[3].c_str());
-		float cell_height = (float)atof(tokens[4].c_str());
+		int cell_width = (int)atof(tokens[3].c_str());
+		int cell_height = (int)atof(tokens[4].c_str());
 		int length = atoi(tokens[5].c_str());
 		int sprite_begin = atoi(tokens[6].c_str());
 		int sprite_middle = atoi(tokens[7].c_str());
@@ -187,15 +187,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_PORTAL:
 	{
-		float r = (float)atof(tokens[3].c_str());
-		float b = (float)atof(tokens[4].c_str());
+		int r = (int)atof(tokens[3].c_str());
+		int b = (int)atof(tokens[4].c_str());
 		int scene_id = atoi(tokens[5].c_str());
 		obj = new CPortal(x, y, r, b, scene_id);
 		break;
 	}
 	case OBJECT_TYPE_GRASS: 
 	{
-		float ani_id = (float)atof(tokens[3].c_str());
+		int ani_id = (int)atof(tokens[3].c_str());
 		obj = new Grass(x, y, ani_id); 
 		break;
 	}
@@ -372,8 +372,8 @@ void CPlayScene::SetCam(float cx, float cy)
 
 
 	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
-	int marioY = mario->GetY();	// target 
-	int posY = cy; // TODO: Fix position when mario too high with ground
+	float marioY = mario->GetY();	// target 
+	float posY = cy; // TODO: Fix position when mario too high with ground
 	//DebugOut(L"[INFO] marioY  %d\n", marioY);
 	if(mario->getLevel() == MARIO_LEVEL_RACOON) {
 		posY = marioY - MARIO_FIX_CAM_ADJUSTMENT; // Fix camera position when racoon fly;

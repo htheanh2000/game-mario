@@ -10,7 +10,7 @@ HUD::HUD(float x, float y)
 
 void HUD::Render(CMario* mario, int time)
 {
-	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(ID_ANI_HUD)->Render(x, y);
+	// CAnimations* animations = CAnimations::GetInstance();
+	// animations->Get(ID_ANI_HUD)->Render(x, y);
 }
 

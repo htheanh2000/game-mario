@@ -339,12 +339,12 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
-	CGame* game = CGame::GetInstance();
-	HUD* hud = new HUD(game->GetCamX() + HUD_WIDTH / 2, game->GetCamY() + game->GetScreenHeight() - HUD_HEIGHT / 2);
+	// CGame* game = CGame::GetInstance();
+	// HUD* hud = new HUD(game->GetCamX() + HUD_WIDTH / 2, game->GetCamY() + game->GetScreenHeight() - HUD_HEIGHT / 2);
 	map->DrawMap();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
-	hud->Render(player,GetTickCount64()/1000);
+	// hud->Render(player,GetTickCount64()/1000);
 
 }
 void CPlayScene::SetCam(float cx, float cy)
@@ -374,7 +374,7 @@ void CPlayScene::SetCam(float cx, float cy)
 	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
 	int marioY = mario->GetY();	// target 
 	int posY = cy; // TODO: Fix position when mario too high with ground
-	DebugOut(L"[INFO] marioY  %d\n", marioY);
+	//DebugOut(L"[INFO] marioY  %d\n", marioY);
 	if(mario->getLevel() == MARIO_LEVEL_RACOON) {
 		posY = marioY - MARIO_FIX_CAM_ADJUSTMENT; // Fix camera position when racoon fly;
 	}

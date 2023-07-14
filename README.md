@@ -34,7 +34,7 @@ This is a Mario Game project that clone Mario Bros 3 World 1-1
 ### 7. Color Box
 - Mario can jump throungh : Done
 
-### 8. HUD: Uncompleted world
+### 8. HUD: Uncompleted work
 
 
 ## Midterm feedback:

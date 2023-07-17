@@ -314,12 +314,13 @@ void CPlayScene::Load()
 	}
 
 	f.close();
-
+	remainingTime = GetTickCount64() ;
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 }
 
 void CPlayScene::Update(DWORD dt)
 {
+
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
@@ -353,7 +354,7 @@ void CPlayScene::Render()
 	map->DrawMap();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
-	hud->Render(player,GetTickCount64()/1000);
+	hud->Render(player, (GetTickCount64() - remainingTime) / 1000);
 
 }
 void CPlayScene::SetCam(float cx, float cy)

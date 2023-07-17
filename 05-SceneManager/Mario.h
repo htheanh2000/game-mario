@@ -263,4 +263,5 @@ public:
 	void setScore(int score) {this->score = score; } ;
 	int getMarioWidthSize();
 	int getNx() {return nx;} ;
+	int GetCoin() {return coin;} ;
 };

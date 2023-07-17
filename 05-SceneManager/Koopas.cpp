@@ -47,6 +47,8 @@ void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom
 }
 
 void Koopas::kicked() {
+
+	// DebugOut(L"[INFO] KICK %f\n", 0);
 	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
 	vx = KOOPAS_KICKED_SPEED * mario->getNx(); 
 	this->SetState(KOOPAS_STATE_KICKED);
@@ -71,7 +73,7 @@ void Koopas::TurnBack() {
 };
 
 void Koopas::Hit() {
-	DebugOut(L"[INFO] objType  %d\n", objType);
+	// DebugOut(L"[INFO] objType  %d\n", objType);
 	if(objType == KOOPAS_GREEN_WING && hasWing) {
 		hasWing = false ;
 	}

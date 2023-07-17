@@ -134,15 +134,28 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 {
 	Koopas *koopas = dynamic_cast<Koopas *>(e->obj);
-
+	
+	// isAttacking && level == MARIO_LEVEL_RACOON
 	// jump on top >> kill Koopas and deflect a bit
-	if ( (e->ny < 0 || (isAttacking && level == MARIO_LEVEL_RACOON ) && koopas->GetState() != KOOPAS_STATE_DEFEND) )
+	if (e->ny < 0)
 	{
-		koopas->Hit();
-		vy = -MARIO_JUMP_DEFLECT_SPEED;
+		if(koopas->GetState() == KOOPAS_STATE_WALKING) {
+			koopas->Hit();
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (koopas->GetState() == KOOPAS_STATE_DEFEND) {
+			koopas->kicked(); 
+		}
+		else {
+			this->Hit() ;
+		}
 	}
 	else // hit by Koopas
 	{
+		if(this->getLevel() == MARIO_LEVEL_RACOON) {
+			// Attack Koopas
+			
+		}
 		if (koopas->GetState() == KOOPAS_STATE_DEFEND)
 		{
 			if (this->GetState() == MARIO_STATE_RUNNING_RIGHT || this->GetState() == MARIO_STATE_RUNNING_LEFT) 
@@ -471,6 +484,9 @@ void CMario::Die() {
 void CMario::Hit() {
 	if (untouchable == 0)
 		{
+			ax = 0;
+			vx = 0;
+			this->state = MARIO_STATE_IDLE;
 			if (level == MARIO_LEVEL_RACOON)
 			{
 				level = MARIO_LEVEL_BIG;
@@ -482,6 +498,7 @@ void CMario::Hit() {
 			else if (level == MARIO_LEVEL_SMALL) {
 				this->Die() ;
 			}
+			
 			StartUntouchable();
 	}
 }

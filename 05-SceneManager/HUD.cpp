@@ -18,7 +18,7 @@ void HUD::Render(CMario* mario, int time)
 
 	int stack = 0 ;
 	if(mario->getLevel()  == MARIO_LEVEL_RACOON) {
-		((mario->GetVx() - MARIO_ACCEL_WALK_X) / (MARIO_FLYING_CONDITION_SPEED - MARIO_ACCEL_WALK_X) ) * 7 ; // ENUM: 1,2,3,4,5,6,7 
+		stack = ((mario->GetVx() - MARIO_ACCEL_WALK_X) / (MARIO_FLYING_CONDITION_SPEED - MARIO_ACCEL_WALK_X) ) * 7 ; // ENUM: 1,2,3,4,5,6,7 
 	} 
 
 	_char.Draw(x - ADJUST_X_WORLD, y - ADJUST_Y_WORLD, FillNumber(std::to_string(1), NUMBER_WORLD));

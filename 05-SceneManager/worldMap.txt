@@ -3,6 +3,7 @@
 [ASSETS]
 grass.txt
 mario.txt
+hud.txt
 
 [OBJECTS]
 # type	x	y	extra_settings per object type

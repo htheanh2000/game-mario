@@ -349,7 +349,7 @@ void CPlayScene::Update(DWORD dt)
 void CPlayScene::Render()
 {
 	CGame* game = CGame::GetInstance();
-	HUD* hud = new HUD(game->GetCamX() + HUD_WIDTH / 2, game->GetCamY() + game->GetScreenHeight() - HUD_HEIGHT / 2);
+	HUD* hud = new HUD(game->GetCamX() + HUD_WIDTH / 2, game->GetCamY() + game->GetScreenHeight() - HUD_HEIGHT / 2 + 4);
 	map->DrawMap();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
@@ -392,11 +392,11 @@ void CPlayScene::SetCam(float cx, float cy)
 		posY = MARIO_HEAVEN_CAM_ADJUSTMENT - MARIO_FIX_CAM_ADJUSTMENT;
 	}
 	if(game->GetCurrentSceneId() == INTRO_SCENE_ID || game->GetCurrentSceneId() == WORLD_DMAP_ID || game->GetCurrentSceneId() == HIDDEN_SCENE_ID) {
-		game->SetCamPos(cx, cy);
-		map->SetCamPos(cx, cy);
+		game->SetCamPos(cx, cy );
+		map->SetCamPos(cx, cy );
 	}
 	else {
-		game->SetCamPos(cx, posY);
+		game->SetCamPos(cx, posY +16);
 		map->SetCamPos(cx, posY);
 	}
 }

@@ -1,0 +1,15 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+
+# P BUTTON
+90001	156	144	172	160	23
+90002	178	144	194	160	23
+
+# Jumped
+90003	200	144	216	160	23
+
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+12000	90001	300	90002	300
+12001	90003	300

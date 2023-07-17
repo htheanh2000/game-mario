@@ -18,6 +18,8 @@
 #include "Star.h"
 #include "Grass.h"
 #include "HUD.h"
+#include "PButton.h"
+
 
 #include "SampleKeyEventHandler.h"
 
@@ -142,6 +144,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
+	case OBJECT_TYPE_PBUTTON: obj = new PButton(x, y); break;
 	case OBJECT_TYPE_SOFTBRICK: obj = new SoftBrick(x, y); break;
 	case OBJECT_TYPE_STAR: obj = new Star(x, y); break;
 	case OBJECT_TYPE_FIRE_PIRANHA: { 

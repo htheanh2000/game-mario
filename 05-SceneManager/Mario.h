@@ -175,12 +175,16 @@ class CMario : public CGameObject
 
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
+	
+	float powerMeter = 0;
 
 	BOOLEAN isFlatMario = false; // In world map sence
 	BOOLEAN isAttacking = false;
 	BOOLEAN isHold = false;
 	ULONGLONG attackTime = -1 ;
 	ULONGLONG die_start = -1 ;
+
+
 	int status = 0 ; // Fall, Fly, Hold, status control varible...
 	int level; 
 	int untouchable;

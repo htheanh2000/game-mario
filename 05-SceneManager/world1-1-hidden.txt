@@ -1,5 +1,7 @@
 # list of object assets to load in this scene
 [ASSETS]
+hud.txt
+pbutton.txt
 
 mario.txt
 coin.txt
@@ -11,7 +13,7 @@ items.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-0	138	0
+0	168	0
 
 #COIN
 4	195	50
@@ -73,6 +75,9 @@ items.txt
 
 # Portal #
 50	362	16	400	32	3
+
+
+6	120	0	1	1000	1
 
 [TILEMAP]
 Resources\Tilemap\world1-1-hidden.txt

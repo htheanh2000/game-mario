@@ -10,6 +10,8 @@ coin.txt
 brick.txt
 softbrick.txt
 star.txt
+hud.txt
+pbutton.txt
 
 [OBJECTS]
 # type	x	y	extra_settings per object type

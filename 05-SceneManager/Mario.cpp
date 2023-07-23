@@ -249,6 +249,7 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal *p = (CPortal *)e->obj;
+	this->state = MARIO_STATE_IDLE ;
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 }
 

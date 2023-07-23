@@ -15,6 +15,7 @@
 #include "Leaf.h"
 #include "FireBall.h"
 #include "PiranhaPlant.h"
+#include "PButton.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -122,7 +123,23 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		this->Hit();
 	else if (dynamic_cast<PiranhaPlant *>(e->obj)) 
 		this->Hit();
+	else if (dynamic_cast<PButton *>(e->obj)) 
+		OnCollisionWithButton(e);
+
 		
+}
+
+void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
+{
+	PButton *btn = dynamic_cast<PButton *>(e->obj);
+	// DebugOut(L"[INFO] OnCollisionWith mario %f\n", 1 );
+	if(isAttacking) {
+		btn->SetState(STATE_BREAK);
+	}
+	else if (e->ny < 0 && btn->state == STATE_BREAK) {
+		btn->SetState(STATE_JUMPED_ON);
+		btn->jumpedOn = 1;
+	}
 }
 
 void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)

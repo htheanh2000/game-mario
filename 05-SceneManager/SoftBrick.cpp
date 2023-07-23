@@ -1,11 +1,27 @@
 #include "SoftBrick.h"
-
+#include "Mario.h"
+#include "PlayScene.h"
+#include "Coin.h"
+#include "Game.h"
 void SoftBrick::Render()
 {
+	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
+	int ani = ID_SPRITE_SOFTBRICK ;
+	if(mario->pressedButton) {
+		ani = ID_ANI_COIN ;
+	}
 	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(ID_SPRITE_SOFTBRICK)->Render(x, y);
+	animations->Get(ani)->Render(x, y);
 
 	//RenderBoundingBox();
+}
+
+int SoftBrick::IsBlocking() {
+	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
+	if(mario->pressedButton) {
+		return 0  ;
+	}
+	return 1;
 }
 
 void SoftBrick::GetBoundingBox(float& l, float& t, float& r, float& b)

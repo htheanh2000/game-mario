@@ -16,6 +16,7 @@
 #include "FireBall.h"
 #include "PiranhaPlant.h"
 #include "PButton.h"
+#include "SoftBrick.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -125,8 +126,13 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		this->Hit();
 	else if (dynamic_cast<PButton *>(e->obj)) 
 		OnCollisionWithButton(e);
+	else if (dynamic_cast<SoftBrick *>(e->obj) && this->pressedButton) 
+		OnCollisionWithCoin(e);
+}
 
-		
+void CMario::OnCollisionWithSoftBrick(LPCOLLISIONEVENT e)
+{
+	
 }
 
 void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
@@ -139,6 +145,7 @@ void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
 	else if (e->ny < 0 && btn->state == STATE_BREAK) {
 		btn->SetState(STATE_JUMPED_ON);
 		btn->jumpedOn = 1;
+		pressedButton = true;
 	}
 }
 

@@ -208,12 +208,15 @@ class CMario : public CGameObject
 	void OnCollisionWithKoopas(LPCOLLISIONEVENT e);
 	void OnCollisionWithButton(LPCOLLISIONEVENT e);
 	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
+	void OnCollisionWithSoftBrick(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
 	int GetAniIdRacoon();
 
 public:
+	BOOLEAN pressedButton = false;
+
 	CMario(float x, float y) : CGameObject(x, y)
 	{
 		isFlatMario = CGame::GetInstance()->GetCurrentSceneId() == WORLD_DMAP_ID ;

@@ -112,8 +112,9 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	}
 	else if (game->IsKeyDown(DIK_RIGHT))
 	{
-		if(mario->IsFlatMario()) {
-			mario->SetState(MARIO_STATE_WALKING_RIGHT);
+		
+		if(mario->IsFlatMario() ) {
+			mario->SetState(MARIO_STATE_MOVE_RIGHT);
 		}
 		// mario->SetRorate() ;
 		else if (game->IsKeyDown(DIK_A))
@@ -124,7 +125,7 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	}
 	else if (game->IsKeyDown(DIK_LEFT))
 	{
-		if(mario->IsFlatMario()) {
+		if(mario->IsFlatMario() ) {
 			mario->SetState(MARIO_STATE_MOVE_LEFT);
 		}
 		// mario->SetRorate() ;

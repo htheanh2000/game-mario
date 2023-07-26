@@ -184,6 +184,7 @@ class CMario : public CGameObject
 	ULONGLONG attackTime = -1 ;
 	ULONGLONG die_start = -1 ;
 
+	
 
 	int status = 0 ; // Fall, Fly, Hold, status control varible...
 	int level; 
@@ -209,12 +210,16 @@ class CMario : public CGameObject
 	void OnCollisionWithButton(LPCOLLISIONEVENT e);
 	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
 	void OnCollisionWithSoftBrick(LPCOLLISIONEVENT e);
+	void OnCollisionWithGrass(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
 	int GetAniIdRacoon();
 
 public:
+	int currentGate = -1;
+	float gateX = this->GetX();
+	float gateY = this->GetY();
 	BOOLEAN pressedButton = false;
 
 	CMario(float x, float y) : CGameObject(x, y)

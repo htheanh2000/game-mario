@@ -388,7 +388,7 @@ void CPlayScene::SetCam(float cx, float cy)
 	float marioY = mario->GetY();	// target 
 	float posY = cy; // TODO: Fix position when mario too high with ground
 	//DebugOut(L"[INFO] marioY  %d\n", marioY);
-	if(mario->getLevel() == MARIO_LEVEL_RACOON) {
+	if(mario->GetStatus() == MARIO_STATE_FLY  ) {
 		posY = marioY - MARIO_FIX_CAM_ADJUSTMENT; // Fix camera position when racoon fly;
 	}
 	else if(marioY < MARIO_HEAVEN_CAM_ADJUSTMENT) {
@@ -400,7 +400,7 @@ void CPlayScene::SetCam(float cx, float cy)
 		map->SetCamPos(cx, cy );
 	}
 	else {
-		game->SetCamPos(cx, posY +16);
+		game->SetCamPos(cx, posY + 16);
 		map->SetCamPos(cx, posY);
 	}
 }

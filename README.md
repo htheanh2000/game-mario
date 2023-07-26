@@ -6,6 +6,7 @@ This is a Mario Game project that clone Mario Bros 3 World 1-1
 - Fix camera lag when update status to Racoon
 - Adding Hud
 - Adding logic to allow mario stop at Node
+- Adding button turn brick to gold
 
 ## Project Checklist
 ### 1. Scene Object

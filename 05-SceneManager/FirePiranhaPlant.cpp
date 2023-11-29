@@ -32,6 +32,14 @@ void FirePiranhaPlant::GetBoundingBox(float& left, float& top, float& right, flo
 
 void FirePiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	if(abs(this->x - mario->GetX()) < DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO && abs(y - maxY) < 10) {
+		vy = 0 ; // Fireplant is not go up and attack
+		return ;
+	} else if (vy == 0) {
+		vy = -FIRE_PLANT_SPEED ; // Enable fire 
+	}
+
 	if(y >= maxY) {
 		y = maxY ;
 		vy = -FIRE_PLANT_SPEED ;

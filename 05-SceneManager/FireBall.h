@@ -9,7 +9,7 @@
 
 
 #define FIRE_BALL_GRAVITY 0.002f
-#define FIRE_BALL_SPEED 0.2f
+#define FIRE_BALL_SPEED 0.1f
 
 class FireBall :
 	public CGameObject

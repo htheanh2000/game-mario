@@ -15,6 +15,7 @@
 #include "Leaf.h"
 #include "FireBall.h"
 #include "PiranhaPlant.h"
+#include "FirePiranhaPlant.h"
 #include "PButton.h"
 #include "SoftBrick.h"
 #include "Grass.h"
@@ -101,7 +102,6 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
@@ -115,6 +115,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = 0;
 	}
+	DebugOut(L"[INFO] OnCollisionWith \n" );
 
 	if (dynamic_cast<CGoomba *>(e->obj))
 		OnCollisionWithGoomba(e);
@@ -137,6 +138,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<FireBall *>(e->obj))
 		this->Hit();
 	else if (dynamic_cast<PiranhaPlant *>(e->obj))
+		this->Hit();
+	else if (dynamic_cast<FirePiranhaPlant *>(e->obj))
 		this->Hit();
 	else if (dynamic_cast<PButton *>(e->obj))
 		OnCollisionWithButton(e);
@@ -529,7 +532,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	// RenderBoundingBox();
+	RenderBoundingBox();
 
 	// DebugOutTitle(L"Coins: %d", coin);
 

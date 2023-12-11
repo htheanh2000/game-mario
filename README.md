@@ -2,7 +2,15 @@
 # Mario Game Project
 
 This is a Mario Game project that clone Mario Bros 3 World 1-1
-## Update on 15/7
+
+## Midterm feedback 9/12/2023
+- Hold Koopas Timeout missing
+- Jump issue when nearby colorbox
+- Tail: Slow fail issue, can not break diamond brick
+- P button: Timeout Missing
+- TODO: Pipe animation. 
+
+## Update on 2/12/2023
 - Fix camera lag when update status to Racoon
 - Adding Hud
 - Adding logic to allow mario stop at Node

@@ -25,7 +25,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (isFlatMario &&  currentGate != -1)
+	if (isFlatMario && currentGate != -1)
 	{
 		y = gateY;
 		x = gateX;
@@ -77,16 +77,39 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	isOnPlatform = false;
 
-	if (isGoThroughBlock && !isFlatMario)
+
+	// LEGACY CODE FOR BACKUP PURPOSE
+	// if (isGoThroughBlock && !isFlatMario)
+	// {
+	// 	// reset y to avoid mario lag and stuck in block
+	// 	// To do: Fix mario can jump higher when in block
+	// 	// y -= ADJUST_MARIO_COLLISION_WITH_COLOR_BLOCK;
+	// 	// vy = -MARIO_JUMP_SPEED_MAX;
+	// 	isGoThroughBlock = false;
+	// }
+
+	if (isFlatMario)
 	{
-		// reset y to avoid mario lag and stuck in block
-		// To do: Fix mario can jump higher when in block
-		y -= ADJUST_MARIO_COLLISION_WITH_COLOR_BLOCK;
-		vy = -MARIO_JUMP_SPEED_MAX;
-		isGoThroughBlock = false;
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+		return;
+	}
+	else
+	{
+		vector<LPGAMEOBJECT> *objects = new vector<LPGAMEOBJECT>();
+		for (UINT i = 0; i < coObjects->size(); i++)
+		{
+			LPGAMEOBJECT obj = (*coObjects)[i];
+			if (dynamic_cast<CBGBlock *>(obj) && this->vy < 0)
+			{
+			}
+			else {
+				objects->push_back(obj);
+			}
+		}
+		CCollision::GetInstance()->Process(this, dt, objects);
 	}
 
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+	// CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -94,10 +117,10 @@ void CMario::OnNoCollision(DWORD dt)
 	x += vx * dt;
 	y += vy * dt;
 
-	if (y < -100)
-	{
-		y = -100;
-	}
+	// if (y < -100)
+	// {
+	// 	y = -100;
+	// }
 }
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -115,7 +138,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = 0;
 	}
-	DebugOut(L"[INFO] OnCollisionWith \n" );
 
 	if (dynamic_cast<CGoomba *>(e->obj))
 		OnCollisionWithGoomba(e);
@@ -298,10 +320,6 @@ void CMario::OnCollisionWithBackgroundBlock(LPCOLLISIONEVENT e)
 {
 	CBGBlock *block = dynamic_cast<CBGBlock *>(e->obj);
 	if (e->ny > 0)
-	{
-		isGoThroughBlock = true;
-	}
-	if (block->objType == ENEMIES_ONLY_BLOCK)
 	{
 		isGoThroughBlock = true;
 	}
@@ -647,7 +665,8 @@ void CMario::SetState(int state)
 		}
 		break;
 	case MARIO_STATE_MOVE_LEFT:
-		if(currentGate == 0) return;
+		if (currentGate == 0)
+			return;
 		if (currentGate != -1) // Gate 0 is start point
 		{
 			x -= 1;

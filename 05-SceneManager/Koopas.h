@@ -51,6 +51,7 @@
 
 #define KOOPAS_DEFEND_BBOX_HOLD_ADJUSTMENT 2
 #define KOOPAS_WAITING_RESPAWW_TIME  5000 
+#define KOOPAS_WAITING_HOLD_TIME  3000 
 #define KOOPAS_WAITING_RESPAWWING_TIME 2500 // Preparing for spawnng
 #define KOOPAS_JUMP_TIMESLEEP 1000
 
@@ -85,6 +86,7 @@ protected:
 	ULONGLONG jumpStart = 0 ;
 	vector<LPGAMEOBJECT> effects;
 	ULONGLONG defending_start = 0;
+	ULONGLONG hold_start = 0;
 	ULONGLONG respawning_start = 0;
 	ULONGLONG dead_start = 0;
 

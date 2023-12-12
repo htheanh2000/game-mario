@@ -56,13 +56,12 @@ void Koopas::kicked() {
 
 void Koopas::hold() { // Koopas is hold by mario
 	this->SetState(KOOPAS_STATE_HOLD);
+	this->hold_start = GetTickCount64();
 };
 
 void Koopas::defend() { // Koopas is hold by mario
 	this->SetState(KOOPAS_STATE_DEFEND);
-	// if(this->state != KOOPAS_STATE_DEFEND) {
-		this->defending_start = GetTickCount64();
-	// }
+	this->defending_start = GetTickCount64();
 };
 
 void Koopas::TurnBack() {
@@ -128,6 +127,11 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else {
 			this->SetPosition(mario->GetX() + mario->getMarioWidthSize() * mario->getNx(), mario->GetY() - KOOPAS_DEFEND_BBOX_HOLD_ADJUSTMENT);
 		}
+	}
+
+	if((hold_start + KOOPAS_WAITING_HOLD_TIME < GetTickCount64()) && (state == KOOPAS_STATE_HOLD)  ) {
+		y = y - 10;
+		this->SetState(KOOPAS_STATE_WALKING) ;
 	}
 
 	if((defending_start + KOOPAS_WAITING_RESPAWW_TIME < GetTickCount64()) && (state == KOOPAS_STATE_DEFEND)  ) {

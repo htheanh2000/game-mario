@@ -7,7 +7,7 @@ void SoftBrick::Render()
 {
 	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
 	int ani = ID_SPRITE_SOFTBRICK ;
-	if(mario->pressedButton) {
+	if(state == SOFTBRICK_STATE_BROKEN) {
 		ani = ID_ANI_COIN ;
 	}
 	CAnimations* animations = CAnimations::GetInstance();
@@ -18,7 +18,7 @@ void SoftBrick::Render()
 
 int SoftBrick::IsBlocking() {
 	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
-	if(mario->pressedButton) {
+	if(state == SOFTBRICK_STATE_BROKEN) {
 		return 0  ;
 	}
 	return 1;

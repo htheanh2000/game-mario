@@ -165,8 +165,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		this->Hit();
 	else if (dynamic_cast<PButton *>(e->obj))
 		OnCollisionWithButton(e);
-	else if (dynamic_cast<SoftBrick *>(e->obj) && this->pressedButton)
-		OnCollisionWithCoin(e);
+	else if (dynamic_cast<SoftBrick *>(e->obj) )
+		OnCollisionWithSoftBrick(e);
 	else if (dynamic_cast<Grass *>(e->obj))
 		OnCollisionWithGrass(e);
 }
@@ -188,9 +188,7 @@ void CMario::OnCollisionWithGrass(LPCOLLISIONEVENT e)
 	}
 }
 
-void CMario::OnCollisionWithSoftBrick(LPCOLLISIONEVENT e)
-{
-}
+
 
 void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
 {
@@ -206,6 +204,33 @@ void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
 		btn->jumpedOn = 1;
 		pressedButton = true;
 	}
+}
+
+void CMario::OnCollisionWithSoftBrick(LPCOLLISIONEVENT e)
+{
+	SoftBrick *softbrick = dynamic_cast<SoftBrick *>(e->obj);
+	// DebugOut(L"[INFO] OnCollisionWithSoftBrick %f\n" , this->isAttacking);
+
+	if(isAttacking && softbrick->GetState() == SOFTBRICK_STATE_DEFAULT && e->nx != 0) {
+		DebugOut(L"[INFO] MARIO ATTACK %f\n");
+		softbrick->SetState(SOFTBRICK_STATE_BROKEN);
+	}
+	
+	if (softbrick->GetState() == SOFTBRICK_STATE_BROKEN) {
+		//e->obj->Delete();
+		//coin++;
+	}
+	// // DebugOut(L"[INFO] OnCollisionWith mario %f\n", 1 );
+	// if (isAttacking)
+	// {
+	// 	btn->SetState(STATE_BREAK);
+	// }
+	// else if (e->ny < 0 && btn->state == STATE_BREAK)
+	// {
+	// 	btn->SetState(STATE_JUMPED_ON);
+	// 	btn->jumpedOn = 1;
+	// 	pressedButton = true;
+	// }
 }
 
 void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
@@ -514,7 +539,6 @@ int CMario::GetAniIdRacoon()
 
 	if (isAttacking)
 	{
-		DebugOut(L"[INFO] MARIO_STATUS_ATTACK:  %d\n", 1);
 		if (ax < 0)
 		{
 			aniId = ID_ANI_RACOON_MARIO_ATTACK_LEFT;
@@ -551,9 +575,7 @@ void CMario::Render()
 	animations->Get(aniId)->Render(x, y);
 
 	// RenderBoundingBox();
-
 	// DebugOutTitle(L"Coins: %d", coin);
-
 	// DebugOutTitle(L"Coins: %d, Score: %d, Life: %.2f", coin, score, lifeCount);
 }
 

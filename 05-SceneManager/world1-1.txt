@@ -20,9 +20,9 @@ pbutton.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 #
 # MARIO
-0	76	350
+#0	76	350
 #0	490	350
-#0	2080	350
+0	2000	350
 
 #0	2000	350
 #0	2244	0

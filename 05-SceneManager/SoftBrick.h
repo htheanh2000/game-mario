@@ -11,13 +11,19 @@
 
 #define SOFTBRICK_STATE_DEFAULT 100
 #define SOFTBRICK_STATE_BROKEN 200
+
+
+#define COIN_TO_BRICK_DURATION 1000
 class SoftBrick : public CGameObject {
+
+	
 public:
+	ULONGLONG pressedStart = 0 ;
 	SoftBrick(float x, float y) : CGameObject(x, y) {
 		state = SOFTBRICK_STATE_DEFAULT ;
 	}
 	void Render();
-	void Update(DWORD dt) {}
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int IsBlocking() ;
 };

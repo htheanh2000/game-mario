@@ -209,16 +209,16 @@ void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithSoftBrick(LPCOLLISIONEVENT e)
 {
 	SoftBrick *softbrick = dynamic_cast<SoftBrick *>(e->obj);
-	// DebugOut(L"[INFO] OnCollisionWithSoftBrick %f\n" , this->isAttacking);
+	// DebugOut(L"[INFO] OnCollisionWithSoftBrick %s\n" , this->isAttacking);
 
-	if(isAttacking && softbrick->GetState() == SOFTBRICK_STATE_DEFAULT && e->nx != 0) {
+	if(isAttacking && softbrick->GetState() == SOFTBRICK_STATE_DEFAULT && e->ny < 0) {
 		DebugOut(L"[INFO] MARIO ATTACK %f\n");
 		softbrick->SetState(SOFTBRICK_STATE_BROKEN);
 	}
 	
 	if (softbrick->GetState() == SOFTBRICK_STATE_BROKEN) {
-		//e->obj->Delete();
-		//coin++;
+		e->obj->Delete();
+		coin++;
 	}
 	// // DebugOut(L"[INFO] OnCollisionWith mario %f\n", 1 );
 	// if (isAttacking)

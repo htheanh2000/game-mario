@@ -637,8 +637,10 @@ void CMario::Hit()
 
 void CMario::Attack()
 {
-	this->isAttacking = true;
-	attackTime = GetTickCount64();
+	if(this->state != MARIO_STATE_RELEASE_FLY) {
+		this->isAttacking = true;
+		attackTime = GetTickCount64();
+	}
 }
 
 void CMario::SetState(int state)
@@ -779,10 +781,13 @@ void CMario::SetState(int state)
 		status = MARIO_STATUS_FLY;
 		ay = 0;
 		break;
-
+	case MARIO_STATE_SLOWFALL:
+		DebugOut(L"MARIO_STATE_SLOWFALL \n");
+		ay = MARIO_GRAVITY * 0.4;
+		break;
 	case MARIO_STATE_RELEASE_FLY:
-		ay = MARIO_GRAVITY;
-		DebugOut(L"MARIO_STATE_RELEASE_FLY \n");
+		vy = 0.01f;
+		ay = 0;
 		if (this->GetDX() > 0)
 		{
 			this->SetState(MARIO_STATE_WALKING_RIGHT);

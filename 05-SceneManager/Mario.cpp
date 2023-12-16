@@ -88,6 +88,22 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// 	isGoThroughBlock = false;
 	// }
 
+	if(pressedButton) {
+		for (UINT i = 0; i < coObjects->size(); i++)
+		{
+			LPGAMEOBJECT obj = (*coObjects)[i];
+			if (dynamic_cast<SoftBrick *>(obj))
+			{
+				SoftBrick *brick = dynamic_cast<SoftBrick *>(obj);
+				if(brick->GetState() != SOFTBRICK_STATE_BROKEN)  {
+					brick->SetState(SOFTBRICK_STATE_BROKEN) ;
+					brick->pressedStart = GetTickCount64();
+				}
+			}
+		}
+		pressedButton = false;
+	}
+
 	if (isFlatMario)
 	{
 		CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -198,7 +214,8 @@ void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
 	{
 		btn->SetState(STATE_BREAK);
 	}
-	else if (e->ny < 0 && btn->state == STATE_BREAK)
+	
+	if (e->ny < 0 && btn->state == STATE_BREAK)
 	{
 		btn->SetState(STATE_JUMPED_ON);
 		btn->jumpedOn = 1;

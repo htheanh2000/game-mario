@@ -13,7 +13,7 @@
 #define SOFTBRICK_STATE_BROKEN 200
 
 
-#define COIN_TO_BRICK_DURATION 1000
+#define COIN_TO_BRICK_DURATION 5000
 class SoftBrick : public CGameObject {
 
 	

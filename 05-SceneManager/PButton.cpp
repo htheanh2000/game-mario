@@ -40,6 +40,13 @@ void PButton::GetBoundingBox(float& l, float& t, float& r, float& b)
 	
 }
 
+void PButton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	if(pressedStart + BUTTON_TO_BRICK_DURATION < GetTickCount64()) {
+		this->SetState(STATE_UNBREAKED) ;
+	}
+}
+
 void PButton::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	

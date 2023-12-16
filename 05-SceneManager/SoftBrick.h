@@ -15,8 +15,6 @@
 
 #define COIN_TO_BRICK_DURATION 5000
 class SoftBrick : public CGameObject {
-
-	
 public:
 	ULONGLONG pressedStart = 0 ;
 	SoftBrick(float x, float y) : CGameObject(x, y) {

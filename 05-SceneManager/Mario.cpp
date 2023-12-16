@@ -218,6 +218,7 @@ void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
 	if (e->ny < 0 && btn->state == STATE_BREAK)
 	{
 		btn->SetState(STATE_JUMPED_ON);
+		btn->pressedStart = GetTickCount64();
 		btn->jumpedOn = 1;
 		pressedButton = true;
 	}

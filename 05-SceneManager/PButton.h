@@ -16,8 +16,10 @@
 #define STATE_BREAK	2
 #define STATE_JUMPED_ON	3
 
+#define BUTTON_TO_BRICK_DURATION 5000
 class PButton : public CGameObject {
 public:
+	ULONGLONG pressedStart = 0 ;
 	int state = STATE_UNBREAKED;
 	int jumpedOn = 0;
 	PButton(float x, float y) : CGameObject(x, y) {}
@@ -26,6 +28,7 @@ public:
 	int IsBlocking() { return 1; }
 	int IsCollidable() { return 1; }
 	void SetState(int sta) { this->state = sta; }
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) ;
 	virtual void OnNoCollision(DWORD dt) ;
 };

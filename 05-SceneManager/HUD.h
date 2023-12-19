@@ -36,8 +36,6 @@ class HUD
 	float x, y;
 	Character _char;
 	PowerBar* power;
-	ULONGLONG startTime = GetTickCount64();
-
 public:
 	HUD(float x, float y);
 	void Render(CMario* mario, int remainingTime);

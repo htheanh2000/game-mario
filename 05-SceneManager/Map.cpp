@@ -1,4 +1,6 @@
 #include "Map.h"
+#include "HUD.h"
+
 Map::Map(int TexID, int NumofRowMap, int NumofColMap, int NumofRowTileSet, int NumofColTileSet, int TotalTile)
 {
 	Tex = CTextures::GetInstance()->Get(TexID);
@@ -7,6 +9,8 @@ Map::Map(int TexID, int NumofRowMap, int NumofColMap, int NumofRowTileSet, int N
 	this->NumofRowTileSet = NumofRowTileSet;
 	this->NumofColTileSet = NumofColTileSet;
 	this->TotalTile = TotalTile;
+
+	CamX = CamY = 0;
 }
 
 Map::~Map()
@@ -44,7 +48,7 @@ void Map::DrawMap()
 		{
 			int index = TileMapData[CurrentRow][CurrentColumn] - 1;
 			if (index < TotalTile)
-				Tiles.at(index)->Draw((float)(CurrentColumn * TILE_WIDTH), float(CurrentRow * TILE_HEIGHT));
+				Tiles.at(index)->Draw((float)(CurrentColumn * TILE_WIDTH), float(CurrentRow * TILE_HEIGHT - HUD_HEIGHT));
 		}
 	}
 }

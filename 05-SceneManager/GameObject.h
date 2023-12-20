@@ -8,12 +8,12 @@
 #include "Animations.h"
 #include "Sprites.h"
 #include "Collision.h"
+#include "AssetIDs.h"
 
 using namespace std;
 
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box
 #define BBOX_ALPHA 0.25f		// Bounding box transparency
-
 
 class CGameObject
 {
@@ -25,14 +25,12 @@ protected:
 	float vx;
 	float vy;
 
-	int nx;	 
+	int nx;	
+	int ny;
 
 	int state;
 
-	bool isDeleted; 
-
 public: 
-	int objType ;
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
@@ -41,7 +39,6 @@ public:
 	int GetState() { return this->state; }
 	virtual void Delete() { isDeleted = true;  }
 	bool IsDeleted() { return isDeleted; }
-	bool IsMario() { return isDeleted; }
 
 	void RenderBoundingBox();
 
@@ -50,10 +47,13 @@ public:
 
 	float GetX() { return this->x; }
 	float GetY() { return this->y; }
-	float GetVx() { return this->vx; }
-	float GetVy() { return this->vy; }
-	float GetDX() { return this->vx == 0 ? 0 : this->vx / abs(this->vx); }
-	
+
+	float GetVX() { return this->vx; }
+	float GetVY() { return this->vy; }
+
+	void SetVX(float velo_x) { this->vx = velo_x; }
+	void SetVY(float velo_y) { this->vy = velo_y; }
+
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
 	virtual void Render() = 0;
@@ -69,12 +69,30 @@ public:
 
 	// When collision with an object has been detected (triggered by CCollision::Process)
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
-
+	
 	// Is this object blocking other object? If YES, collision framework will automatically push the other object
-	virtual int IsBlocking() { return 1; }
-	virtual int IsMarioBlocking() { return 1; }
+	virtual int IsBlocking(float nx, float ny, CGameObject* target) { return 0; }
 
 	~CGameObject();
 
+	int model = 0;
+	int objType = 0;
+
 	static bool IsDeleted(const LPGAMEOBJECT &o) { return o->isDeleted; }
+
+	bool checkObjectInCamera(CGameObject* obj);
+
+	int GetDirection() { return this->nx; }
+
+	int GetType() { return objType; }
+
+	void SetDirectionX(int nx) { this->nx = nx; }
+	void SetDirectionY(int ny) { this->ny = ny; }
+
+	void SetType(int type) { this->model = type; }
+	int GetModel() { return model; }
+
+	bool isDeleted;
+
+	virtual int SetScoreMario() { return 0; };
 };

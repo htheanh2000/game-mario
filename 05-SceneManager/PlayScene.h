@@ -7,12 +7,10 @@
 #include "Mario.h"
 #include "Goomba.h"
 #include "Map.h"
-#include "BGBlock.h"
-#include "Koopas.h"
+#include "QBCoin.h"
+#include "Timer.h"
+//#include "Koopas.h"
 
-#define MARIO_FIX_CAM_ADJUSTMENT 170
-#define MARIO_HEAVEN_CAM_ADJUSTMENT 200
-#define MARIO_HEAVEN_HIDDEN_ADJUSTMENT 200
 
 class CPlayScene: public CScene
 {
@@ -20,7 +18,6 @@ protected:
 	// A play scene has to have player, right? 
 	CMario* player = NULL;
 
-	ULONGLONG remainingTime ;
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
 
@@ -29,6 +26,8 @@ protected:
 	void _ParseSection_TILEMAP(string line);
 
 	void LoadAssets(LPCWSTR assetFile);
+
+	Timer* gameTime = new Timer(true, GAME_TIME_LIMIT);
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
@@ -38,7 +37,7 @@ public:
 	virtual void Render();
 	virtual void Unload();
 
-	LPGAMEOBJECT GetPlayer() { return player; }
+	CMario* GetPlayer() { return player; }
 
 	void SetCam(float cx, float cy);
 
@@ -48,7 +47,21 @@ public:
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
 	Map* map = NULL;
 
-	vector<LPGAMEOBJECT> objects; // To handle effect brick (coins, magic , ...)
+	void PutPlayer(CMario* m)
+	{
+		if (dynamic_cast<CMario*>(objects[0]))
+			objects[0] = m;
+	}
+	void SetPlayer(CMario* mario) { player = mario; }
+
+	vector<LPGAMEOBJECT> objects;
+
+	bool isFlyCam = false;
+	int remainingTime;
+
+	void SetStartTime(int time) { gameTime->SetTimeOut(time); }
+	void BackupPlayerInfo();
+	void LoadBackupPlayerInfo();
 };
 
 typedef CPlayScene* LPPLAYSCENE;

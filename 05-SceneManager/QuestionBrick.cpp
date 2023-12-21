@@ -47,8 +47,8 @@ void CQuestionBrick::activateEffect()
 
 		if (objType == RED_MUSHROOM_OR_LEAF_EFFECT)
 		{
-			DebugOut(L"[INFO] Mario current level  %f \n", mario->getLevel());
-			if (mario->getLevel() == MARIO_LEVEL_SMALL)
+			DebugOut(L"[INFO] Mario current level  %f \n", mario->GetLevel());
+			if (mario->GetLevel() == MARIO_LEVEL_SMALL)
 			{
 				CMushroom *mushroom = new CMushroom(x, y, RED_MUSHROOM);
 				mushroom->SetState(MUSHROOM_STATE_UP);
@@ -56,7 +56,7 @@ void CQuestionBrick::activateEffect()
 			}
 
 			// active leaf if mario in big state => go to mario racoon
-			if (mario->getLevel() == MARIO_LEVEL_BIG)
+			if (mario->GetLevel() == MARIO_LEVEL_BIG)
 			{
 				CLeaf *leaf = new CLeaf(x, y);
 				scene->objects.push_back(leaf);
@@ -72,7 +72,7 @@ void CQuestionBrick::activateEffect()
 			QBCoin *coin = new QBCoin(x, y);
 			coin->SetState(QB_COIN_STATE_UP);
 			scene->objects.push_back(coin);
-			mario->addCoin(); // add 1 coin
+			//mario->addCoin(); // add 1 coin
 		}
 		isEmpty = true; // Ensure only effect for each brick
 						// TODO: Make brick jump after active effect

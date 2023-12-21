@@ -11,15 +11,17 @@
 #include "Platform.h"
 #include "BGBlock.h"
 #include "QuestionBrick.h"
-#include "PiranhaPlant.h"
 #include "FirePiranhaPlant.h"
+#include "PiranhaPlant.h"
 #include "PiranhaPipe.h"
-#include "SoftBrick.h"
-#include "Star.h"
-#include "Grass.h"
-#include "HUD.h"
-#include "PButton.h"
+#include "Koopas.h"
+#include "GoldBrick.h"
+#include "PortalIn.h"
+#include "PortalOut.h"
 
+#include "HUD.h"
+
+#include "Backup.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -60,7 +62,7 @@ void CPlayScene::_ParseSection_SPRITES(string line)
 	LPTEXTURE tex = CTextures::GetInstance()->Get(texID);
 	if (tex == NULL)
 	{
-		DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
+		DebugOut(L"[ERROR] Texture IDDD %d not found!\n", texID);
 		return; 
 	}
 
@@ -84,7 +86,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 
 	if (tokens.size() < 3) return; // skip invalid lines - an animation must at least has 1 frame and 1 frame time
 
-	DebugOut(L"--> %s\n",ToWSTR(line).c_str());
+	//DebugOut(L"--> %s\n",ToWSTR(line).c_str());
 
 	LPANIMATION ani = new CAnimation();
 
@@ -123,45 +125,40 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
-
 		obj = new CMario(x,y); 
-
 		player = (CMario*)obj;  
-		if(CGame::GetInstance()->GetPrevState() != -1  )
-		{
-			int prevState =  CGame::GetInstance()->GetPrevState()  ;
-			DebugOut(L"[ERROR] MARIO state! %d \n", prevState);
-			player->SetLevel(prevState); // state mean level 
-		}
-
 
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;
 	case OBJECT_TYPE_GOOMBA: {
 		int type = (int)atof(tokens[3].c_str());
-		obj = new CGoomba(x, y, type);
+		obj = new CGoomba(x, y, type);//CGoomba
 		break;
 	}
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
-	case OBJECT_TYPE_PBUTTON: obj = new PButton(x, y); break;
-	case OBJECT_TYPE_SOFTBRICK: obj = new SoftBrick(x, y); break;
-	case OBJECT_TYPE_STAR: obj = new Star(x, y); break;
 	case OBJECT_TYPE_FIRE_PIRANHA: { 
 		int type = (int)atof(tokens[3].c_str());
-		obj = new FirePiranhaPlant(x, y, type); 
+		obj = new FirePiranhaPlant(x, y, type); //FirePiranhaPlant
 		break; 
 	}
+
+	case OBJECT_TYPE_GOLD_BRICK: {
+		int type = (int)atof(tokens[3].c_str());
+		obj = new GoldBrick (x, y, type);
+		break;
+	}
+	case OBJECT_TYPE_PIRANHA: { obj = new PiranhaPlant(x, y); break; }
 	case OBJECT_TYPE_BLOCK: {
 		float width = (float)atof(tokens[3].c_str());
 		float height = (float)atof(tokens[4].c_str());
-		int type = (int)atof(tokens[5].c_str());
-		obj = new CBGBlock(x, y, width, height, type);
+		obj = new CBGBlock(x, y, width, height);
 		break;
 	}
+						  
 	case OBJECT_TYPE_KOOPAS: {
 		int type = (int)atof(tokens[3].c_str());
-		obj = new Koopas(x, y, type); // Unwing koopas
+		obj = new Koopas(x, y, type);
 		break;
 	}
 
@@ -170,15 +167,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CQuestionBrick(x, y, type);
 		break;
 	}
-	case OBJECT_TYPE_PIRANHA: { 
-		int type = (int)atof(tokens[3].c_str());
-		obj = new PiranhaPlant(x, y, type); break; 
-		}
 	case OBJECT_TYPE_PIPE: {
 		int type = (int)atof(tokens[3].c_str());
 		obj = new PiranhaPipe(x, y, type);
 		break;
 	}
+
 	case OBJECT_TYPE_PLATFORM:
 	{
 
@@ -197,6 +191,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		break;
 	}
+
 	case OBJECT_TYPE_PORTAL:
 	{
 		float r = (float)atof(tokens[3].c_str());
@@ -205,15 +200,38 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CPortal(x, y, r, b, scene_id);
 		break;
 	}
-	case OBJECT_TYPE_GRASS: 
+	case OBJECT_TYPE_PORTAL_IN:
 	{
-		int ani_id = (int)atof(tokens[3].c_str());
-		obj = new Grass(x, y, ani_id); 
+
+		float width = (float)atof(tokens[3].c_str());
+		float height = (float)atof(tokens[4].c_str());
+		int dir = atoi(tokens[5].c_str());
+		float cx = atoi(tokens[6].c_str());
+		float cy = atoi(tokens[7].c_str());
+		int scID = atoi(tokens[8].c_str());
+
+		obj = new PortalIn(
+			x, y,
+			width, height, dir,
+			cx, cy, scID
+		);
+
 		break;
 	}
+	case OBJECT_TYPE_PORTAL_OUT:
+	{
 
-	break;
+		float width = (float)atof(tokens[3].c_str());
+		float height = (float)atof(tokens[4].c_str());
+		int dir = atoi(tokens[5].c_str());
 
+		obj = new PortalOut(
+			x, y,
+			width, height, dir
+		);
+
+		break;
+	}
 
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
@@ -317,15 +335,19 @@ void CPlayScene::Load()
 	}
 
 	f.close();
-	remainingTime = GetTickCount64() ;
+
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
+
+	gameTime->Start();
 }
 
 void CPlayScene::Update(DWORD dt)
 {
-
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
+
+	gameTime->Update(dt);
+	remainingTime = gameTime->GetTime();
 
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 1; i < objects.size(); i++)
@@ -352,13 +374,14 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
+
 	CGame* game = CGame::GetInstance();
-	HUD* hud = new HUD(game->GetCamX() + HUD_WIDTH / 2, game->GetCamY() + game->GetScreenHeight() - HUD_HEIGHT / 2 + 4);
+	HUD* hud = new HUD(game->GetCamX() + HUD_WIDTH / 2, game->GetCamY() + game->GetScreenHeight() - HUD_HEIGHT / 2);
 	map->DrawMap();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
-	hud->Render(player, (GetTickCount64() - remainingTime) / 1000);
 
+	hud->Render(player,remainingTime / 1000);
 }
 void CPlayScene::SetCam(float cx, float cy)
 {
@@ -378,31 +401,21 @@ void CPlayScene::SetCam(float cx, float cy)
 	if (cx >= mw - sw)//Right Edge
 		cx = (float)mw - (float)sw;
 
-	//cy -= sh /2 + MARIO_BIG_BBOX_HEIGHT;
-	cy = (float)mh - (float)sh;
+	if(isFlyCam){ 
+		cy -= (float)sh / 2 + MARIO_BIG_BBOX_HEIGHT;
+	}
+	/*else {
+		cy = (float)mh - (float)sh;
+	}*/
+	//if (cy <= -HUD_HEIGHT)//Top Edge
+	//	cy = -HUD_HEIGHT;
+	if (cy + sh >= mh)//Bottom Edge
+		cy = (float)mh - (float)sh;
 	if (cy <= 0)//Left Edge
 		cy = 0;
 
-
-	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
-	float marioY = mario->GetY();	// target 
-	float posY = cy; // TODO: Fix position when mario too high with ground
-	//DebugOut(L"[INFO] marioY  %d\n", marioY);
-	if(mario->GetStatus() == MARIO_STATE_FLY  ) {
-		posY = marioY - MARIO_FIX_CAM_ADJUSTMENT; // Fix camera position when racoon fly;
-	}
-	else if(marioY < MARIO_HEAVEN_CAM_ADJUSTMENT) {
-		// DebugOut(L"[INFO] marioY  %d\n", marioY);
-		posY = MARIO_HEAVEN_CAM_ADJUSTMENT - MARIO_FIX_CAM_ADJUSTMENT;
-	}
-	if(game->GetCurrentSceneId() == INTRO_SCENE_ID || game->GetCurrentSceneId() == WORLD_DMAP_ID || game->GetCurrentSceneId() == HIDDEN_SCENE_ID) {
-		game->SetCamPos(cx, cy );
-		map->SetCamPos(cx, cy );
-	}
-	else {
-		game->SetCamPos(cx, posY + 16);
-		map->SetCamPos(cx, posY);
-	}
+	game->SetCamPos(cx, cy);
+	map->SetCamPos(cx, cy);
 }
 
 
@@ -433,10 +446,31 @@ void CPlayScene::Unload()
 	objects.clear();
 	player = NULL;
 
+	gameTime->SetTimeOut(0);
+	delete map;
+
+	map = nullptr;
+	isFlyCam = false;
+
+
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);
 }
 
 bool CPlayScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
+
+void CPlayScene::BackupPlayerInfo()
+{
+	if (player) {
+		CBackUp* backup = CBackUp::GetInstance();
+		backup->BackUpMario(player);
+	}
+}
+
+void CPlayScene::LoadBackupPlayerInfo()
+{
+	CBackUp* backup = CBackUp::GetInstance();
+	backup->LoadBackUp(player);
+}
 
 void CPlayScene::PurgeDeletedObjects()
 {

@@ -196,7 +196,7 @@ void CCollision::Filter( LPGAMEOBJECT objSrc,
 		if (c->obj->IsDeleted()) continue; 
 
 		// ignore collision event with object having IsBlocking = 0 (like coin, mushroom, etc)
-		if (filterBlock == 1 && !c->obj->IsBlocking()) 
+		if (filterBlock == 1 && !c->obj->IsBlocking(c->nx, c->ny, objSrc)) 
 		{
 			continue;
 		}
@@ -212,6 +212,16 @@ void CCollision::Filter( LPGAMEOBJECT objSrc,
 
 	if (min_ix >= 0) colX = coEvents[min_ix];
 	if (min_iy >= 0) colY = coEvents[min_iy];
+}
+
+bool CCollision::CheckAABB(LPGAMEOBJECT objA, LPGAMEOBJECT objB)
+{
+	float aL, aT, aR, aB;
+	float bL, bT, bR, bB;
+	objA->GetBoundingBox(aL, aT, aR, aB);
+	objB->GetBoundingBox(bL, bT, bR, bB);
+
+	return (!(aL > bR || aT > bB || aR < bL || aB < bT));
 }
 
 /*
@@ -345,11 +355,16 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 	{
 		LPCOLLISIONEVENT e = coEvents[i];
 		if (e->isDeleted) continue;
-		if (e->obj->IsBlocking()) continue;  // blocking collisions were handled already, skip them
+		if (e->obj->IsBlocking(e->nx, e->ny, objSrc)) continue;  // blocking collisions were handled already, skip them
 
 		objSrc->OnCollisionWith(e);			
 	}
 
 
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+}
+
+bool CCollision::IsOverlap(float ml, float mt, float mr, float mb, float sl, float st, float sr, float sb)
+{
+	return !(mr <= sl || ml >= sr || mt >= sb || mb <= st);
 }

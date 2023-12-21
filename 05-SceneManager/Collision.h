@@ -80,8 +80,19 @@ public:
 		int filterBlock,		
 		int filterX,
 		int filterY);
+	bool CheckAABB(LPGAMEOBJECT objA, LPGAMEOBJECT objB);
 
 	void Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+
+	static bool IsOverlap(
+		float ml,			// move left 
+		float mt,			// move top
+		float mr,			// move right 
+		float mb,			// move bottom
+		float sl,			// static left
+		float st,
+		float sr,
+		float sb);
 
 	static CCollision* GetInstance();
 };

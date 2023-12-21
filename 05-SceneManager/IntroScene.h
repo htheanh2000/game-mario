@@ -1,6 +1,5 @@
 #pragma once
 #include "PlayScene.h"
-#include <fstream>
 
 #define ANI_GROUND_INTRO 1
 
@@ -16,7 +15,7 @@
 #define MAX_SCENE_LINE 1024
 
 #define GROUND_POSITION_X 128
-#define GROUND_POSITION_Y 114 
+#define GROUND_POSITION_Y 114//200
 
 class IntroScene :
     public CPlayScene

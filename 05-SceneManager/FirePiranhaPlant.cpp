@@ -1,17 +1,26 @@
 #include "FirePiranhaPlant.h"
-#include "debug.h"
+#include "Mario.h"
+#include "PlayScene.h"
 #include "FireBall.h"
-#include "Goomba.h"
 
-FirePiranhaPlant::FirePiranhaPlant(float x, float y, int type)
+FirePiranhaPlant::FirePiranhaPlant(float x, float y, int type) : CGameObject(x, y)
 {
+	this->x = x;
+	this->y = y;
 	this->objType = type;
-	ay = 0 ;
-	ay = 0;
-	this->maxY = y + FIRE_PLANT_MAX_HEIGHT - 5 ;// TODO: investigate bad UI rendering if dont -5 !!;
-	vy = FIRE_PLANT_SPEED;
-	this->minY = y;
+	//DebugOut(L"[ERROR] Fire Pi ID is %d!\n", type);
+	this->ax = 0;
+	this->ay = 0;
+	this->startY = y;
 
+	if (objType == FPP_BIG) {
+		this->minY = y - FPP_BIG_BBOX_HEIGHT;
+	}
+	else {
+		this->minY = y - FPP_SMALL_BBOX_HEIGHT;
+	}
+
+	SetType(EType::ENEMY);
 }
 
 void FirePiranhaPlant::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -32,33 +41,129 @@ void FirePiranhaPlant::GetBoundingBox(float& left, float& top, float& right, flo
 
 void FirePiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (!checkObjectInCamera(this)) return;
+	vy += ay * dt;
+	vx += ax * dt;
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-	if(abs(this->x - mario->GetX()) < DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO && abs(y - maxY) < 10) {
-		vy = 0 ; // Fireplant is not go up and attack
-		return ;
-	} else if (vy == 0) {
-		vy = -FIRE_PLANT_SPEED ; // Enable fire 
+
+	if (state == ENEMY_STATE_IS_FIRE_ATTACKED || state == ENEMY_STATE_IS_TAIL_ATTACKED) {
+		isDeleted = true;
 	}
 
-	if(y >= maxY) {
-		y = maxY ;
-		vy = -FIRE_PLANT_SPEED ;
+	if (y <= minY) {
+		y = minY;
+		down_start = GetTickCount64();
+		startShoot = true;
 	}
-	else if (y <= minY) {
-		y = minY ;
-		Attack();
-		vy = FIRE_PLANT_SPEED ;
+	else if (y >= startY) {
+		y = startY;
+		up_start = GetTickCount64();
+		startDown = true;
 	}
+
+	if (GetTickCount64() - up_start > FPP_UP_TIME_OUT && startShoot) {
+		ShootFire();
+		startShoot = false;
+		vy = FPP_SPEED;
+		up_start = 0;
+	}
+
+	if (GetTickCount64() - down_start > FPP_DOWN_TIME_OUT && startDown && !GetSafeZone()) {
+		startDown = false;
+		vy = -FPP_SPEED;
+		down_start = 0;
+	}
+
+	GetMarioRangeCurrent();
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void FirePiranhaPlant::Render()
 {
-	
 	int aniId = ID_ANI_FPP_LEFT_BOTTOM;
+	//DebugOut(L"[ERROR] Fire Pi ID is %d!\n", GetType());
+	if (startShoot)
+	{
+		if (isBottom) {
+			if (objType == FPP_BIG) {
+				if (nx > 0) {
+					aniId = ID_ANI_FPP_RIGHT_BOTTOM_SHOOT;
+				}
+				else {
+					aniId = ID_ANI_FPP_LEFT_BOTTOM_SHOOT;
+				}
+			}
+			else {
+				if (nx > 0) {
+					aniId = ID_ANI_FPP_SMALL_RIGHT_BOTTOM_SHOOT;
+				}
+				else {
+					aniId = ID_ANI_FPP_SMALL_LEFT_BOTTOM_SHOOT;
+				}
+			}
+		}
+		else {
+			if (objType == FPP_BIG) {
+				if (nx > 0) {
+					aniId = ID_ANI_FPP_RIGHT_TOP_SHOOT;
+				}
+				else {
+					aniId = ID_ANI_FPP_LEFT_TOP_SHOOT;
+				}
+			}
+			else {
+				if (nx > 0) {
+					aniId = ID_ANI_FPP_SMALL_RIGHT_TOP_SHOOT;
+				}
+				else {
+					aniId = ID_ANI_FPP_SMALL_LEFT_TOP_SHOOT;
+				}
+			}
+		}
+	}
+	else
+	{
+		if (isBottom) {
+			if (objType == FPP_BIG) {
+				if (nx > 0) {
+					aniId = ID_ANI_FPP_RIGHT_BOTTOM;
+				}
+				else {
+					aniId = ID_ANI_FPP_LEFT_BOTTOM;
+				}
+			}
+			else {
+				if (nx > 0) {
+					aniId = ID_ANI_FPP_SMALL_RIGHT_BOTTOM;
+				}
+				else {
+					aniId = ID_ANI_FPP_SMALL_LEFT_BOTTOM;
+				}
+			}
+		}
+		else {
+			if (objType == FPP_BIG) {
+				if (nx > 0) {
+					aniId = ID_ANI_FPP_RIGHT_TOP;
+				}
+				else {
+					aniId = ID_ANI_FPP_LEFT_TOP;
+				}
+			}
+			else {
+				if (nx > 0) {
+					aniId = ID_ANI_FPP_SMALL_RIGHT_TOP;
+				}
+				else {
+					aniId = ID_ANI_FPP_SMALL_LEFT_TOP;
+				}
+			}
+		}
+	}
+
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	// RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void FirePiranhaPlant::OnNoCollision(DWORD dt)
@@ -67,11 +172,123 @@ void FirePiranhaPlant::OnNoCollision(DWORD dt)
 	y += vy * dt;
 }
 
-void FirePiranhaPlant::Attack() {
-	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
-	float tx = mario->GetX(); // target 
-	float ty = mario->GetY();	// target 
+bool FirePiranhaPlant::GetSafeZone()
+{
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	if (mario->GetX() < this->x)
+	{
+		if (this->x - mario->GetX() <= DISTANCE_SAFE_ZONE)
+		{
+			return true;
+		}
+	}
+	if (mario->GetX() > this->x)
+	{
+		if (mario->GetX() - this->x <= DISTANCE_SAFE_ZONE)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void FirePiranhaPlant::ShootFire()
+{
+	FireBall* fireBall = new FireBall(x, y - ADJUST_FPP_SHOOT_FIRE_BALL_HEIGHT);
+	int directionYFireball = 0;
+	fireBall->SetDirectionX(nx);
+	fireBall->isEnemyShoot = true;
+	if (isBottom) {
+		fireBall->SetDirectionY(1);
+		if (isFar) {
+			fireBall->SetState(FIRE_BALL_STATE_FPP_SHOOT_FAR);
+		}
+		else {
+			fireBall->SetState(FIRE_BALL_STATE_FPP_SHOOT_NEAR);
+		}
+	}
+	else {
+		fireBall->SetDirectionY(-1);
+		if (isFar) {
+			fireBall->SetState(FIRE_BALL_STATE_FPP_SHOOT_FAR);
+		}
+		else {
+			fireBall->SetState(FIRE_BALL_STATE_FPP_SHOOT_NEAR);
+		}
+	}
 	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-	FireBall* ball = new FireBall(x , y, tx, ty);
-	scene->objects.push_back(ball);
+	scene->objects.push_back(fireBall);
+}
+
+void FirePiranhaPlant::GetMarioRangeCurrent()
+{
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	if (mario->GetX() < this->x && mario->GetY() < this->y)
+	{
+		if (this->x - mario->GetX() < DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = false;
+			isFar = false;
+			nx = -1;
+		}
+		if (this->x - mario->GetX() >= DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = false;
+			isFar = true;
+			nx = -1;
+		}
+	}
+	if (mario->GetX() < this->x && mario->GetY() > this->y)
+	{
+		if (this->x - mario->GetX() < DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = true;
+			isFar = false;
+			nx = -1;
+		}
+		if (this->x - mario->GetX() > DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = true;
+			isFar = true;
+			nx = -1;
+		}
+
+	}
+	if (mario->GetX() > this->x && mario->GetY() < this->y)
+	{
+		if (this->x - mario->GetX() < DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = false;
+			isFar = false;
+			nx = 1;
+		}
+		if (this->x - mario->GetX() >= DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = false;
+			isFar = true;
+			nx = 1;
+		}
+	}
+	if (mario->GetX() > this->x && mario->GetY() > this->y)
+	{
+		if (this->x - mario->GetX() < DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = true;
+			isFar = false;
+			nx = 1;
+		}
+		if (this->x - mario->GetX() >= DISTANCE_SHOOT_FIRE_ACCRODING_TO_MARIO)
+		{
+			isBottom = true;
+			isFar = true;
+			nx = 1;
+		}
+	}
+}
+
+int FirePiranhaPlant::IsBlocking(float nx, float ny, CGameObject* target)
+{
+	return 0;
 }

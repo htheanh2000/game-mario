@@ -6,6 +6,7 @@ PiranhaPipe::PiranhaPipe(float x, float y, int model) : CGameObject(x, y) {
 	this->x = x;
 	this->y = y;
 	this->objType = model;
+	SetType(EType::OBJECT);
 }
 
 void PiranhaPipe::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -33,5 +34,5 @@ void PiranhaPipe::Render()
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	// RenderBoundingBox();
+	//RenderBoundingBox();
 }

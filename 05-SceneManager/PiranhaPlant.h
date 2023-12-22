@@ -8,13 +8,6 @@
 #define PIRANHA_PLANT_UP_TIME_OUT 3000
 
 #define ID_ANI_PIRANHA_PLANT 500001
-#define ID_ANI_PIRANHA_PLANT_2 500018
-
-#define PIRANHA_1 1
-#define PIRANHA_2 2
-
-#define ID_PIRANHA_NO
-
 #define PIRANHA_STATE_UP 100
 #define PIRANHA_STATE_DOWN 200
 #define PIRANHA_SPEED 0.02f;
@@ -29,7 +22,7 @@ class PiranhaPlant :
 	float minY;
 	float startY;
 public:
-	PiranhaPlant(float x, float y, int type );
+	PiranhaPlant(float x, float y);
 	virtual void SetState(int state);
 
 	ULONGLONG down_start = -1;

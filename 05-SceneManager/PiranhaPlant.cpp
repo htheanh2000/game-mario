@@ -1,15 +1,17 @@
 #include "PiranhaPlant.h"
 #include "PlayScene.h"
 
-PiranhaPlant::PiranhaPlant(float x, float y, int type) : CGameObject(x, y)
+PiranhaPlant::PiranhaPlant(float x, float y) : CGameObject(x, y)
 {
 	this->x = x;
-	this->minY = y - PIRANHA_PLANT_BBOX_HEIGHT;
 	this->y = y;
 	this->ax = 0;
 	this->ay = 0;
 	this->startY = y;
-	objType = type;
+
+	this->minY = y - PIRANHA_PLANT_BBOX_HEIGHT;
+
+	SetType(EType::ENEMY);
 }
 
 void PiranhaPlant::SetState(int state)
@@ -36,6 +38,11 @@ void PiranhaPlant::GetBoundingBox(float& left, float& top, float& right, float& 
 
 void PiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (!checkObjectInCamera(this)) return;
+	if (state == ENEMY_STATE_IS_FIRE_ATTACKED || state == ENEMY_STATE_IS_TAIL_ATTACKED) {
+		isDeleted = true;
+	}
+
 	vy += ay * dt;
 	vx += ax * dt;
 
@@ -89,9 +96,6 @@ void PiranhaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void PiranhaPlant::Render()
 {
 	int aniId = ID_ANI_PIRANHA_PLANT;
-	if(objType == PIRANHA_2) {
-		aniId = ID_ANI_PIRANHA_PLANT_2;
-	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
 }

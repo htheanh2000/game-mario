@@ -11,7 +11,6 @@
 #define PIPE_MEDIUM 2
 class PiranhaPipe : public CGameObject
 {
-    int objType;
 public:
 	PiranhaPipe(float x, float y, int model);
 	void Render();
@@ -19,5 +18,7 @@ public:
 
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	virtual int IsBlocking() { return 1; }
+
+	virtual int IsBlocking(float nx, float ny, CGameObject* target) { return 1; };
 };
 

@@ -2,7 +2,6 @@
 
 #include "Sprite.h"
 #include "Sprites.h"
-
 #include "Textures.h"
 
 void CPlatform::RenderBoundingBox()
@@ -26,25 +25,31 @@ void CPlatform::RenderBoundingBox()
 	float xx = x - this->cellWidth / 2 + rect.right / 2;
 
 	CGame::GetInstance()->Draw(xx - cx, y - cy, bbox, nullptr, BBOX_ALPHA, rect.right - 1, rect.bottom - 1);
+
+}
+
+int CPlatform::IsBlocking(float nx, float ny, CGameObject* target)
+{
+	return 1;
 }
 
 void CPlatform::Render()
 {
-	// if (this->length <= 0) return; 
-	// float xx = x; 
-	// CSprites * s = CSprites::GetInstance();
+	/*if (this->length <= 0) return; 
+	float xx = x; 
+	CSprites * s = CSprites::GetInstance();
 
-	// s->Get(this->spriteIdBegin)->Draw(xx, y);
-	// xx += this->cellWidth;
-	// for (int i = 1; i < this->length - 1; i++)
-	// {
-	// 	s->Get(this->spriteIdMiddle)->Draw(xx, y);
-	// 	xx += this->cellWidth;
-	// }
-	// if (length>1)
-	// 	s->Get(this->spriteIdEnd)->Draw(xx, y);
+	s->Get(this->spriteIdBegin)->Draw(xx, y);
+	xx += this->cellWidth;
+	for (int i = 1; i < this->length - 1; i++)
+	{
+		s->Get(this->spriteIdMiddle)->Draw(xx, y);
+		xx += this->cellWidth;
+	}
+	if (length>1)
+		s->Get(this->spriteIdEnd)->Draw(xx, y);*/
 
-	// RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CPlatform::GetBoundingBox(float& l, float& t, float& r, float& b)

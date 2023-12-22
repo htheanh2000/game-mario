@@ -1,11 +1,14 @@
 #include "Leaf.h"
+#include "Mario.h"
+#include "PlayScene.h"
+#include "Score.h"
 
 CLeaf::CLeaf(float x, float y)
 {
 	this->x = x;
 	this->y = y;
 
-	this->ay = -LEAF_GRAVITY;
+	this->ay = 0;
 	this->ax = 0;
 
 	minY = y - LEAF_MAX_HEIGHT;
@@ -32,7 +35,7 @@ void CLeaf::Render()
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 
-	// RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -59,6 +62,17 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
+	float sl, st, sr, sb, left, top, right, bottom;
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	mario->GetBoundingBox(sl, st, sr, sb);
+
+	GetBoundingBox(left, top, right, bottom);
+
+	if (CCollision::IsOverlap(left, top, right, bottom, sl, st, sr, sb)) {
+		LPCOLLISIONEVENT e = new CCollisionEvent(0.01f, 0, -1, 0, 0, mario, this);
+		OnCollisionWith(e);
+	}
+
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -67,6 +81,19 @@ void CLeaf::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
+}
+
+void CLeaf::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	//CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	//if (e->obj == mario) {
+	//	//TODO: Score
+	//	mario->obj = new Score(this->x, this->y, SCORE_1000);
+	//	mario->SetLevel(MARIO_LEVEL_RACOON);
+	//	mario->ListEffect.push_back(mario->obj);
+	//	isDeleted = true;
+	//	
+	//}
 }
 
 void CLeaf::SetState(int state)

@@ -1,8 +1,8 @@
 #pragma once
 #include "GameObject.h"
 
-#define LEAF_BBOX_WIDTH 12
-#define LEAF_BBOX_HEIGHT 12
+#define LEAF_BBOX_WIDTH 16
+#define LEAF_BBOX_HEIGHT 14
 
 #define ID_ANI_LEAF_RIGHT 110
 #define ID_ANI_LEAF_LEFT 111
@@ -34,6 +34,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 
 	virtual void OnNoCollision(DWORD dt);
+	void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual int IsCollidable() { return 0; }
 	virtual int IsBlocking() { return 0; }
 

@@ -1,4 +1,5 @@
 #include "PowerBar.h"
+#include "Mario.h"
 
 PowerBar::PowerBar(float x, float y, int stack)
 {

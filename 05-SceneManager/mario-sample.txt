@@ -1,16 +1,18 @@
 [SETTINGS]
-start	99
+start	3
 width	320
 height	240
 
 #id	type	file
+# type: 0: intro, 1: play scene 
 [SCENES]
-0	worldMap.txt
-1	world1-1.txt
-2	world1-1-hidden.txt
-3	world1-1-after.txt
-99	intro.txt
-100	worldMap.txt
+1	scene01.txt
+2	scene02.txt
+5	scene0005.txt
+6	world_1-1.txt
+7	world1-1-1.txt
+8	world-map.txt
+3	intro.txt
 
 # id	file 
 [TEXTURES]

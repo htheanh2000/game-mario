@@ -17,7 +17,12 @@ void HUD::Render(CMario* mario, int remainingTime)
 	_char.Draw(x + ADJUST_X_COIN, y - ADJUST_Y_COIN, FillNumber(std::to_string(mario->GetCoin()), NUMBER_COIN));
 	_char.Draw(x + ADJUST_X_TIME, y + ADJUST_Y_TIME, FillNumber(std::to_string(remainingTime), NUMBER_TIME));
 
-	power = new PowerBar(x - ADJUST_X_POWER, y - ADJUST_Y_POWER, mario->powerMeter);
+
+	float powerMeter = 0;
+	if(mario->GetLevel() == MARIO_LEVEL_RACOON) {
+		powerMeter = mario->powerMeter;
+	}
+	power = new PowerBar(x - ADJUST_X_POWER, y - ADJUST_Y_POWER, powerMeter);
 	power->Render();
 	//score
 	//time

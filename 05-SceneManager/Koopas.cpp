@@ -45,7 +45,9 @@ void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	// if (!checkObjectInCamera(this) || isHeld) return;
+	if (!checkObjectInCamera(this)) {
+
+	};
 
 	vy += ay * dt;
 	vx += ax * dt;
@@ -57,7 +59,7 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// start animation comeback
 
-	if (GetTickCount64() - defend_start > KOOPAS_COMBACK_START && (isDefend || isUpside) && !isKicked && !isHeld) {
+	if (GetTickCount64() - defend_start > KOOPAS_COMBACK_START && (isDefend || isUpside) && !isKicked) {
 		isComeback = true;
 	}
 
@@ -67,15 +69,16 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		defend_start = -1;
 		vy = -KOOPAS_COMBACK_HEIGHT_ADJUST;
 		isHeld = false;
+		mario->hand =  nullptr; // Mario thả koopas
 	}
 
-	for (size_t i = 0; i < effects.size(); i++)
-	{
-		effects[i]->Update(dt, coObjects);
-		if (effects[i]->isDeleted) {
-			effects.erase(effects.begin() + i);
-		}
-	}
+	// for (size_t i = 0; i < effects.size(); i++)
+	// {
+	// 	effects[i]->Update(dt, coObjects);
+	// 	if (effects[i]->isDeleted) {
+	// 		effects.erase(effects.begin() + i);
+	// 	}
+	// }
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -229,10 +232,10 @@ void Koopas::Render()
 	}
 	
 
-	for (int i = 0; i < effects.size(); i++)
-	{
-		effects[i]->Render();
-	}
+	// for (int i = 0; i < effects.size(); i++)
+	// {
+	// 	effects[i]->Render();
+	// }
 
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
@@ -252,7 +255,9 @@ int Koopas::IsCollidable()
 void Koopas::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
-	y += vy * dt;
+	if(!isHeld) { // y theo mario nếu bị cầm
+		y += vy * dt;
+	}
 }
 
 void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)

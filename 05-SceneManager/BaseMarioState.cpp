@@ -177,14 +177,23 @@ void BaseMarioState::holdingShellUpdate(DWORD dt)
 	if (mario->isDisable) return;
 
 	CGame* game = CGame::GetInstance();
+	float koopasY = mario->GetY();
+
+	if(mario->GetLevel() == MARIO_LEVEL_SMALL) {
+		koopasY -= 15; // Chỉnh vị trí cho mario nhỏ
+	}
+
+	DebugOut(L"koopasY %f \n", koopasY);
+
 	if (mario->hand != NULL) {
 		if (mario->direct > 0) {
-			mario->hand->SetPosition(mario->GetX() + 10, mario->GetY());
+			mario->hand->SetPosition(mario->GetX() + 10, koopasY);
 		}
-		else mario->hand->SetPosition(mario->GetX() - 10, mario->GetY());
+		else mario->hand->SetPosition(mario->GetX() - 10, koopasY);
+
 		if (game->IsKeyReleased(DIK_A)) {
 			dynamic_cast<Koopas*>(mario->hand)->isHeld = false;
-			mario->hand->SetPosition(mario->hand->GetX() + 5 * mario->direct, mario->hand->GetY() - 5);
+			mario->hand->SetPosition(mario->hand->GetX() + 5 * mario->direct, mario->hand->GetY() - 15);
 			mario->hand->SetState(KOOPAS_STATE_IS_KICKED);
 			mario->hand = NULL;
 		}

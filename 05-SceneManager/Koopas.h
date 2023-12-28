@@ -64,9 +64,7 @@ class Koopas :
 protected:
 	float ax;
 	float ay;
-
-	vector<LPGAMEOBJECT> effects;
-
+	// vector<LPGAMEOBJECT> effects;
 	int mario_nx;
 
 public:

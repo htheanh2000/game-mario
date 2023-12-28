@@ -54,7 +54,7 @@ public:
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void SetState(int state);
-	void SetBreak(int isBreak) { this->isBreak = isBreak; }
+	virtual void SetBreak() ; 
 	BOOLEAN isUnbox = false;
 	BOOLEAN isEmpty = false;
 };

@@ -339,7 +339,7 @@ void Koopas::OnCollisionWithGoldBrick(LPCOLLISIONEVENT e)
 	if (e->nx != 0 && goldbrick->objType == GOLD_BRICK_COIN) {
 		if (goldbrick->GetState() != GOLD_BRICK_STATE_TRANSFORM_COIN) {
 			if (state == KOOPAS_STATE_IS_KICKED) {
-				goldbrick->SetBreak(true);
+				goldbrick->SetBreak();
 			}
 		}
 	}

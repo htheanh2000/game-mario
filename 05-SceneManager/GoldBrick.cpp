@@ -94,6 +94,15 @@ void GoldBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
+void GoldBrick::SetBreak() {
+	if(model == GOLD_BRICK_COIN) {
+		isBreak = true ; 
+	}
+	else if (model == GOLD_BRICK_P_BUTTON) {
+		isTransform = true ;
+	}
+}
+
 void GoldBrick::Render()
 {
 	int aniId = ID_ANI_GOLD_BRICK;

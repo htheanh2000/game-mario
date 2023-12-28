@@ -281,7 +281,7 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 		}
 		else if (koopas->GetState() == KOOPAS_STATE_DEFEND || koopas->GetState() == KOOPAS_STATE_UPSIDE)
 		{
-			if (game->IsKeyDown(DIK_A)) {
+			if (game->IsKeyDown(DIK_A) && koopas->isHeld == false) {
 				koopas->isHeld = true;
 				hand = koopas;
 				return;
@@ -292,7 +292,7 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 	}
 	else if (e->nx != 0) {
 		if ((koopas->GetState() == KOOPAS_STATE_DEFEND || koopas->GetState() == KOOPAS_STATE_UPSIDE)) {
-			if (game->IsKeyDown(DIK_A)) {
+			if (game->IsKeyDown(DIK_A) && koopas->isHeld == false) {
 				koopas->isHeld = true;
 				hand = koopas;
 				return;

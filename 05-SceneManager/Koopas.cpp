@@ -45,7 +45,7 @@ void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (!checkObjectInCamera(this) || isHeld) return;
+	// if (!checkObjectInCamera(this) || isHeld) return;
 
 	vy += ay * dt;
 	vx += ax * dt;
@@ -66,6 +66,7 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(KOOPAS_STATE_WALKING);
 		defend_start = -1;
 		vy = -KOOPAS_COMBACK_HEIGHT_ADJUST;
+		isHeld = false;
 	}
 
 	for (size_t i = 0; i < effects.size(); i++)

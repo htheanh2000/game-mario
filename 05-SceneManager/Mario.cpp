@@ -239,7 +239,7 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithPiranha(LPCOLLISIONEVENT e)
 {
-		SetHurt();	
+	SetHurt();	
 }
 
 void CMario::OnCollisionWithFireball(LPCOLLISIONEVENT e)
@@ -311,10 +311,15 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithGoldBrick(LPCOLLISIONEVENT e)
 {
 	GoldBrick* goldBrick = dynamic_cast<GoldBrick*>(e->obj);
-	if (e->ny > 0 && !goldBrick->isEmpty) {
+	if (goldBrick->model == GOLD_BRICK_COIN && this->isActivePButton) {
+		e->obj->Delete();
+		coin++;
+	}
+	else if (e->ny > 0 && !goldBrick->isEmpty) {
 		//isGoThroughBlock = false;
 		goldBrick->SetState(GOLD_BRICK_STATE_UP);
 	}
+	
 }
 
 void CMario::OnCollisionWithPortalIn(LPCOLLISIONEVENT e)

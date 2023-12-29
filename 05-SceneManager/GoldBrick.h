@@ -6,7 +6,7 @@
 
 #define ID_ANI_GOLD_BRICK 1004
 #define ID_ANI_GOLD_BRICK_EMPTY 103
-#define ID_ANI_COIN_IDLE 113
+#define ID_ANI_COIN_IDLE 11000
 
 #define GOLD_BRICK_MAX_HEIGHT 10 
 #define GOLD_BRICK_SPEED_UP 0.1f
@@ -48,9 +48,9 @@ public:
 	virtual void Render();
 
 	virtual int IsBlocking(float nx, float ny, CGameObject* target) {
-		return 1;
+		return !(objType == GOLD_BRICK_COIN && isTransform);
 	};
-	virtual int IsCollidable() { return 0; };
+	virtual int IsCollidable() { return 0  ;};
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void SetState(int state);

@@ -212,6 +212,7 @@ public:
 	boolean isWalking = false;
 	boolean isRunningMax = false;
 	boolean canFallSlow = false;
+	boolean isActivePButton = false;
 	BOOLEAN isSitting;
 	boolean isDisable = true;
 

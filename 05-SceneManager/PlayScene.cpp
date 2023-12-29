@@ -145,6 +145,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	case OBJECT_TYPE_GOLD_BRICK: {
 		int type = (int)atof(tokens[3].c_str());
+		DebugOut(L"[ERROR] Brick type %d\n", type);
 		obj = new GoldBrick (x, y, type);
 		break;
 	}

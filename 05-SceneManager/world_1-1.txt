@@ -11,6 +11,7 @@ pipe.txt
 koopas.txt
 hud.txt
 effect.txt
+pbutton.txt
 
 [OBJECTS]
 # type	x	y	extra_settings per object type

@@ -85,9 +85,14 @@ void GoldBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		scene->objects.push_back(break4);
 	}
 
+	if(mario->isActivePButton && objType == GOLD_BRICK_COIN) {
+		this->SetState(GOLD_BRICK_STATE_TRANSFORM_COIN) ;
+	}
+
 	if (isTransform && GetTickCount64() - transform_start > GOLD_BRICK_COIN_TIME_OUT) {
 		SetState(GOLD_BRICK_STATE_NORMAL);
 		isTransform = false;
+		mario->isActivePButton = false;
 	}
 
 	CGameObject::Update(dt, coObjects);
@@ -95,11 +100,12 @@ void GoldBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 
 void GoldBrick::SetBreak() {
-	if(model == GOLD_BRICK_COIN) {
+	if(objType == GOLD_BRICK_COIN && !isTransform ) { // Chưa biến thành vàng
 		isBreak = true ; 
 	}
-	else if (model == GOLD_BRICK_P_BUTTON) {
-		isTransform = true ;
+	else if (objType == GOLD_BRICK_P_BUTTON) {
+		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+		mario->isActivePButton = true ;
 	}
 }
 

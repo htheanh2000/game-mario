@@ -183,7 +183,6 @@ void BaseMarioState::holdingShellUpdate(DWORD dt)
 		koopasY -= 15; // Chỉnh vị trí cho mario nhỏ
 	}
 
-	DebugOut(L"koopasY %f \n", koopasY);
 
 	if (mario->hand != NULL) {
 		if (mario->direct > 0) {

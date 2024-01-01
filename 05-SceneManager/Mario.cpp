@@ -311,13 +311,17 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithGoldBrick(LPCOLLISIONEVENT e)
 {
 	GoldBrick* goldBrick = dynamic_cast<GoldBrick*>(e->obj);
-	if (goldBrick->model == GOLD_BRICK_COIN && this->isActivePButton) {
+	if (goldBrick->objType == GOLD_BRICK_COIN && this->isActivePButton) {
 		e->obj->Delete();
 		coin++;
 	}
 	else if (e->ny > 0 && !goldBrick->isEmpty) {
 		//isGoThroughBlock = false;
 		goldBrick->SetState(GOLD_BRICK_STATE_UP);
+	}
+
+	if(goldBrick->objType == GOLD_BRICK_P_BUTTON && e->ny < 0) { // Mario nhảy lên
+		goldBrick->SetPress();
 	}
 	
 }

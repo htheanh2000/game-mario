@@ -3,10 +3,14 @@
 
 #define GOLD_BRICK_BBOX_WIDTH 16
 #define GOLD_BRICK_BBOX_HEIGHT 16
+#define GOLD_BRICK_PRESSED_BBOX_HEIGHT 4
+#define GOLD_BRICK_PRESSED_BBOX_HEIGHT_ADJ 8
 
 #define ID_ANI_GOLD_BRICK 1004
 #define ID_ANI_GOLD_BRICK_EMPTY 103
 #define ID_ANI_COIN_IDLE 11000
+#define ID_ANI_PBUTTON 12000
+#define ID_ANI_PBUTTON_PRESSED 12001
 
 #define GOLD_BRICK_MAX_HEIGHT 10 
 #define GOLD_BRICK_SPEED_UP 0.1f
@@ -55,7 +59,9 @@ public:
 
 	virtual void SetState(int state);
 	virtual void SetBreak() ; 
+	virtual void SetPress() ; 
 	BOOLEAN isUnbox = false;
 	BOOLEAN isEmpty = false;
+	BOOLEAN isPress = false;
 };
 

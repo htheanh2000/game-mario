@@ -15,27 +15,30 @@ Koopas::Koopas(float x, float y, int model) : CGameObject(x, y)
 
 	defend_start = -1;
 	isHeld = false;
-	if (model == KOOPAS_GREEN_WING) {
+	if (model == KOOPAS_GREEN_WING)
+	{
 		SetState(KOOPAS_STATE_JUMP);
 	}
-	else {
+	else
+	{
 		SetState(KOOPAS_STATE_WALKING);
 	}
 
 	SetType(EType::ENEMY);
 }
 
-void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+void Koopas::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
-	if (isDefend || isUpside) {
+	if (isDefend || isUpside)
+	{
 
 		left = x - KOOPAS_BBOX_WIDTH / 2;
 		top = y - KOOPAS_BBOX_HEIGHT_DEFEND / 2;
 		right = left + KOOPAS_BBOX_WIDTH;
 		bottom = top + KOOPAS_BBOX_HEIGHT_DEFEND;
-
 	}
-	else {
+	else
+	{
 		left = x - KOOPAS_BBOX_WIDTH / 2;
 		top = y - KOOPAS_BBOX_HEIGHT / 2;
 		right = left + KOOPAS_BBOX_WIDTH;
@@ -43,33 +46,33 @@ void Koopas::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	}
 }
 
-void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
-	if (!checkObjectInCamera(this)) {
 
-	};
-
-	vy += ay * dt;
+	if (!isHeld)
+	{
+		vy += ay * dt;
+	}
 	vx += ax * dt;
 
 	CGameObject::SetState(state);
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-
-	
+	CMario *mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
 	// start animation comeback
 
-	if (GetTickCount64() - defend_start > KOOPAS_COMBACK_START && (isDefend || isUpside) && !isKicked) {
+	if (GetTickCount64() - defend_start > KOOPAS_COMBACK_START && (isDefend || isUpside) && !isKicked)
+	{
 		isComeback = true;
 	}
 
 	// end defend and start walking
-	if (GetTickCount64() - defend_start > KOOPAS_DEFEND_TIMEOUT && (isDefend || isUpside) && !isKicked) {
+	if (GetTickCount64() - defend_start > KOOPAS_DEFEND_TIMEOUT && (isDefend || isUpside) && !isKicked)
+	{
 		SetState(KOOPAS_STATE_WALKING);
 		defend_start = -1;
 		vy = -KOOPAS_COMBACK_HEIGHT_ADJUST;
 		isHeld = false;
-		mario->hand =  nullptr; // Mario thả koopas
+		mario->hand = nullptr; // Mario thả koopas
 	}
 
 	// for (size_t i = 0; i < effects.size(); i++)
@@ -88,17 +91,21 @@ void Koopas::Render()
 {
 	int aniId = ID_ANI_KOOPAS_WALKING_RIGHT;
 
-	if (objType == KOOPAS_GREEN_WING) {
-		if (vx > 0) {
+	if (objType == KOOPAS_GREEN_WING)
+	{
+		if (vx > 0)
+		{
 			aniId = ID_ANI_KOOPAS_GREEN_WING_RIGHT;
 		}
-		else {
+		else
+		{
 			aniId = ID_ANI_KOOPAS_GREEN_WING_LEFT;
 		}
 	}
 	if (model == KOOPAS_GREEN || model == KOOPAS_GREEN_WING)
 	{
-		if (state == ENEMY_STATE_IS_FIRE_ATTACKED || state == ENEMY_STATE_IS_KOOPAS_ATTACKED || state == ENEMY_STATE_IS_TAIL_ATTACKED) {
+		if (state == ENEMY_STATE_IS_FIRE_ATTACKED || state == ENEMY_STATE_IS_KOOPAS_ATTACKED || state == ENEMY_STATE_IS_TAIL_ATTACKED)
+		{
 			aniId = ID_ANI_KOOPAS_IS_UPSIDE;
 		}
 		if (vx > 0)
@@ -165,7 +172,8 @@ void Koopas::Render()
 	}
 	else if (model == KOOPAS_RED)
 	{
-		if (state == ENEMY_STATE_IS_FIRE_ATTACKED || state == ENEMY_STATE_IS_KOOPAS_ATTACKED || state == ENEMY_STATE_IS_TAIL_ATTACKED) {
+		if (state == ENEMY_STATE_IS_FIRE_ATTACKED || state == ENEMY_STATE_IS_KOOPAS_ATTACKED || state == ENEMY_STATE_IS_TAIL_ATTACKED)
+		{
 			aniId = ID_ANI_KOOPAS_RED_IS_UPSIDE;
 		}
 		if (vx > 0)
@@ -230,24 +238,24 @@ void Koopas::Render()
 			}
 		}
 	}
-	
 
 	// for (int i = 0; i < effects.size(); i++)
 	// {
 	// 	effects[i]->Render();
 	// }
 
-
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	//RenderBoundingBox();
+	// RenderBoundingBox();
 }
 
 int Koopas::IsCollidable()
 {
-	if (state == ENEMY_STATE_IS_FIRE_ATTACKED || state == ENEMY_STATE_IS_KOOPAS_ATTACKED) {
+	if (state == ENEMY_STATE_IS_FIRE_ATTACKED || state == ENEMY_STATE_IS_KOOPAS_ATTACKED)
+	{
 		return 0;
 	}
-	else {
+	else
+	{
 		return 1;
 	}
 }
@@ -255,7 +263,8 @@ int Koopas::IsCollidable()
 void Koopas::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
-	if(!isHeld) { // y theo mario nếu bị cầm
+	if (!isHeld)
+	{ // y theo mario nếu bị cầm
 		y += vy * dt;
 	}
 }
@@ -266,13 +275,16 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vy = 0;
 
-		if (isTailAttacked) {
+		if (isTailAttacked)
+		{
 			SetState(KOOPAS_STATE_UPSIDE);
 			vy = -KOOPAS_BOUNCE_SPEED;
 			isTailAttacked = false;
 		}
-		else {
-			if (objType == KOOPAS_GREEN_WING && state == KOOPAS_STATE_JUMP) {
+		else
+		{
+			if (objType == KOOPAS_GREEN_WING && state == KOOPAS_STATE_JUMP)
+			{
 				vy = -KOOPAS_WING_JUMP_SPEED;
 				ay = KOOPAS_WING_GRAVITY;
 			}
@@ -280,40 +292,46 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (e->nx != 0)
 	{
-		if (e->obj->GetModel() == OBJECT || e->obj->GetModel() == GOLDBRICK) {
+		if (e->obj->GetModel() == OBJECT || e->obj->GetModel() == GOLDBRICK)
+		{
 			vx = -vx;
 		}
 	}
 
-	if (dynamic_cast<CBGBlock*>(e->obj))
+	if (dynamic_cast<CBGBlock *>(e->obj))
 		OnCollisionWithBackGroundBlock(e);
-	else if (dynamic_cast<CQuestionBrick*>(e->obj))
+	else if (dynamic_cast<CQuestionBrick *>(e->obj))
 		OnCollisionWithQuestionBrick(e);
-	else if (dynamic_cast<GoldBrick*>(e->obj))
+	else if (dynamic_cast<GoldBrick *>(e->obj))
 		OnCollisionWithGoldBrick(e);
-	else if (dynamic_cast<CGoomba*>(e->obj))
+	else if (dynamic_cast<CGoomba *>(e->obj))
 		OnCollisionWithGoomba(e);
 }
 
 void Koopas::OnCollisionWithBackGroundBlock(LPCOLLISIONEVENT e)
 {
-	CBGBlock* block = dynamic_cast<CBGBlock*>(e->obj);
+	CBGBlock *block = dynamic_cast<CBGBlock *>(e->obj);
 
-	if (e->ny < 0) {
-		if (state == KOOPAS_STATE_WALKING && model == KOOPAS_RED) {
+	if (e->ny < 0)
+	{
+		if (state == KOOPAS_STATE_WALKING && model == KOOPAS_RED)
+		{
 			if (x <= block->GetX() - block->GetWidth() / 2)
 			{
 				vy = 0;
 				vx = KOOPAS_WALKING_SPEED;
 			}
-			else if (x >= block->GetX() + block->GetWidth() / 2) {
+			else if (x >= block->GetX() + block->GetWidth() / 2)
+			{
 				vy = 0;
 				vx = -KOOPAS_WALKING_SPEED;
 			}
 		}
 	}
-	if (e->nx != 0) {
-		if (state == KOOPAS_STATE_IS_KICKED) {
+	if (e->nx != 0)
+	{
+		if (state == KOOPAS_STATE_IS_KICKED)
+		{
 			vx = -vx;
 			nx = -nx;
 		}
@@ -322,10 +340,12 @@ void Koopas::OnCollisionWithBackGroundBlock(LPCOLLISIONEVENT e)
 
 void Koopas::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 {
-	CQuestionBrick* questionBrick = dynamic_cast<CQuestionBrick*>(e->obj);
+	CQuestionBrick *questionBrick = dynamic_cast<CQuestionBrick *>(e->obj);
 
-	if (e->nx != 0 && !questionBrick->isEmpty) {
-		if (state == KOOPAS_STATE_IS_KICKED) {
+	if (e->nx != 0 && !questionBrick->isEmpty)
+	{
+		if (state == KOOPAS_STATE_IS_KICKED)
+		{
 			questionBrick->SetState(QUESTION_BRICK_STATE_UP);
 			vx = -vx;
 		}
@@ -334,26 +354,33 @@ void Koopas::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 
 void Koopas::OnCollisionWithGoldBrick(LPCOLLISIONEVENT e)
 {
-	GoldBrick* goldbrick = dynamic_cast<GoldBrick*>(e->obj);
+	GoldBrick *goldbrick = dynamic_cast<GoldBrick *>(e->obj);
 
-	if (e->nx != 0 && goldbrick->objType == GOLD_BRICK_COIN) {
-		if (goldbrick->GetState() != GOLD_BRICK_STATE_TRANSFORM_COIN) {
-			if (state == KOOPAS_STATE_IS_KICKED) {
+	if (e->nx != 0 && goldbrick->objType == GOLD_BRICK_COIN)
+	{
+		if (goldbrick->GetState() != GOLD_BRICK_STATE_TRANSFORM_COIN)
+		{
+			if (state == KOOPAS_STATE_IS_KICKED)
+			{
 				goldbrick->SetBreak();
 			}
 		}
 	}
-	//DebugOut(L"ObjType: %s", objType);
+	// DebugOut(L"ObjType: %s", objType);
 
-	if (objType == KOOPAS_RED) {
-		if (e->ny < 0) {
-			if (state == KOOPAS_STATE_WALKING && objType == KOOPAS_RED) {
+	if (objType == KOOPAS_RED)
+	{
+		if (e->ny < 0)
+		{
+			if (state == KOOPAS_STATE_WALKING && objType == KOOPAS_RED)
+			{
 				if (x <= goldbrick->GetX() - ADJUST_X_TO_RED_CHANGE_DIRECTION)
 				{
 					vy = 0;
 					vx = KOOPAS_WALKING_SPEED;
 				}
-				else if (x >= goldbrick->GetX() + ADJUST_X_TO_RED_CHANGE_DIRECTION) {
+				else if (x >= goldbrick->GetX() + ADJUST_X_TO_RED_CHANGE_DIRECTION)
+				{
 					vy = 0;
 					vx = -KOOPAS_WALKING_SPEED;
 				}
@@ -364,7 +391,8 @@ void Koopas::OnCollisionWithGoldBrick(LPCOLLISIONEVENT e)
 
 void Koopas::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
-	if (state == KOOPAS_STATE_IS_KICKED) {
+	if (state == KOOPAS_STATE_IS_KICKED)
+	{
 		e->obj->SetState(ENEMY_STATE_IS_KOOPAS_ATTACKED);
 	}
 }
@@ -372,7 +400,7 @@ void Koopas::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 void Koopas::SetState(int state)
 {
 	CGameObject::SetState(state);
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	CMario *mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
 	switch (state)
 	{

@@ -35,6 +35,7 @@ void BaseMarioState::WalkUpdate(DWORD dt)
 	}
 	if (game->IsKeyReleased(DIK_DOWN) && mario->walkState == MarioWalkState::Sit) {
 		mario->walkState = MarioWalkState::Idle;
+		mario->SetY(mario->GetY() - 5);
 	}
 	if (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))
 	{

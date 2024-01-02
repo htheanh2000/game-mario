@@ -121,11 +121,11 @@ pbutton.txt
 ##### FIRE PIRANHA PLANT 9 ######
 MODEL = 1 BIG FIREPIRANHA PLANT
 
-9	359	348	1
+9	359	353	1
 
 #MODEL = 2 SMALL FIREPIRANHA PLANT
 
-9	1864	343	2
+9	1864	348	2
 
 ############ PIPE 7 #############
 #model = 1 long pipe

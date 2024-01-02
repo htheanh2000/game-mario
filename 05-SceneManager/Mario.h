@@ -207,14 +207,14 @@ public:
 	}
 
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
-	boolean IsAttack = false;
-	boolean isRunning = false;
-	boolean isWalking = false;
-	boolean isRunningMax = false;
-	boolean canFallSlow = false;
-	boolean isActivePButton = false;
+	BOOLEAN IsAttack = false;
+	BOOLEAN isRunning = false;
+	BOOLEAN isWalking = false;
+	BOOLEAN isRunningMax = false;
+	BOOLEAN canFallSlow = false;
+	BOOLEAN isActivePButton = false;
 	BOOLEAN isSitting;
-	boolean isDisable = true;
+	BOOLEAN isDisable = true;
 
 	void SetTail();
 
@@ -254,7 +254,7 @@ public:
 
 	void SetHurt();
 
-	boolean isSliding = false;
+	BOOLEAN isSliding = false;
 	BOOLEAN isOnPlatform;
 
 	float drag = 0;
@@ -266,6 +266,12 @@ public:
 
 	float GetAX() { return this->ax; }
 	float GetAY() { return this->ay; }
+
+	float GetX() { return this->x; }
+	float GetY() { return this->y; }
+
+	void SetX(float x) { this->x = x ; }
+	void SetY(float y) { this->y = y ; }
 
 	int GetScore() { return score; }
 	void SetScore(int sc) { score += sc; }

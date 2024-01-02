@@ -61,12 +61,12 @@ void IntroScene::Update(DWORD dt)
 {
 
 	CGame* game = CGame::GetInstance();
-	if (game->IsKeyDown(DIK_W)) {
-		CGame::GetInstance()->InitiateSwitchScene(WORLD_MAP);
-	}
-	if (game->IsKeyDown(DIK_1)) {
+	if (game->IsKeyDown(DIK_W) || game->IsKeyDown(DIK_1)) {
 		CGame::GetInstance()->InitiateSwitchScene(MAIN_SCENE_ID);
 	}
+	// if (game->IsKeyDown(DIK_1)) {
+		// CGame::GetInstance()->InitiateSwitchScene(MAIN_SCENE_ID);
+	// }
 }
 
 void IntroScene::_ParseSection_SPRITES(string line)

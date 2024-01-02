@@ -405,6 +405,9 @@ void CPlayScene::SetCam(float cx, float cy)
 	if(isFlyCam){ 
 		cy -= (float)sh / 2 + MARIO_BIG_BBOX_HEIGHT;
 	}
+
+	
+
 	/*else {
 		cy = (float)mh - (float)sh;
 	}*/
@@ -414,7 +417,10 @@ void CPlayScene::SetCam(float cx, float cy)
 		cy = (float)mh - (float)sh;
 	if (cy <= 0)//Left Edge
 		cy = 0;
-
+	if (game->GetCurrentSceneId() ==  HIDDEN_SCENE_ID  ) {
+		cx = HIDDEN_CAMERA_X;
+		cy = HIDDEN_CAMERA_Y;
+	}
 	game->SetCamPos(cx, cy);
 	map->SetCamPos(cx, cy);
 }

@@ -97,7 +97,7 @@ void PiranhaPlant::Render()
 {
 	int aniId = ID_ANI_PIRANHA_PLANT;
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	//RenderBoundingBox();
+	// RenderBoundingBox();
 }
 
 void PiranhaPlant::OnNoCollision(DWORD dt)

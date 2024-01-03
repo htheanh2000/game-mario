@@ -48,24 +48,31 @@
 
 #define KOOPAS_DEFEND_TIMEOUT 8000 // hết thời gian defend ( ra khỏi mai rùa và bắt đầu đi)
 #define KOOPAS_COMBACK_START 6000 //thời gian tính từ lúc defend đến lúc có hiệu ứng comeback
+#define KOOPAS_RESPAWN_START 4000 //thời gian tính từ lúc die đến lúc hồi sinh
 
 #define KOOPAS_STATE_WALKING 100
 #define KOOPAS_STATE_DEFEND 200
 #define KOOPAS_STATE_IS_KICKED 300
 #define KOOPAS_STATE_UPSIDE 400
 #define KOOPAS_STATE_JUMP 500
+#define KOOPAS_STATE_DIED 600
 
 #define ADJUST_X_TO_RED_CHANGE_DIRECTION 10
 
 #define KOOPAS_WING_GRAVITY 0.0002f
+#define KOOPAS_COLLISION_LIMITATION 3 // Va chạm tối đa 3 lần thì sẽ bị delete
 class Koopas :
     public CGameObject
 {
 protected:
 	float ax;
 	float ay;
+	
+	float respawn_pos_x;
+	float respawn_pos_y;
 	// vector<LPGAMEOBJECT> effects;
 	int mario_nx;
+	int collision_count = 0 ; // Đếm va chạm
 
 public:
 	Koopas(float x, float y, int model);
@@ -75,7 +82,7 @@ public:
 	virtual void Render();
 
 	virtual int IsCollidable();
-	virtual int IsBlocking() { return 0; }
+	virtual int IsBlocking() { return isDied; }
 	virtual void OnNoCollision(DWORD dt);
 
 	BOOLEAN isTailAttacked = false;
@@ -84,6 +91,7 @@ public:
 	BOOLEAN isKicked;
 	BOOLEAN isComeback;
 	BOOLEAN isUpside;
+	BOOLEAN isDied;
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	void OnCollisionWithBackGroundBlock(LPCOLLISIONEVENT e);
@@ -94,6 +102,7 @@ public:
 	virtual void SetState(int state);
 
 	ULONGLONG defend_start;
+	ULONGLONG die_start;
 
 };
 

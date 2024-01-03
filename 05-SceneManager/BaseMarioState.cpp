@@ -181,7 +181,7 @@ void BaseMarioState::holdingShellUpdate(DWORD dt)
 	float koopasY = mario->GetY();
 
 	if(mario->GetLevel() == MARIO_LEVEL_SMALL) {
-		koopasY -= 15; // Chỉnh vị trí cho mario nhỏ
+		koopasY -= 1; // Chỉnh vị trí cho mario nhỏ
 	}
 
 

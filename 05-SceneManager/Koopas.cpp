@@ -13,7 +13,11 @@ Koopas::Koopas(float x, float y, int model) : CGameObject(x, y)
 	this->ay = KOOPAS_GRAVITY;
 	this->objType = model;
 
+	respawn_pos_x = x ;
+	respawn_pos_y = y ;
+ 
 	defend_start = -1;
+	die_start = -1;
 	isHeld = false;
 	if (model == KOOPAS_GREEN_WING)
 	{
@@ -75,13 +79,14 @@ void Koopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		mario->hand = nullptr; // Mario thả koopas
 	}
 
-	// for (size_t i = 0; i < effects.size(); i++)
-	// {
-	// 	effects[i]->Update(dt, coObjects);
-	// 	if (effects[i]->isDeleted) {
-	// 		effects.erase(effects.begin() + i);
-	// 	}
-	// }
+	if ( (GetTickCount64() - die_start > KOOPAS_RESPAWN_START ) && isDied )
+	{
+		die_start = -1 ;
+		x = respawn_pos_x ;
+		y = respawn_pos_y ;
+		isDied = false ;
+		SetState(KOOPAS_STATE_WALKING);
+	}
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -91,6 +96,7 @@ void Koopas::Render()
 {
 	int aniId = ID_ANI_KOOPAS_WALKING_RIGHT;
 
+	if(isDied) return ;
 	if (objType == KOOPAS_GREEN_WING)
 	{
 		if (vx > 0)
@@ -239,11 +245,6 @@ void Koopas::Render()
 		}
 	}
 
-	// for (int i = 0; i < effects.size(); i++)
-	// {
-	// 	effects[i]->Render();
-	// }
-
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	// RenderBoundingBox();
 }
@@ -263,10 +264,7 @@ int Koopas::IsCollidable()
 void Koopas::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
-	if (!isHeld)
-	{ // y theo mario nếu bị cầm
-		y += vy * dt;
-	}
+	y += vy * dt;
 }
 
 void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -295,7 +293,14 @@ void Koopas::OnCollisionWith(LPCOLLISIONEVENT e)
 		if (e->obj->GetModel() == OBJECT || e->obj->GetModel() == GOLDBRICK)
 		{
 			vx = -vx;
+			collision_count += 1;
 		}
+	}
+	
+	if(collision_count > 3 && !isDied) {
+		die_start = GetTickCount64();
+		isDied = true ;
+		collision_count = 0;
 	}
 
 	if (dynamic_cast<CBGBlock *>(e->obj))
@@ -413,6 +418,7 @@ void Koopas::SetState(int state)
 		isUpside = false;
 		isKicked = false;
 		isHeld = false;
+		isDied = false;
 		break;
 	case KOOPAS_STATE_DEFEND:
 		isDefend = true;
@@ -452,6 +458,12 @@ void Koopas::SetState(int state)
 		vx = 0;
 		break;
 	case ENEMY_STATE_IS_TAIL_ATTACKED:
+		ay = KOOPAS_GRAVITY;
+		vy = -KOOPAS_SPEED_Y_IS_TAIL_ATTACKED;
+		vx = mario->GetDirection() * KOOPAS_SPEED_X_IS_TAIL_ATTACKED;
+		isTailAttacked = true;
+		break;
+	case KOOPAS_STATE_DIED:
 		ay = KOOPAS_GRAVITY;
 		vy = -KOOPAS_SPEED_Y_IS_TAIL_ATTACKED;
 		vx = mario->GetDirection() * KOOPAS_SPEED_X_IS_TAIL_ATTACKED;

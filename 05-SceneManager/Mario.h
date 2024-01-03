@@ -49,6 +49,7 @@
 
 
 #define MARIO_DIE_TIME 1000
+#define ENDMAP_TIME 2000
 
 #pragma region ANIMATION_ID
 
@@ -191,6 +192,7 @@ class CMario : public CGameObject
 	void OnCollisionWithKoopas(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoldBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortalIn(LPCOLLISIONEVENT e);
+	void OnCollisionWithStar(LPCOLLISIONEVENT e);
 
 
 public:
@@ -220,6 +222,7 @@ public:
 	BOOLEAN isSitting;
 	BOOLEAN isDisable = true;
 	BOOLEAN isDied = false; 
+	BOOLEAN isEndMap = false; 
 
 
 	void SetTail();
@@ -244,6 +247,7 @@ public:
 	//Countdown time
 	ULONGLONG attack_start = -1;
 	ULONGLONG die_start = -1;
+	ULONGLONG endmap_start = -1;
 
 	float powerMeter = 0;
 

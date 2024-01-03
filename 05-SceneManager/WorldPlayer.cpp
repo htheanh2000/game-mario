@@ -64,15 +64,15 @@ void WorldPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	if (game->IsKeyDown(DIK_1)) {
-		SetLevel(MARIO_LEVEL_SMALL);
-	}
-	if (game->IsKeyDown(DIK_2)) {
-		SetLevel(MARIO_LEVEL_BIG);
-	}
-	if (game->IsKeyDown(DIK_3)) {
-		SetLevel(MARIO_LEVEL_RACOON);
-	}
+	// if (game->IsKeyDown(DIK_1)) {
+	// 	SetLevel(MARIO_LEVEL_SMALL);
+	// }
+	// if (game->IsKeyDown(DIK_2)) {
+	// 	SetLevel(MARIO_LEVEL_BIG);
+	// }
+	// if (game->IsKeyDown(DIK_3)) {
+	// 	SetLevel(MARIO_LEVEL_RACOON);
+	// }
 
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);

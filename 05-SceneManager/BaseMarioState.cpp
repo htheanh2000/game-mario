@@ -14,6 +14,17 @@ void BaseMarioState::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// 	return;
 	// 	// mario->SetVX(0);
 	// }
+
+	if(mario->isEndMap) {
+		mario->walkState = MarioWalkState::Walk;
+		mario->SetAX(MARIO_ACCEL_WALK_X); 
+		mario->SetVX(MARIO_WALKING_SPEED);
+
+		if(GetTickCount64() - mario->endmap_start > ENDMAP_TIME) {
+		CGame::GetInstance()->InitiateSwitchScene(WORLD_MAP);
+		}
+	}
+	
 	WalkUpdate(dt);
 	PowerMeterUpdate(dt);
 	JumpUpdate(dt);
@@ -27,12 +38,13 @@ void BaseMarioState::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void BaseMarioState::WalkUpdate(DWORD dt)
 {
+
 	if (mario->isDisable) return; 
 
 	if(mario->isDied && GetTickCount64() - mario->die_start > MARIO_DIE_TIME) {
 		CGame::GetInstance()->InitiateSwitchScene(WORLD_MAP);
-
 	}
+
 
 	CGame* game = CGame::GetInstance();
 	float vx_check = mario->GetVX();

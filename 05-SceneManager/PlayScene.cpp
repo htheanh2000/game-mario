@@ -18,6 +18,7 @@
 #include "GoldBrick.h"
 #include "PortalIn.h"
 #include "PortalOut.h"
+#include "Star.h"
 
 #include "HUD.h"
 
@@ -170,6 +171,10 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_PIPE: {
 		int type = (int)atof(tokens[3].c_str());
 		obj = new PiranhaPipe(x, y, type);
+		break;
+	}
+	case OBJECT_TYPE_STAR: {
+		obj = new Star(x, y);
 		break;
 	}
 

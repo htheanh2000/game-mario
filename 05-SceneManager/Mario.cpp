@@ -16,6 +16,7 @@
 #include "Score.h"
 #include "GoldBrick.h"
 #include "PortalIn.h"
+#include "Star.h"
 
 #include "BaseMarioState.h"
 #include "MarioStateSmall.h"
@@ -79,13 +80,17 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (game->IsKeyPressed(DIK_5))
 	{
 		SetPosition(1440, 50);
-
 		playScene->isFlyCam = true;
 	}
 	if (game->IsKeyPressed(DIK_6))
 	{
 		SetPosition(2260, 50);
 		playScene->isFlyCam = true;
+	}
+	if (game->IsKeyPressed(DIK_7))
+	{
+		SetPosition(2650, 250);
+		DebugOut(L"Mario position %f \n", this->x) ;
 	}
 
 	if (!isDisable)
@@ -171,6 +176,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithGoldBrick(e);
 	else if (dynamic_cast<PortalIn *>(e->obj))
 		OnCollisionWithPortalIn(e);
+	else if (dynamic_cast<Star *>(e->obj))
+		OnCollisionWithStar(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -379,6 +386,13 @@ void CMario::OnCollisionWithPortalIn(LPCOLLISIONEVENT e)
 			}
 		}
 	}
+}
+
+void CMario::OnCollisionWithStar(LPCOLLISIONEVENT e)
+{
+	isEndMap = true;
+	isDisable = true;
+	endmap_start = GetTickCount64() ;
 }
 
 void CMario::Render()

@@ -12,6 +12,7 @@ koopas.txt
 hud.txt
 effect.txt
 pbutton.txt
+star.txt
 
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -182,5 +183,8 @@ MODEL = 1 BIG FIREPIRANHA PLANT
 
 ############ PORTAL IN ######
 #52	100	350	5	10	1
+
+############ STAR ######
+11	2688	304
 [TILEMAP]
 Resources\Tilemap\world1-1.txt

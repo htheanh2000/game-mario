@@ -86,7 +86,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	stateHandler->Update(dt, coObjects);
 
-	
 
 	/*float finall, finalt, finalr, finalb;
 	this->GetBoundingBox(finall, finalt, finalr, finalb);
@@ -472,22 +471,20 @@ void CMario::SetHurt()
 		if (level > MARIO_LEVEL_SMALL){
 			level--;
 			SetLevel(level);
-			//StartUntouchable();
+			// StartUntouchable();
 		}
 		else
 		{
-			DebugOut(L">>> Mario DIE >>> \n");
-			SetState(MARIO_STATE_DIE);
+			// SetState(MARIO_STATE_DIE);
+			isDied = true ;
 			die_start = GetTickCount64();
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			untouchable = 0 ;
 		}
 	}
 	else return;
 }
 
-void CMario::ShootFire()
-{
-	
-}
 
 void CMario::SetLevel(int l)
 {

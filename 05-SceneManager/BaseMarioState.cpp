@@ -25,6 +25,11 @@ void BaseMarioState::WalkUpdate(DWORD dt)
 {
 	if (mario->isDisable) return; 
 
+	if(mario->isDied && GetTickCount64() - mario->die_start > MARIO_DIE_TIME) {
+		CGame::GetInstance()->InitiateSwitchScene(WORLD_MAP);
+
+	}
+
 	CGame* game = CGame::GetInstance();
 	float vx_check = mario->GetVX();
 	if (game->IsKeyDown(DIK_DOWN)) {

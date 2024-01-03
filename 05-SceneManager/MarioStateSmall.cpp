@@ -11,6 +11,9 @@ void MarioStateSmall::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
 
+	// DebugOut(L"[ERROR] Sprite ID %d not found!\n", spriteId);
+
+	
 
 	if (!mario->isOnPlatform)
 	{
@@ -68,6 +71,9 @@ void MarioStateSmall::Render()
 	if (aniId == -1) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
 	if (mario->direct < 0) aniId += 1;
 
+	if(mario->isDied) {
+		aniId = ID_ANI_MARIO_SMALL_DIED ;
+	}
 	animations->Get(aniId)->Render(mario->GetX(), mario->GetY());
 }
 

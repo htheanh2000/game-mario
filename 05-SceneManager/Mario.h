@@ -47,6 +47,9 @@
 
 #define MARIO_POWER_FULL 7
 
+
+#define MARIO_DIE_TIME 1000
+
 #pragma region ANIMATION_ID
 
 
@@ -203,10 +206,10 @@ public:
 
 	int IsCollidable()
 	{ 
-		return (state != MARIO_STATE_DIE); 
+		return (!isDied); 
 	}
 
-	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
+	int IsBlocking() { return (!isDied && untouchable == 0); }
 	BOOLEAN IsAttack = false;
 	BOOLEAN isRunning = false;
 	BOOLEAN isWalking = false;
@@ -215,6 +218,8 @@ public:
 	BOOLEAN isActivePButton = false;
 	BOOLEAN isSitting;
 	BOOLEAN isDisable = true;
+	BOOLEAN isDied = false; 
+
 
 	void SetTail();
 
@@ -237,7 +242,6 @@ public:
 
 	//Countdown time
 	ULONGLONG attack_start = -1;
-	ULONGLONG transform_start = -1;
 	ULONGLONG die_start = -1;
 
 	float powerMeter = 0;

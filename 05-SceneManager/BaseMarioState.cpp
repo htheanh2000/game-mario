@@ -10,6 +10,10 @@ BaseMarioState::BaseMarioState(CMario* mario)
 
 void BaseMarioState::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	// if(mario->untouchable) {
+	// 	return;
+	// 	// mario->SetVX(0);
+	// }
 	WalkUpdate(dt);
 	PowerMeterUpdate(dt);
 	JumpUpdate(dt);

@@ -171,8 +171,8 @@ class CMario : public CGameObject
 	BaseMarioState* stateHandler;
 
 	int level; 
-	int untouchable; 
 	ULONGLONG untouchable_start;
+	ULONGLONG lastTick = GetTickCount64();
 
 	int coin; 
 	int score;
@@ -194,6 +194,7 @@ class CMario : public CGameObject
 
 
 public:
+	int untouchable; 
 	CGameObject* obj = NULL;
 //	CTail* tail;
 

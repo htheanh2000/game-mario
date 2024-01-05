@@ -30,7 +30,6 @@ void BaseMarioState::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	JumpUpdate(dt);
 	AttackUpdate(dt);
 	holdingShellUpdate(dt);
-	warpUpdate(dt);
 
 	CCollision::GetInstance()->Process(mario, dt, coObjects);
 	//DebugOut(L"vy: %f\n", mario->GetVY());
@@ -220,10 +219,6 @@ void BaseMarioState::holdingShellUpdate(DWORD dt)
 		}
 	}
 
-}
-
-void BaseMarioState::warpUpdate(DWORD dt)
-{
 }
 
 void BaseMarioState::PowerMeterUpdate(DWORD dt)

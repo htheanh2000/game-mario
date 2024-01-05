@@ -22,8 +22,6 @@ public:
 
 	virtual void holdingShellUpdate(DWORD dt);
 
-	virtual void warpUpdate(DWORD dt);
-
 	virtual void PowerMeterUpdate(DWORD dt);
 
 	virtual void AttackUpdate(DWORD dt);

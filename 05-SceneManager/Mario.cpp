@@ -24,6 +24,8 @@
 #include "MarioStateRacoon.h"
 
 #include "Collision.h"
+#include <thread>
+
 
 CMario::CMario(float x, float y) : CGameObject(x, y)
 {
@@ -381,8 +383,9 @@ void CMario::OnCollisionWithPortalIn(LPCOLLISIONEVENT e)
 			}
 			if (p->sceneNo == MAIN_SCENE_ID)
 			{
-				DebugOut(L"New map position: x: %f %f\n", p->GetCX(), p->GetCY());
+				// DebugOut(L"Main map position: x: %f %f\n", p->GetCX(), p->GetCY());
 				CGame::GetInstance()->SwitchToMainMap(p->sceneNo, p->GetCX(), p->GetCY());
+				DebugOut(L"Main map position: x: %f %f\n", this->x, this->y);
 			}
 		}
 	}

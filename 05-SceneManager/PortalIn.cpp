@@ -25,7 +25,7 @@ void PortalIn::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void PortalIn::Render()
 {
-	RenderBoundingBox();
+	// RenderBoundingBox();
 }
 
 void PortalIn::GetBoundingBox(float& left, float& top, float& right, float& bottom)

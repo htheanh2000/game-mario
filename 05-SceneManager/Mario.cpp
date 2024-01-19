@@ -337,12 +337,12 @@ void CMario::OnCollisionWithKoopas(LPCOLLISIONEVENT e)
 			else
 				koopas->SetState(KOOPAS_STATE_IS_KICKED);
 		}
-		else if (this->hand != NULL)
+		else if (this->hand == NULL)
 		{
 			SetHurt();
 		}
 	}
-	else if (e->ny > 0 && this->hand != NULL)
+	else if (e->ny > 0 && this->hand == NULL)
 	{
 		SetHurt();
 	}

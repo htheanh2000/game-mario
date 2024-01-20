@@ -1,64 +1,23 @@
+# Mario Game in C++ with DirectX
 
-# Mario Game Project
+## Introduction
 
-This is a Mario Game project that clone Mario Bros 3 World 1-1
+Welcome to the Mario Game project, a fresh take on the classic platformer, recreated using C++ and DirectX. This project aims to provide a rich, immersive experience, leveraging the power of modern graphics and game design principles, while staying true to the charm and gameplay of the beloved original.
 
-## Midterm feedback 9/12/2023
-- Hold Koopas Timeout missing
-- Jump issue when nearby colorbox
-- Tail: Slow fail issue, can not break diamond brick
-- P button: Timeout Missing
-- TODO: Pipe animation. 
+## Features
 
-## Update on 2/12/2023
-- Fix camera lag when update status to Racoon
-- Adding Hud
-- Adding logic to allow mario stop at Node
-- Adding button turn brick to gold
-- Fix Mario fall out of map when jump into hidden map
+- **Classic Gameplay:** Enjoy the classic Mario gameplay, including running, jumping, and exploring various levels filled with secrets and power-ups.
+- **Enhanced Graphics:** Experience the game like never before with enhanced graphics powered by DirectX.
+- **Level Editor:** Customize your adventure with our intuitive level editor, allowing you to create, edit, and share your levels.
+- **Cross-Platform Compatibility:** Play the game on multiple platforms, ensuring you can enjoy your favorite levels anywhere, anytime.
 
-## Project Checklist
-### 1. Scene Object
-- Intro Scene (Image only accepted): Done
-- World Scene : Done
-- Main World 1-1 Map: Done
-- Hidden world 1-1 Map: Done
-### 2. Mario Object
-- Small, big and racoon mario: Done
-- Racoon Mario can fly: Done
-- Racoon Mario can attack: Done
-- Mario can hold and kick koopas: Done
+## Getting Started
 
-### 3. Koopas Object
-- Normal Koopas and Wing Koopas: Done
-- Respawn after dead: Done
-- Break Brick: Done
-- Attack Groomba in defending state: Done
+### Prerequisites
 
-### 4. Groomba
-- Normal Groomba and Red Groomba: Done
+Before you begin, ensure you have the following prerequisites installed on your system:
 
-### 5. Fire plant
-- Fire plant and green plant: Done
+- A C++ compiler (e.g., GCC, MSVC)
+- DirectX SDK
+- Git (for cloning the repository)
 
-### 6. Question Brick
-- Create level-up mushroom, 1up mushroom and leaf effect: Done
-- Create Coin: Done
-
-### 7. Color Box
-- Mario can jump throungh : Done
-
-### 8. HUD: Uncompleted work
-
-
-## Midterm feedback:
-- Warning when build: Fixed
-- Inccorect logic Koopas rotate (!Important): Fixed
-- Mushroom can not rorate: Fixed
-- Camera stick with Mario: Fixed
-
-
-## Update from Midterm
-- Intro scene and world scene
-- Improve base on feedback
-- Mario racoon logic
